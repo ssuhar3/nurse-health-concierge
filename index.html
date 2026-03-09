@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nurse Health Concierge — Concierge Elder Health Advocacy</title>
+<title>Nurse Health Concierge — Concierge Senior Health Advocacy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -490,10 +490,7 @@ nav.scrolled {
 }
 
 .retainer-banner {
-  display: grid;
-  grid-template-columns: auto 1px 1fr;
-  align-items: center;
-  gap: 0;
+  display: block;
   background: rgba(255,255,255,0.03);
   border: 1px solid var(--blue-border);
   border-radius: var(--radius-lg);
@@ -1065,8 +1062,7 @@ footer {
 @media (max-width: 720px) {
   .contact-grid, .creds-grid { grid-template-columns: 1fr; }
   .hero-stats { grid-template-columns: 1fr 1fr; }
-  .retainer-banner { grid-template-columns: 1fr; }
-  .retainer-price-block { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .retainer-banner { display: block; }
   .team-strip { grid-template-columns: 1fr; }
   .formula-row { flex-direction: column; border-radius: var(--radius); }
   .formula-terms { flex-direction: column; }
@@ -1117,26 +1113,25 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <p class="hero-eyebrow">Concierge Elder Health Advocacy</p>
+    <p class="hero-eyebrow">Concierge Senior Health Advocacy</p>
     <h1 class="hero-headline">
-      Your Loved One<br>
-      Deserves a<br>
-      <em>True Advocate</em>
+      Your Loved One Deserves a<br>
+      <em>Knowledgeable Health Advocate</em>
     </h1>
     <div class="hero-rule"></div>
-    <p class="hero-body">Navigating the healthcare system shouldn't be a journey you take alone. We provide a dedicated personal health advocate who coordinates, communicates, and champions your care at every step.</p>
+    <p class="hero-body">Navigating the healthcare system shouldn't be a journey you take alone. We provide a dedicated personal health advocate who coordinates, communicates, and champions your care at every step — always honoring the dignity and choices of your Senior.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Speak With Us &rarr;</a>
       <a href="#services" class="btn-ghost">Our Services</a>
     </div>
   </div>
   <div class="hero-right">
-    <img class="hero-img" src="images/Nurse with elderly.png" alt="Nurse caring for elderly patient" />
+    <img class="hero-img" src="images/Nurse with elderly.png" alt="Nurse caring for Senior patient" />
     <div class="hero-img-overlay"></div>
   </div>
   <div class="hero-stats">
     <div class="stat-cell">
-      <span class="stat-val">45+</span>
+      <span class="stat-val">53+</span>
       <span class="stat-lbl">Years in Nursing</span>
     </div>
     <div class="stat-cell">
@@ -1190,7 +1185,7 @@ footer {
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
       </div>
       <div class="pillar-title">Coordination</div>
-      <p class="pillar-body">Seamless orchestration of your care between all providers, specialists, and insurance carriers — handled entirely on your behalf.</p>
+      <p class="pillar-body">Seamless orchestration of your care between all providers, specialists, and insurance carriers.</p>
     </div>
     <div class="pillar-card reveal reveal-d2">
       <div class="pillar-icon-wrap">
@@ -1219,50 +1214,55 @@ footer {
 <!-- SERVICES -->
 <section class="services section-pad" id="services">
   <div class="reveal">
-    <p class="eyebrow" style="color:var(--blue-lt)">The Concierge Model</p>
+    <p class="eyebrow" style="color:var(--blue-lt)">The Exclusive Concierge Model</p>
     <h2 class="section-h light">Everything You Need,<br><em>Nothing Left to Chance</em></h2>
     <div class="section-rule"></div>
   </div>
 
   <div class="retainer-banner reveal reveal-d1">
-    <div class="retainer-price-block">
-      <span class="retainer-price-num">$4,000</span>
-      <span class="retainer-price-period">Per Month</span>
-    </div>
-    <div class="retainer-divider"></div>
     <div class="retainer-details-row">
       <div class="retainer-detail">
         <span class="retainer-detail-val">Mon &ndash; Fri</span>
-        <span class="retainer-detail-lbl">9 am &ndash; 2 pm On-Call</span>
+        <span class="retainer-detail-lbl">8 am &ndash; 2 pm &middot; As Needed</span>
       </div>
       <div class="retainer-detail">
         <span class="retainer-detail-val">20 Hours</span>
-        <span class="retainer-detail-lbl">Monthly Access</span>
+        <span class="retainer-detail-lbl">Monthly Advocate Access</span>
       </div>
       <div class="retainer-detail">
         <span class="retainer-detail-val">Weekly</span>
         <span class="retainer-detail-lbl">In-Home Visits</span>
       </div>
       <div class="retainer-detail">
-        <span class="retainer-detail-val">Phone &nbsp;&middot;&nbsp; Text &nbsp;&middot;&nbsp; Email &nbsp;&middot;&nbsp; In-Person</span>
-        <span class="retainer-detail-lbl">Ways to Reach Your Advocate</span>
+        <span class="retainer-detail-val">Personalized Onboarding</span>
+        <span class="retainer-detail-lbl">Assessment &amp; interview process allows for full customization of your Senior's Health Advocacy Plan</span>
       </div>
     </div>
   </div>
 
   <div class="services-grid reveal reveal-d2">
-    <div class="service-item"><div class="service-marker"></div><span class="service-text">Manage &amp; attend all medical appointments</span></div>
+    <div class="service-item"><div class="service-marker"></div><span class="service-text">Manage &amp; attend medical appointments as needed</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Explain diagnoses in plain language</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Monitor and manage medication lists</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Coordinate care across all providers</span></div>
-    <div class="service-item"><div class="service-marker"></div><span class="service-text">Attend specialist visits &amp; ask questions</span></div>
+    <div class="service-item"><div class="service-marker"></div><span class="service-text">Attend specialist visits as necessary &amp; ask questions</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Weekly home visits and safety checks</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Liaison between insurers &amp; physicians</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Weekly family update discussions</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Medication box setup when needed</span></div>
-    <div class="service-item"><div class="service-marker"></div><span class="service-text">Advocate for wellness &amp; education</span></div>
+    <div class="service-item"><div class="service-marker"></div><span class="service-text">Advocate for wellness, education &amp; Senior dignity</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Comprehensive home safety assessments</span></div>
     <div class="service-item"><div class="service-marker"></div><span class="service-text">Document all communications &amp; visits</span></div>
+  </div>
+</section>
+
+<!-- GUIDING COMMITMENT -->
+<section class="commitment section-pad" style="background:var(--blue-bg);text-align:center;padding:64px 24px">
+  <div class="reveal" style="max-width:720px;margin:0 auto">
+    <p class="eyebrow">Our Guiding Commitment</p>
+    <h2 class="section-h" style="font-size:clamp(28px,3vw,40px);margin-bottom:24px">Your Voice Always <em>Leads</em></h2>
+    <div class="section-rule"></div>
+    <p style="font-size:17px;line-height:1.8;color:var(--text-mid);margin-top:28px">Your advocate is here to inform, coordinate, and support — never to override the decisions of your Senior or family. We honor the dignity, independence, and choices of every individual we serve.</p>
   </div>
 </section>
 
@@ -1272,7 +1272,7 @@ footer {
   <div class="family-banner-overlay">
     <p class="family-banner-eyebrow">Our Story</p>
     <h2 class="family-banner-h">From Our <em>Family</em><br>to Yours</h2>
-    <p class="family-banner-body">NHC is a family-run business — three generations united by a single mission: to ensure no family faces the healthcare system alone.</p>
+    <p class="family-banner-body">NHC is a family-run business — three generations united by a single mission to ensure no family faces the healthcare system alone.</p>
   </div>
 </div>
 
@@ -1292,21 +1292,21 @@ footer {
       </div>
       <div class="photo-stack-caption">
         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="var(--blue-lt)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <span>45 Years of Nursing Leadership</span>
+        <span>53 Years of Nursing Leadership</span>
       </div>
     </div>
 
     <div class="founder-bio-col reveal reveal-d2">
       <h3 class="founder-name">Pat Dobbins</h3>
-      <p class="founder-role">Chairman &amp; Co-Founder &nbsp;&middot;&nbsp; Nurse Health Concierge</p>
+      <p class="founder-role">Founder &nbsp;&middot;&nbsp; Nurse Health Concierge</p>
 
-      <p class="bio-text">Pat Dobbins has dedicated her career to improving lives through nursing leadership, healthcare advocacy, and community service. Her experience spans the Veterans Administration, urban and rural hospital systems, 15 years as a nurse educator in a public school district, and ownership of her own consulting and case management business.</p>
+      <p class="bio-text">Pat Dobbins has dedicated 53 years to improving lives through nursing leadership, healthcare advocacy, and community service. Her experience spans the Veterans Administration, urban and rural hospital systems, 15 years as a nurse educator in a public school district, and ownership of her own consulting and case management business.</p>
 
-      <p class="bio-text">She served as administrator of the health departments for Hendry and Glades Counties following 18 years as Executive Community Health Nursing Director — championing underserved, rural, and uninsured populations throughout her entire tenure.</p>
+      <p class="bio-text">A former Department of Health Officer, she served as administrator of the health departments for Hendry and Glades Counties following 18 years as Executive Community Health Nursing Director — championing underserved, rural, and uninsured populations throughout her entire tenure.</p>
 
       <blockquote class="pull-quote">
         <p class="pull-quote-text">"The people, the values and the communities are the best in Florida — and I will forever advocate for them."</p>
-        <cite class="pull-quote-attr">&mdash; Pat Dobbins, Chairman</cite>
+        <cite class="pull-quote-attr">&mdash; Pat Dobbins, Founder</cite>
       </blockquote>
 
       <div class="creds-grid">
@@ -1327,7 +1327,7 @@ footer {
     <img class="team-strip-photo" src="images/Pat older photo with nursing team.jpeg" alt="Pat Dobbins with her nursing team" />
     <div class="team-strip-content">
       <p class="team-strip-eyebrow">A Career Built on Service</p>
-      <h3 class="team-strip-h">45 years of nursing — from rural Florida to the Veterans Administration and beyond.</h3>
+      <h3 class="team-strip-h">53 years of nursing — from rural Florida to the Veterans Administration and beyond.</h3>
       <p class="team-strip-body">Pat has served on numerous local, regional, and state boards as a voice for the uninsured and underserved. Her life's work is the foundation on which every NHC engagement is built.</p>
     </div>
   </div>
@@ -1337,7 +1337,7 @@ footer {
 <section class="mission" id="mission">
   <div class="mission-inner reveal">
     <p class="mission-eyebrow">Our Purpose</p>
-    <p class="mission-quote">"To reduce frustration and error while increasing understanding for seniors and their families as they navigate the complex healthcare system — through liaison communication, coordination, and compassionate support."</p>
+    <p class="mission-quote">"To reduce frustration and error while increasing understanding for Seniors and their families as they navigate the complex healthcare system through liaison communication, coordination, and compassionate support."</p>
     <div class="mission-rule"></div>
   </div>
 </section>
@@ -1349,40 +1349,17 @@ footer {
     <h2 class="section-h">Let's Start the <em>Conversation</em></h2>
     <div class="section-rule"></div>
   </div>
-  <p class="contact-intro reveal">We'd love to learn about your family's situation and explain how a dedicated Health Advocate can make a meaningful difference. Reach out to either of us directly.</p>
+  <p class="contact-intro reveal">We'd love to learn about your family's situation and explain how a dedicated Health Advocate can make a meaningful difference.</p>
 
-  <div class="contact-grid">
+  <div class="contact-grid" style="justify-content:center">
     <div class="contact-card reveal reveal-d1">
       <div class="contact-name">Pat Dobbins</div>
-      <div class="contact-org">Chairman &middot; Nurse Health Concierge</div>
-      <div class="contact-row">
-        <div class="contact-ico">
-          <svg viewBox="0 0 24 24" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <a href="tel:2392927320" class="contact-val">239-292-7320</a>
-      </div>
+      <div class="contact-org">Founder &middot; Nurse Health Concierge</div>
       <div class="contact-row">
         <div class="contact-ico">
           <svg viewBox="0 0 24 24" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
-        <a href="mailto:Pdobbers@aol.com" class="contact-val">Pdobbers@aol.com</a>
-      </div>
-    </div>
-
-    <div class="contact-card reveal reveal-d2">
-      <div class="contact-name">Scott Dobbins</div>
-      <div class="contact-org">Hybridge CRE</div>
-      <div class="contact-row">
-        <div class="contact-ico">
-          <svg viewBox="0 0 24 24" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <a href="tel:7274597607" class="contact-val">727-459-7607</a>
-      </div>
-      <div class="contact-row">
-        <div class="contact-ico">
-          <svg viewBox="0 0 24 24" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </div>
-        <a href="https://HybridgeCRE.com" target="_blank" class="contact-val">HybridgeCRE.com</a>
+        <a href="mailto:Pdobbens@aol.com" class="contact-val">Pdobbens@aol.com</a>
       </div>
     </div>
   </div>
