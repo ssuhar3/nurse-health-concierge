@@ -32,7 +32,7 @@ async function sendNotification(subject, html, attachments = []) {
 
   const result = await mail.sendMail({
     from: `"Nurse Health Concierge" <${process.env.SMTP_USER}>`,
-    to: process.env.NOTIFICATION_EMAIL || 'pdobbers@aol.com',
+    to: process.env.NOTIFICATION_EMAIL || 'nursehealthconcierge@gmail.com',
     subject,
     html,
     attachments,

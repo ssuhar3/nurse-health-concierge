@@ -108,7 +108,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error('submit-inquiry error:', err);
     return respond(500, {
-      error: 'Something went wrong. Please try again or email us directly at pdobbers@aol.com.',
+      error: 'Something went wrong. Please try again or email us directly at nursehealthconcierge@gmail.com.',
     });
   }
 };

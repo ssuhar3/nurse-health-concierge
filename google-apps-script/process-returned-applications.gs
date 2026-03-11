@@ -11,11 +11,14 @@
  * 3. Set Script Properties (Project Settings > Script Properties):
  *    - DRIVE_FOLDER_ID: Your Google Drive folder ID
  *    - SHEET_ID: Your Google Sheet ID
- *    - ADMIN_EMAIL: pdobbers@aol.com (for notifications)
- * 4. Create a time-driven trigger:
- *    - Function: processReturnedApplications
- *    - Frequency: Every 15 minutes
- * 5. Authorize the script when prompted
+ *    - ADMIN_EMAIL: nursehealthconcierge@gmail.com (for notifications)
+ * 4. Authorize the script when prompted
+ *
+ * ON-DEMAND USAGE (no auto-trigger needed):
+ *   - Run processReturnedApplications() manually from the Apps Script editor
+ *   - Or use testRun() which adds logging around the main function
+ *   - When ready to go live, you can optionally add a time-driven trigger
+ *     (Triggers > Add Trigger > processReturnedApplications > Time-driven > Every 15 min)
  */
 
 // ── Configuration ─────────────────────────────────────────
@@ -24,14 +27,14 @@ function getConfig() {
   return {
     driveFolderId: props.getProperty('DRIVE_FOLDER_ID'),
     sheetId: props.getProperty('SHEET_ID'),
-    adminEmail: props.getProperty('ADMIN_EMAIL') || 'pdobbers@aol.com',
+    adminEmail: props.getProperty('ADMIN_EMAIL') || 'nursehealthconcierge@gmail.com',
     sheetTabName: 'Advocate Applications',
     processedLabel: 'nhc-processed',
     searchQuery: 'has:attachment filename:pdf subject:"NHC Application" -label:nhc-processed',
   };
 }
 
-// ── Main Function (triggered every 15 min) ────────────────
+// ── Main Function (run on-demand or via optional trigger) ──
 function processReturnedApplications() {
   const config = getConfig();
 
