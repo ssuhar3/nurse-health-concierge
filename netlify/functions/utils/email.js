@@ -27,7 +27,7 @@ function getTransporter() {
  * @param {string} html - HTML body content
  * @returns {Object} Send result
  */
-async function sendNotification(subject, html) {
+async function sendNotification(subject, html, attachments = []) {
   const mail = getTransporter();
 
   const result = await mail.sendMail({
@@ -35,6 +35,7 @@ async function sendNotification(subject, html) {
     to: process.env.NOTIFICATION_EMAIL || 'pdobbers@aol.com',
     subject,
     html,
+    attachments,
   });
 
   return result;

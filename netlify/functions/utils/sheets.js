@@ -1,4 +1,5 @@
 const { google } = require('googleapis');
+const { getAuth } = require('./auth');
 
 let sheetsClient = null;
 
@@ -8,14 +9,7 @@ let sheetsClient = null;
 async function getClient() {
   if (sheetsClient) return sheetsClient;
 
-  const auth = new google.auth.JWT(
-    process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    null,
-    process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    ['https://www.googleapis.com/auth/spreadsheets']
-  );
-
-  await auth.authorize();
+  const auth = await getAuth();
   sheetsClient = google.sheets({ version: 'v4', auth });
   return sheetsClient;
 }
