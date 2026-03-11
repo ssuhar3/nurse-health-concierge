@@ -62,6 +62,31 @@ function formatSection(sectionTitle, data) {
 }
 
 /**
+ * Send email to an arbitrary recipient (e.g., an applicant)
+ * @param {Object} opts
+ * @param {string} opts.to - Recipient email
+ * @param {string} opts.subject - Email subject
+ * @param {string} opts.html - HTML body
+ * @param {string} [opts.replyTo] - Reply-To address
+ * @param {Array}  [opts.attachments] - Nodemailer attachments
+ * @returns {Object} Send result
+ */
+async function sendEmail({ to, subject, html, replyTo, attachments = [] }) {
+  const mail = getTransporter();
+
+  const mailOpts = {
+    from: `"Nurse Health Concierge" <${process.env.SMTP_USER}>`,
+    to,
+    subject,
+    html,
+    attachments,
+  };
+  if (replyTo) mailOpts.replyTo = replyTo;
+
+  return mail.sendMail(mailOpts);
+}
+
+/**
  * Escape HTML entities
  */
 function escapeHtml(str) {
@@ -72,4 +97,4 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-module.exports = { sendNotification, formatSection, escapeHtml };
+module.exports = { sendNotification, sendEmail, formatSection, escapeHtml };
