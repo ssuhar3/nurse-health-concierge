@@ -607,60 +607,54 @@ legend::before { content: ''; display: block; width: 20px; height: 2px; backgrou
   }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  // Form submit — mailto
-  document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+  // Form submit — backend API
+  document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const fd = new FormData(this);
-    const name = fd.get('contactName') || 'Prospective Client';
-    const phone = fd.get('phone') || '';
-    const email = fd.get('email') || '';
-    const relationship = fd.get('relationship') || '';
-    const seniorName = fd.get('seniorName') || '';
-    const ageRange = fd.get('ageRange') || '';
-    const location = fd.get('seniorLocation') || '';
-    const living = fd.get('livingSituation') || '';
-    const contactMethod = fd.get('contactMethod') || '';
-    const story = fd.get('story') || '';
-    const referral = fd.get('referralSource') || '';
-    const timeframe = fd.get('timeframe') || '';
+    const form = this;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const btnText = submitBtn.textContent;
 
-    // Collect checked needs
-    const needs = [];
-    document.querySelectorAll('[name^="need_"]:checked').forEach(cb => {
-      needs.push(cb.closest('.checkbox-label').querySelector('span').textContent);
+    // Loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    submitBtn.style.opacity = '0.7';
+
+    // Collect form data as plain object
+    const fd = new FormData(form);
+    const data = {};
+    fd.forEach((val, key) => { data[key] = val; });
+
+    // Checkboxes need explicit boolean values
+    document.querySelectorAll('[name^="need_"]').forEach(cb => {
+      data[cb.name] = cb.checked;
     });
 
-    const subject = encodeURIComponent('Consultation Request - ' + name);
-    const body = encodeURIComponent(
-      'NEW CONSULTATION REQUEST\n' +
-      '========================\n\n' +
-      'CONTACT INFORMATION\n' +
-      'Name: ' + name + '\n' +
-      'Phone: ' + phone + '\n' +
-      'Email: ' + email + '\n' +
-      'Preferred Contact: ' + contactMethod + '\n' +
-      'Relationship to Senior: ' + relationship + '\n\n' +
-      'ABOUT THE SENIOR\n' +
-      'Name: ' + seniorName + '\n' +
-      'Age Range: ' + ageRange + '\n' +
-      'Location: ' + location + '\n' +
-      'Living Situation: ' + living + '\n\n' +
-      'HEALTH SITUATION\n' +
-      'Challenges: ' + (needs.length ? needs.join(', ') : 'None selected') + '\n\n' +
-      'THEIR STORY\n' +
-      story + '\n\n' +
-      'ADDITIONAL\n' +
-      'Referral Source: ' + referral + '\n' +
-      'Timeframe: ' + timeframe + '\n'
-    );
+    try {
+      const res = await fetch('/.netlify/functions/submit-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
 
-    window.location.href = 'mailto:pdobbers@aol.com?subject=' + subject + '&body=' + body;
+      const result = await res.json();
 
-    // Show success state
-    this.style.display = 'none';
-    document.getElementById('formSuccess').classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (res.ok && result.success) {
+        form.style.display = 'none';
+        document.getElementById('formSuccess').classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert(result.error || 'Something went wrong. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = btnText;
+        submitBtn.style.opacity = '1';
+      }
+    } catch (err) {
+      alert('Unable to submit. Please check your connection or email us at pdobbers@aol.com.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = btnText;
+      submitBtn.style.opacity = '1';
+    }
   });
 })();
 </script>

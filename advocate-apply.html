@@ -1061,9 +1061,9 @@ legend::before { content: ''; display: block; width: 20px; height: 2px; backgrou
           <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           Print / Save as PDF
         </button>
-        <button type="button" class="btn-gold" onclick="emailApplication()">
-          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Email Application
+        <button type="button" class="btn-gold" id="btnSubmitApp" onclick="submitApplication()">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Submit Application
         </button>
       </div>
     </div>
@@ -1304,12 +1304,65 @@ legend::before { content: ''; display: block; width: 20px; height: 2px; backgrou
     window.print();
   };
 
-  // ── Email ──
-  window.emailApplication = function() {
-    const name = document.querySelector('[name="fullName"]')?.value || 'Applicant';
-    const subject = encodeURIComponent('Health Advocate Application - ' + name);
-    const body = encodeURIComponent('Please find my Health Advocate Application attached.\n\nApplicant: ' + name + '\n\nNote: Please print/save as PDF first, then attach the PDF to this email.');
-    window.location.href = 'mailto:pdobbers@aol.com?subject=' + subject + '&body=' + body;
+  // ── Submit to backend ──
+  window.submitApplication = async function() {
+    const btn = document.getElementById('btnSubmitApp');
+    const btnText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span>Submitting...</span>';
+    btn.style.opacity = '0.7';
+
+    // Collect all form data
+    const data = { ratings };
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+      if (!el.name) return;
+      if (el.type === 'checkbox') data[el.name] = el.checked;
+      else if (el.type === 'radio') {
+        if (el.checked) data[el.name] = el.value;
+      } else data[el.name] = el.value;
+    });
+
+    try {
+      const res = await fetch('/.netlify/functions/submit-application', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        // Clear saved draft
+        try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+
+        // Show success message
+        document.querySelector('.wizard-card').innerHTML = `
+          <div style="text-align:center;padding:60px 24px">
+            <div style="width:72px;height:72px;background:#c9972f;border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center">
+              <svg viewBox="0 0 24 24" width="36" height="36" stroke="white" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h2 style="color:var(--navy);margin-bottom:12px">Application Submitted!</h2>
+            <p style="color:#4a5568;max-width:480px;margin:0 auto 24px;line-height:1.7">
+              Thank you for your interest in joining the Nurse Health Concierge team.
+              We will review your application and be in touch soon.
+            </p>
+            <a href="index.html" class="btn-primary" style="text-decoration:none">Return Home</a>
+          </div>
+        `;
+        document.querySelector('.wizard-nav').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert(result.error || 'Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.innerHTML = btnText;
+        btn.style.opacity = '1';
+      }
+    } catch (err) {
+      alert('Unable to submit. Please check your connection or email us at pdobbers@aol.com.');
+      btn.disabled = false;
+      btn.innerHTML = btnText;
+      btn.style.opacity = '1';
+    }
   };
 
   // ── Auto-save to localStorage ──
