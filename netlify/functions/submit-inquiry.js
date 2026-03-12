@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { appendRow } = require('./utils/sheets');
 const { sendNotification, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
@@ -40,7 +41,7 @@ exports.handler = async (event) => {
 
     const timestamp = new Date().toISOString();
 
-    // --- Google Sheet ---
+    // --- Google Sheet --- (17 columns: 14 original + Status + Notes + Record ID)
     const sheetRow = [
       timestamp,
       data.contactName,
@@ -56,6 +57,9 @@ exports.handler = async (event) => {
       data.story || '',
       data.referralSource || '',
       data.timeframe || '',
+      'New', // Status
+      '', // Internal Notes
+      crypto.randomUUID(), // Record ID
     ];
 
     await appendRow('Client Inquiries', sheetRow);

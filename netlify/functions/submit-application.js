@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { appendRow } = require('./utils/sheets');
 const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
@@ -53,7 +54,7 @@ exports.handler = async (event) => {
     // ── Step 3: Sheet + emails in parallel ────────────
     const address = [data.address, data.city, data.state, data.zip].filter(Boolean).join(', ');
 
-    // Sheet row — 15 columns
+    // Sheet row — 17 columns (15 original + Notes + Record ID)
     const sheetRow = [
       timestamp,
       data.fullName,
@@ -70,6 +71,8 @@ exports.handler = async (event) => {
       summaryUpload.webViewLink,
       packetUpload.webViewLink,
       'Packet Sent',
+      '', // Internal Notes
+      crypto.randomUUID(), // Record ID
     ];
 
     // Admin notification email

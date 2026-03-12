@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard — Nurse Health Concierge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/dashboard/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Mobile toggle -->
+<button class="mobile-toggle" id="mobileToggle">&#9776;</button>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <img src="/images/nhc-logo.svg" alt="NHC">
+    <span>Dashboard</span>
+  </div>
+  <ul class="sidebar-nav">
+    <li><a href="#overview" class="active" data-view="overview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Overview
+    </a></li>
+    <li><a href="#applicants" data-view="applicants">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Applicants
+    </a></li>
+    <li><a href="#inquiries" data-view="inquiries">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Inquiries
+    </a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <button class="btn-logout" id="logoutBtn">Sign Out</button>
+  </div>
+</aside>
+
+<!-- Main content -->
+<main class="main">
+  <!-- Overview -->
+  <div class="view active" id="view-overview">
+    <div class="main-header"><h1>Overview</h1></div>
+    <div class="metrics" id="metricsGrid"></div>
+    <div class="charts-grid" id="chartsGrid">
+      <div class="chart-card"><h3>Application Status</h3><canvas id="chartAppStatus"></canvas></div>
+      <div class="chart-card"><h3>Monthly Trends</h3><canvas id="chartMonthly"></canvas></div>
+    </div>
+    <div class="activity-list" id="recentActivity">
+      <h3>Recent Activity</h3>
+      <div id="activityItems"></div>
+    </div>
+  </div>
+
+  <!-- Applicants -->
+  <div class="view" id="view-applicants">
+    <div class="main-header"><h1>Applicants</h1></div>
+    <div class="table-controls">
+      <input type="text" class="search-input" id="appSearch" placeholder="Search by name, email, or title...">
+      <select class="filter-select" id="appFilter"><option value="">All Statuses</option></select>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table" id="appTable">
+        <thead><tr>
+          <th data-sort="1">Name</th>
+          <th data-sort="2">Email</th>
+          <th data-sort="8">Title</th>
+          <th data-sort="0">Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr></thead>
+        <tbody id="appTableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="appPagination"></div>
+  </div>
+
+  <!-- Inquiries -->
+  <div class="view" id="view-inquiries">
+    <div class="main-header"><h1>Client Inquiries</h1></div>
+    <div class="table-controls">
+      <input type="text" class="search-input" id="inqSearch" placeholder="Search by name, phone, or email...">
+      <select class="filter-select" id="inqFilter"><option value="">All Statuses</option></select>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table" id="inqTable">
+        <thead><tr>
+          <th data-sort="1">Contact Name</th>
+          <th data-sort="2">Relationship</th>
+          <th data-sort="4">Email</th>
+          <th data-sort="0">Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr></thead>
+        <tbody id="inqTableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="inqPagination"></div>
+  </div>
+</main>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Record Details</h2>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script src="/dashboard/app.js"></script>
+</body>
+</html>
