@@ -192,11 +192,7 @@ exports.handler = async (event) => {
 
   } catch (err) {
     console.error('dashboard-data error:', err);
-    return authResponse(event, 500, {
-      error: 'Internal server error',
-      debug: err.message,
-      stack: err.stack?.split('\n').slice(0, 3).join(' | '),
-    });
+    return authResponse(event, 500, { error: 'Internal server error' });
   }
 };
 
