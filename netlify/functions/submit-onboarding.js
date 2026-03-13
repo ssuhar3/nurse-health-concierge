@@ -4,7 +4,8 @@ const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
 const { generateOnboardingSummaryPdf } = require('./utils/client-summary-pdf');
 const { generateClientPacket } = require('./utils/client-packet-pdf');
-const { uploadPdf } = require('./utils/drive');
+// Drive upload disabled — service accounts lack storage quota on free Gmail
+// PDFs are delivered as email attachments instead
 
 const REQUIRED_FIELDS = [
   'clientName', 'dob', 'phone', 'email',
@@ -58,14 +59,9 @@ exports.handler = async (event) => {
       generateClientPacket(data),
     ]);
 
-    // ── Step 2: Upload both to Drive in parallel ──────
+    // ── Step 2: File names for email attachments ──────
     const summaryFileName = `Onboarding_Summary_${safeName}_${Date.now()}.pdf`;
     const packetFileName = `NHC_Client_Packet_${safeName}.pdf`;
-
-    const [summaryUpload, packetUpload] = await Promise.all([
-      uploadPdf(summaryFileName, summaryPdf),
-      uploadPdf(packetFileName, packetPdf),
-    ]);
 
     // ── Step 3: Sheet + emails in parallel ────────────
     const address = [data.address, data.city, data.state, data.zip].filter(Boolean).join(', ');
@@ -98,8 +94,8 @@ exports.handler = async (event) => {
       data.pharmacy || '',                    // X: Pharmacy
       careNeeds.join(', '),                   // Y: Care Needs
       careGoals,                              // Z: Care Goals
-      summaryUpload.webViewLink,              // AA: Summary PDF Link
-      packetUpload.webViewLink,               // AB: Agreement Packet Link
+      'Emailed to admin',                      // AA: Summary PDF Link
+      'Emailed to client',                    // AB: Agreement Packet Link
       'New',                                  // AC: Status
       '',                                     // AD: Internal Notes
       crypto.randomUUID(),                    // AE: Record ID
@@ -138,15 +134,10 @@ exports.handler = async (event) => {
             'Goals': careGoals,
           }) : ''}
           <p style="margin-top:20px;font-size:14px">
-            <strong>Summary PDF:</strong>
-            <a href="${summaryUpload.webViewLink}" style="color:#1a365d">View in Drive</a>
+            <strong>Summary PDF:</strong> Attached to this email
           </p>
           <p style="font-size:14px">
-            <strong>Agreement Packet:</strong>
-            <a href="${packetUpload.webViewLink}" style="color:#1a365d">View in Drive</a>
-          </p>
-          <p style="font-size:13px;color:#666;margin-top:16px">
-            A fillable agreement packet has been emailed to the client at ${data.email}.
+            <strong>Agreement Packet:</strong> Emailed to client at ${data.email}
           </p>
         </div>
       </div>
@@ -217,7 +208,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error('submit-onboarding error:', err);
     return respond(500, {
-      error: `Debug: ${err.message || 'Unknown error'}`,
+      error: 'Something went wrong. Please try again or contact us directly.',
     });
   }
 };
