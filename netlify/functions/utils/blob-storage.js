@@ -3,13 +3,25 @@ const { getStore } = require('@netlify/blobs');
 const STORE_NAME = 'client-packets';
 
 /**
+ * Get a Netlify Blobs store configured for the current environment
+ */
+function getConfiguredStore() {
+  return getStore({
+    name: STORE_NAME,
+    siteID: process.env.SITE_ID || process.env.NETLIFY_SITE_ID,
+    token: process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_TOKEN,
+    consistency: 'strong',
+  });
+}
+
+/**
  * Upload a PDF to Netlify Blobs
  * @param {string} fileName - Name/key for the file
  * @param {Buffer} pdfBuffer - PDF content as a Buffer
  * @returns {{ key: string, url: string }}
  */
 async function uploadPdfToBlobs(fileName, pdfBuffer) {
-  const store = getStore({ name: STORE_NAME, consistency: 'strong' });
+  const store = getConfiguredStore();
 
   await store.set(fileName, pdfBuffer, {
     metadata: {
@@ -31,7 +43,7 @@ async function uploadPdfToBlobs(fileName, pdfBuffer) {
  * @returns {Buffer|null}
  */
 async function getPdfFromBlobs(key) {
-  const store = getStore({ name: STORE_NAME, consistency: 'strong' });
+  const store = getConfiguredStore();
   const data = await store.get(key, { type: 'arrayBuffer' });
   if (!data) return null;
   return Buffer.from(data);
