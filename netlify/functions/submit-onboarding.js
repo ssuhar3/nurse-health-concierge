@@ -4,8 +4,7 @@ const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
 const { generateOnboardingSummaryPdf } = require('./utils/client-summary-pdf');
 const { generateClientPacket } = require('./utils/client-packet-pdf');
-// Drive upload disabled — service accounts lack storage quota on free Gmail
-// PDFs are delivered as email attachments instead
+const { uploadPdfToBlobs } = require('./utils/blob-storage');
 
 const REQUIRED_FIELDS = [
   'clientName', 'dob', 'phone', 'email',
@@ -59,9 +58,14 @@ exports.handler = async (event) => {
       generateClientPacket(data),
     ]);
 
-    // ── Step 2: File names for email attachments ──────
+    // ── Step 2: Store PDFs in Netlify Blobs + set file names ──
     const summaryFileName = `Onboarding_Summary_${safeName}_${Date.now()}.pdf`;
-    const packetFileName = `NHC_Client_Packet_${safeName}.pdf`;
+    const packetFileName = `NHC_Client_Packet_${safeName}_${Date.now()}.pdf`;
+
+    const [summaryBlob, packetBlob] = await Promise.all([
+      uploadPdfToBlobs(summaryFileName, summaryPdf),
+      uploadPdfToBlobs(packetFileName, packetPdf),
+    ]);
 
     // ── Step 3: Sheet + emails in parallel ────────────
     const address = [data.address, data.city, data.state, data.zip].filter(Boolean).join(', ');
@@ -94,8 +98,8 @@ exports.handler = async (event) => {
       data.pharmacy || '',                    // X: Pharmacy
       careNeeds.join(', '),                   // Y: Care Needs
       careGoals,                              // Z: Care Goals
-      'Emailed to admin',                      // AA: Summary PDF Link
-      'Emailed to client',                    // AB: Agreement Packet Link
+      summaryBlob.url,                          // AA: Summary PDF Link
+      packetBlob.url,                           // AB: Agreement Packet Link
       'New',                                  // AC: Status
       '',                                     // AD: Internal Notes
       crypto.randomUUID(),                    // AE: Record ID
@@ -134,10 +138,12 @@ exports.handler = async (event) => {
             'Goals': careGoals,
           }) : ''}
           <p style="margin-top:20px;font-size:14px">
-            <strong>Summary PDF:</strong> Attached to this email
+            <strong>Summary PDF:</strong>
+            <a href="${summaryBlob.url}" style="color:#1a365d">View Online</a> (also attached)
           </p>
           <p style="font-size:14px">
-            <strong>Agreement Packet:</strong> Emailed to client at ${data.email}
+            <strong>Agreement Packet:</strong>
+            <a href="${packetBlob.url}" style="color:#1a365d">View Online</a> (emailed to client)
           </p>
         </div>
       </div>
