@@ -18,6 +18,13 @@ const TABS = {
     idCol: 16,
     statuses: ['New', 'Contacted', 'Under Review', 'Consultation Scheduled', 'Converted', 'Closed', 'Active Client'],
   },
+  clients: {
+    sheetName: 'Client Onboarding',
+    statusCol: 28,
+    notesCol: 29,
+    idCol: 30,
+    statuses: ['New', 'Documents Sent', 'Documents Received', 'Under Review', 'Active', 'Inactive'],
+  },
 };
 
 function authResponse(event, statusCode, body) {
@@ -77,9 +84,10 @@ exports.handler = async (event) => {
 
     // ── Stats for overview ────────────────────────
     if (action === 'stats' && event.httpMethod === 'GET') {
-      const [apps, inqs] = await Promise.all([
+      const [apps, inqs, clients] = await Promise.all([
         getRows(TABS.applications.sheetName),
         getRows(TABS.inquiries.sheetName),
+        getRows(TABS.clients.sheetName).catch(() => ({ headers: [], rows: [] })),
       ]);
 
       const now = new Date();
@@ -107,12 +115,24 @@ exports.handler = async (event) => {
         if (ts.startsWith(thisMonth)) inqsThisMonth++;
       });
 
+      // Client stats
+      const clientStatusCounts = {};
+      TABS.clients.statuses.forEach(s => { clientStatusCounts[s] = 0; });
+      let clientsThisMonth = 0;
+
+      clients.rows.forEach(row => {
+        const status = row[TABS.clients.statusCol] || 'New';
+        clientStatusCounts[status] = (clientStatusCounts[status] || 0) + 1;
+        const ts = row[0] || '';
+        if (ts.startsWith(thisMonth)) clientsThisMonth++;
+      });
+
       // Monthly trend (last 6 months)
       const monthly = {};
       for (let i = 5; i >= 0; i--) {
         const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
         const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-        monthly[key] = { applications: 0, inquiries: 0 };
+        monthly[key] = { applications: 0, inquiries: 0, clients: 0 };
       }
       apps.rows.forEach(row => {
         const m = (row[0] || '').substring(0, 7);
@@ -122,14 +142,20 @@ exports.handler = async (event) => {
         const m = (row[0] || '').substring(0, 7);
         if (monthly[m]) monthly[m].inquiries++;
       });
+      clients.rows.forEach(row => {
+        const m = (row[0] || '').substring(0, 7);
+        if (monthly[m]) monthly[m].clients++;
+      });
 
       // Pending review count
       const pendingReview = (appStatusCounts['Packet Received'] || 0)
         + (appStatusCounts['Under Review'] || 0)
         + (inqStatusCounts['New'] || 0)
-        + (inqStatusCounts['Contacted'] || 0);
+        + (inqStatusCounts['Contacted'] || 0)
+        + (clientStatusCounts['New'] || 0)
+        + (clientStatusCounts['Documents Received'] || 0);
 
-      // Recent activity (last 10 from both tabs combined)
+      // Recent activity (last 10 from all tabs combined)
       const recent = [];
       apps.rows.slice(-10).forEach(row => {
         recent.push({ type: 'application', name: row[1] || '', date: row[0] || '', status: row[TABS.applications.statusCol] || '' });
@@ -137,16 +163,22 @@ exports.handler = async (event) => {
       inqs.rows.slice(-10).forEach(row => {
         recent.push({ type: 'inquiry', name: row[1] || '', date: row[0] || '', status: row[TABS.inquiries.statusCol] || '' });
       });
+      clients.rows.slice(-10).forEach(row => {
+        recent.push({ type: 'client', name: row[1] || '', date: row[0] || '', status: row[TABS.clients.statusCol] || '' });
+      });
       recent.sort((a, b) => b.date.localeCompare(a.date));
 
       return authResponse(event, 200, {
         totalApplications: apps.rows.length,
         totalInquiries: inqs.rows.length,
+        totalClients: clients.rows.length,
         appsThisMonth,
         inqsThisMonth,
+        clientsThisMonth,
         pendingReview,
         appStatusCounts,
         inqStatusCounts,
+        clientStatusCounts,
         monthly,
         recent: recent.slice(0, 10),
       });

@@ -48,7 +48,7 @@ async function getRows(tabName) {
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId,
-    range: `${tabName}!A:Z`,
+    range: `${tabName}!A:AZ`,
   });
 
   const allRows = response.data.values || [];

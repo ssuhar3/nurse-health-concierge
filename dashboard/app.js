@@ -11,6 +11,7 @@ const API = {
   },
   listApplications() { return this.request('/.netlify/functions/dashboard-data?action=list&tab=applications'); },
   listInquiries()    { return this.request('/.netlify/functions/dashboard-data?action=list&tab=inquiries'); },
+  listClients()      { return this.request('/.netlify/functions/dashboard-data?action=list&tab=clients'); },
   getStats()         { return this.request('/.netlify/functions/dashboard-data?action=stats'); },
   updateStatus(tab, id, status) {
     return this.request('/.netlify/functions/dashboard-data?action=updateStatus', {
@@ -42,11 +43,13 @@ const API = {
 // ─── State ──────────────────────────────────────────────
 let appData = null;
 let inqData = null;
+let clientData = null;
 let emailTemplates = [];
-let appPage = 1, inqPage = 1;
+let appPage = 1, inqPage = 1, clientPage = 1;
 const PER_PAGE = 25;
 let appSortCol = 0, appSortDir = -1; // default: newest first
 let inqSortCol = 0, inqSortDir = -1;
+let clientSortCol = 0, clientSortDir = -1;
 let chartInstances = {};
 
 // ─── Init ───────────────────────────────────────────────
@@ -90,6 +93,7 @@ function showView(name) {
   if (name === 'overview') loadOverview();
   if (name === 'applicants') loadApplicants();
   if (name === 'inquiries') loadInquiries();
+  if (name === 'clients') loadClients();
 }
 
 // ─── Logout ─────────────────────────────────────────────
@@ -134,12 +138,13 @@ async function loadOverview() {
   document.getElementById('metricsGrid').innerHTML = `
     <div class="metric-card"><div class="label">Total Applications</div><div class="value">${stats.totalApplications}</div><div class="sub">${stats.appsThisMonth} this month</div></div>
     <div class="metric-card"><div class="label">Total Inquiries</div><div class="value">${stats.totalInquiries}</div><div class="sub">${stats.inqsThisMonth} this month</div></div>
+    <div class="metric-card"><div class="label">Total Clients</div><div class="value">${stats.totalClients || 0}</div><div class="sub">${stats.clientsThisMonth || 0} this month</div></div>
     <div class="metric-card"><div class="label">Pending Review</div><div class="value">${stats.pendingReview}</div><div class="sub">Needs attention</div></div>
-    <div class="metric-card"><div class="label">This Month</div><div class="value">${stats.appsThisMonth + stats.inqsThisMonth}</div><div class="sub">Total submissions</div></div>
   `;
 
   // Charts
   renderStatusChart(stats);
+  renderClientStatusChart(stats);
   renderMonthlyChart(stats);
 
   // Recent activity
@@ -169,6 +174,23 @@ function renderStatusChart(stats) {
   });
 }
 
+function renderClientStatusChart(stats) {
+  const ctx = document.getElementById('chartClientStatus');
+  if (!ctx) return;
+  if (chartInstances.clientStatus) chartInstances.clientStatus.destroy();
+
+  const counts = stats.clientStatusCounts || {};
+  const labels = Object.keys(counts);
+  const data = Object.values(counts);
+  const colors = ['#276B6B', '#3D7AB5', '#C9A54E', '#E65100', '#2E7D32', '#8A8E9C'];
+
+  chartInstances.clientStatus = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors.slice(0, labels.length), borderWidth: 0 }] },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } } } },
+  });
+}
+
 function renderMonthlyChart(stats) {
   const ctx = document.getElementById('chartMonthly');
   if (chartInstances.monthly) chartInstances.monthly.destroy();
@@ -179,6 +201,7 @@ function renderMonthlyChart(stats) {
   });
   const appValues = Object.values(stats.monthly).map(v => v.applications);
   const inqValues = Object.values(stats.monthly).map(v => v.inquiries);
+  const clientValues = Object.values(stats.monthly).map(v => v.clients || 0);
 
   chartInstances.monthly = new Chart(ctx, {
     type: 'line',
@@ -187,6 +210,7 @@ function renderMonthlyChart(stats) {
       datasets: [
         { label: 'Applications', data: appValues, borderColor: '#3D7AB5', backgroundColor: 'rgba(61,122,181,0.1)', fill: true, tension: 0.3 },
         { label: 'Inquiries', data: inqValues, borderColor: '#C9A54E', backgroundColor: 'rgba(201,165,78,0.1)', fill: true, tension: 0.3 },
+        { label: 'Clients', data: clientValues, borderColor: '#276B6B', backgroundColor: 'rgba(39,107,107,0.1)', fill: true, tension: 0.3 },
       ],
     },
     options: {
@@ -381,9 +405,97 @@ function renderInqTable() {
   `;
 }
 
+// ─── Clients Table ─────────────────────────────────────
+async function loadClients() {
+  if (!clientData) {
+    document.getElementById('clientTableBody').innerHTML = '<tr><td colspan="6" class="loading">Loading...</td></tr>';
+    clientData = await API.listClients();
+    if (!clientData) return;
+
+    const filter = document.getElementById('clientFilter');
+    filter.innerHTML = '<option value="">All Statuses</option>';
+    (clientData.statuses || []).forEach(s => {
+      filter.innerHTML += `<option value="${esc(s)}">${esc(s)}</option>`;
+    });
+
+    document.getElementById('clientSearch').addEventListener('input', () => { clientPage = 1; renderClientTable(); });
+    filter.addEventListener('change', () => { clientPage = 1; renderClientTable(); });
+
+    document.querySelectorAll('#clientTable thead th[data-sort]').forEach(th => {
+      th.addEventListener('click', () => {
+        const col = parseInt(th.dataset.sort);
+        if (clientSortCol === col) { clientSortDir *= -1; } else { clientSortCol = col; clientSortDir = 1; }
+        renderClientTable();
+      });
+    });
+  }
+  renderClientTable();
+}
+
+function renderClientTable() {
+  let records = [...(clientData.records || [])];
+  const search = document.getElementById('clientSearch').value.toLowerCase();
+  const statusFilter = document.getElementById('clientFilter').value;
+
+  if (search) {
+    records = records.filter(r =>
+      (r['Client Name'] || '').toLowerCase().includes(search) ||
+      (r['Email'] || '').toLowerCase().includes(search) ||
+      (r['Phone'] || '').toLowerCase().includes(search)
+    );
+  }
+  if (statusFilter) {
+    records = records.filter(r => (r['Status'] || '') === statusFilter);
+  }
+
+  const headers = clientData.headers;
+  records.sort((a, b) => {
+    const aVal = (a[headers[clientSortCol]] || '').toLowerCase();
+    const bVal = (b[headers[clientSortCol]] || '').toLowerCase();
+    return aVal < bVal ? -clientSortDir : aVal > bVal ? clientSortDir : 0;
+  });
+
+  const totalPages = Math.max(1, Math.ceil(records.length / PER_PAGE));
+  if (clientPage > totalPages) clientPage = totalPages;
+  const start = (clientPage - 1) * PER_PAGE;
+  const pageRecords = records.slice(start, start + PER_PAGE);
+
+  const tbody = document.getElementById('clientTableBody');
+  if (pageRecords.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="loading">No records found</td></tr>';
+  } else {
+    tbody.innerHTML = pageRecords.map(r => `
+      <tr data-id="${esc(r._id)}" data-tab="clients">
+        <td>${esc(r['Client Name'] || '')}</td>
+        <td>${esc(r['Email'] || '')}</td>
+        <td>${esc(r['Phone'] || '')}</td>
+        <td>${formatDate(r['Timestamp'] || '')}</td>
+        <td><span class="status-badge" data-status="${esc(r['Status'] || '')}">${esc(r['Status'] || '')}</span></td>
+        <td><button class="btn btn-sm btn-outline btn-detail">View</button></td>
+      </tr>
+    `).join('');
+
+    tbody.querySelectorAll('.btn-detail').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const tr = btn.closest('tr');
+        const id = tr.dataset.id;
+        const rec = clientData.records.find(r => r._id === id);
+        if (rec) openDetailModal('clients', rec, clientData.statuses);
+      });
+    });
+  }
+
+  document.getElementById('clientPagination').innerHTML = `
+    <button ${clientPage <= 1 ? 'disabled' : ''} onclick="clientPage--;renderClientTable()">Prev</button>
+    <span>Page ${clientPage} of ${totalPages} (${records.length} records)</span>
+    <button ${clientPage >= totalPages ? 'disabled' : ''} onclick="clientPage++;renderClientTable()">Next</button>
+  `;
+}
+
 // ─── Detail Modal ───────────────────────────────────────
 async function openDetailModal(tab, record, statuses) {
-  const name = record['Full Name'] || record['Contact Name'] || 'Record';
+  const name = record['Full Name'] || record['Client Name'] || record['Contact Name'] || 'Record';
   const email = record['Email'] || '';
   const id = record._id;
   const currentStatus = record['Status'] || '';
@@ -461,7 +573,9 @@ async function openDetailModal(tab, record, statuses) {
     if (res?.success) {
       record['Status'] = newStatus;
       // Refresh table
-      if (tab === 'applications') renderAppTable(); else renderInqTable();
+      if (tab === 'applications') renderAppTable();
+      else if (tab === 'inquiries') renderInqTable();
+      else if (tab === 'clients') renderClientTable();
       btn.textContent = 'Saved!';
       setTimeout(() => { btn.textContent = 'Save'; btn.disabled = false; }, 1500);
     } else {

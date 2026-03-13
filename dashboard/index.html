@@ -34,6 +34,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       Inquiries
     </a></li>
+    <li><a href="#clients" data-view="clients">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Clients
+    </a></li>
   </ul>
   <div class="sidebar-footer">
     <button class="btn-logout" id="logoutBtn">Sign Out</button>
@@ -48,7 +52,8 @@
     <div class="metrics" id="metricsGrid"></div>
     <div class="charts-grid" id="chartsGrid">
       <div class="chart-card"><h3>Application Status</h3><canvas id="chartAppStatus"></canvas></div>
-      <div class="chart-card"><h3>Monthly Trends</h3><canvas id="chartMonthly"></canvas></div>
+      <div class="chart-card"><h3>Client Status</h3><canvas id="chartClientStatus"></canvas></div>
+      <div class="chart-card" style="grid-column:1/-1"><h3>Monthly Trends</h3><canvas id="chartMonthly"></canvas></div>
     </div>
     <div class="activity-list" id="recentActivity">
       <h3>Recent Activity</h3>
@@ -100,6 +105,29 @@
       </table>
     </div>
     <div class="pagination" id="inqPagination"></div>
+  </div>
+
+  <!-- Clients -->
+  <div class="view" id="view-clients">
+    <div class="main-header"><h1>Clients</h1></div>
+    <div class="table-controls">
+      <input type="text" class="search-input" id="clientSearch" placeholder="Search by name, email, or phone...">
+      <select class="filter-select" id="clientFilter"><option value="">All Statuses</option></select>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table" id="clientTable">
+        <thead><tr>
+          <th data-sort="1">Client Name</th>
+          <th data-sort="8">Email</th>
+          <th data-sort="7">Phone</th>
+          <th data-sort="0">Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr></thead>
+        <tbody id="clientTableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="clientPagination"></div>
   </div>
 </main>
 

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Onboarding — Nurse Health Concierge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:       #0B1D3A;
+  --navy-2:     #0F2444;
+  --navy-3:     #16304F;
+  --blue:       #3D7AB5;
+  --blue-lt:    #6BA3D6;
+  --blue-pale:  #A8CCE8;
+  --blue-bg:    #E8F1F8;
+  --gold:       #C9A54E;
+  --gold-lt:    #D4B76A;
+  --gold-pale:  #F5EDDA;
+  --teal:       #276B6B;
+  --teal-lt:    #E4F0F0;
+  --cream:      #F7F5F1;
+  --warm-white: #FDFBF8;
+  --text:       #1A1E2C;
+  --text-mid:   #4A4E5C;
+  --text-lt:    #8A8E9C;
+  --border:     rgba(11,29,58,0.08);
+  --gold-border:rgba(201,165,78,0.28);
+  --blue-border:rgba(61,122,181,0.18);
+  --radius:     6px;
+  --radius-lg:  12px;
+  --shadow-sm:  0 2px 12px rgba(11,29,58,0.05);
+  --shadow-md:  0 8px 32px rgba(11,29,58,0.08);
+  --shadow-lg:  0 20px 60px rgba(11,29,58,0.12);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--warm-white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* ─── LOGO ────────────────────────────────────────────── */
+.nav-logo-img { height: 40px; width: auto; }
+.footer-logo-img { height: 48px; width: auto; }
+
+/* ─── NAV ─────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 72px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 60px;
+  background: rgba(11,29,58,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+nav.scrolled { background: rgba(11,29,58,0.97); box-shadow: 0 4px 20px rgba(0,0,0,0.15); height: 64px; }
+.nav-brand { display: flex; align-items: center; gap: 12px; }
+.nav-brand .nav-logo-img { height: 48px; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55); transition: color 0.3s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -6px; left: 0; right: 0; height: 2px;
+  background: var(--blue); transform: scaleX(0); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  transform-origin: left; border-radius: 1px;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after { background: var(--gold); transform: scaleX(1); }
+.nav-cta {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  color: #fff !important; background: var(--blue); padding: 10px 24px; border-radius: var(--radius);
+  transition: all 0.3s !important;
+}
+.nav-cta:hover { background: var(--blue-lt); transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; z-index: 200; }
+.nav-hamburger span { width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+
+/* ─── BUTTONS ─────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--blue); color: #fff; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; padding: 16px 36px;
+  border-radius: var(--radius); border: none; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 4px 16px rgba(61,122,181,0.3);
+}
+.btn-primary:hover { background: var(--blue-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(61,122,181,0.35); }
+.btn-primary:disabled { opacity: 0.5; pointer-events: none; }
+
+/* ─── HERO ────────────────────────────────────────────── */
+.onboard-hero {
+  padding: 140px 60px 80px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+  text-align: center; color: #fff;
+}
+.onboard-hero-inner { max-width: 680px; margin: 0 auto; }
+.onboard-hero-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+.onboard-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; line-height: 1.2; margin-bottom: 16px; }
+.onboard-hero em { font-style: italic; color: var(--blue-pale); }
+.onboard-hero-rule { width: 48px; height: 3px; background: var(--gold); margin: 0 auto 20px; border-radius: 2px; }
+.onboard-hero p { font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,0.7); max-width: 540px; margin: 0 auto; }
+
+/* ─── FORM CONTAINER ──────────────────────────────────── */
+.form-wrapper {
+  max-width: 760px;
+  margin: -40px auto 80px;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+.form-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 48px 44px;
+  border: 1px solid var(--border);
+}
+.form-card fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 36px;
+}
+.form-card fieldset:last-of-type {
+  margin-bottom: 24px;
+}
+.form-card legend {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--gold);
+  width: 100%;
+  display: block;
+}
+
+/* ─── FORM FIELDS ─────────────────────────────────────── */
+.form-group {
+  margin-bottom: 18px;
+}
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.form-group label .required {
+  color: #c53030;
+  margin-left: 2px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(61,122,181,0.12);
+  background: #fff;
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234A4E5C' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+/* Grid rows */
+.form-row { display: grid; gap: 16px; }
+.cols-2 { grid-template-columns: 1fr 1fr; }
+.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+/* ─── CHECKBOXES ──────────────────────────────────────── */
+.checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+.checkbox-label {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  font-size: 13px; color: var(--text-mid); font-weight: 400;
+  padding: 10px 14px; border-radius: var(--radius); border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.checkbox-label:hover { border-color: var(--blue-border); background: var(--blue-bg); }
+.checkbox-label input[type="checkbox"] {
+  width: 16px; height: 16px; accent-color: var(--blue); cursor: pointer; flex-shrink: 0;
+}
+
+/* ─── SECTION NOTE ───────────────────────────────────── */
+.section-note {
+  font-size: 13px; color: var(--text-lt); line-height: 1.6;
+  margin-bottom: 16px; font-style: italic;
+}
+
+/* ─── SUBMIT AREA ─────────────────────────────────────── */
+.form-submit {
+  text-align: center;
+  padding-top: 12px;
+}
+.form-submit .btn-primary {
+  width: 100%;
+  max-width: 340px;
+  justify-content: center;
+  font-size: 12px;
+  padding: 18px 36px;
+}
+
+/* ─── LOADING SPINNER ─────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── SUCCESS STATE ───────────────────────────────────── */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 60px 24px;
+}
+.form-success.visible { display: block; }
+.form-success .success-icon {
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, var(--teal), var(--blue));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+}
+.form-success .success-icon svg { width: 36px; height: 36px; stroke: #fff; fill: none; stroke-width: 2.5; }
+.form-success h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; color: var(--navy); margin-bottom: 12px;
+}
+.form-success p { font-size: 1.05rem; color: var(--text-mid); line-height: 1.7; max-width: 480px; margin: 0 auto; }
+
+/* ─── ERROR STATE ─────────────────────────────────────── */
+.form-error {
+  display: none;
+  background: #FFF5F5;
+  border: 1px solid #FEB2B2;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  color: #C53030;
+  font-size: 0.9rem;
+}
+.form-error.visible { display: block; }
+
+/* ─── FOOTER ──────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  padding: 48px 60px;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+}
+.footer-links {
+  display: flex; gap: 32px; list-style: none; flex-wrap: wrap; justify-content: center;
+}
+.footer-links a {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-text { font-size: 12px; }
+
+/* ─── REVEAL ANIMATION ────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ─── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links {
+    display: none; flex-direction: column; gap: 0;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--navy); padding: 100px 40px 40px;
+    z-index: 150;
+  }
+  .nav-links.mobile-open { display: flex; }
+  .nav-links li { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nav-links a { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .nav-cta { display: inline-block; margin-top: 16px; text-align: center; }
+  .nav-hamburger { display: flex; }
+  .onboard-hero { padding: 120px 24px 60px; }
+  .form-card { padding: 32px 24px; }
+  .cols-2, .cols-3 { grid-template-columns: 1fr; }
+  .checkbox-grid { grid-template-columns: 1fr; }
+  footer { padding: 36px 24px; }
+  .footer-links { gap: 20px; }
+}
+
+/* ─── PRINT ───────────────────────────────────────────── */
+@media print {
+  nav, footer { display: none !important; }
+  .onboard-hero { padding: 24px 0; background: #fff; }
+  .onboard-hero h1 { color: var(--navy); font-size: 24px; }
+  .onboard-hero h1 em { color: var(--blue); }
+  .onboard-hero p, .onboard-hero-eyebrow { display: none; }
+  .form-card { box-shadow: none; border: 1px solid #ccc; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">
+    <img src="images/nhc-logo.svg" alt="Nurse Health Concierge" class="nav-logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#advocacy">Advocacy</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#founder">Our Founder</a></li>
+    <li><a href="index.html#mission">Mission</a></li>
+    <li><a href="advocate-apply.html">Join Our Team</a></li>
+    <li><a href="client-inquiry.html">Consultation</a></li>
+    <li><a href="client-onboarding.html" class="active">Client Onboarding</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="onboard-hero">
+  <div class="onboard-hero-inner">
+    <p class="onboard-hero-eyebrow">Welcome to Our Family</p>
+    <h1>Client<br><em>Onboarding</em></h1>
+    <div class="onboard-hero-rule"></div>
+    <p>Complete the intake form below to begin your journey with Nurse Health Concierge. We'll send you a personalized agreement packet to review and sign.</p>
+  </div>
+</section>
+
+<!-- ONBOARDING FORM -->
+<div class="form-wrapper">
+  <div class="form-card reveal">
+
+    <div id="formError" class="form-error"></div>
+
+    <form id="onboardingForm" novalidate>
+
+      <!-- CLIENT INFORMATION -->
+      <fieldset>
+        <legend>Client Information</legend>
+        <div class="form-row cols-2">
+          <div class="form-group">
+            <label>Full Name <span class="required">*</span></label>
+            <input type="text" name="clientName" required placeholder="First and last name">
+          </div>
+          <div class="form-group">
+            <label>Date of Birth <span class="required">*</span></label>
+            <input type="date" name="dob" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Street Address</label>
+          <input type="text" name="address" placeholder="123 Main Street">
+        </div>
+        <div class="form-row cols-3">
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" name="city" placeholder="Clermont">
+          </div>
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" name="state" placeholder="FL" maxlength="2">
+          </div>
+          <div class="form-group">
+            <label>Zip Code</label>
+            <input type="text" name="zip" placeholder="34711" maxlength="10">
+          </div>
+        </div>
+        <div class="form-row cols-2">
+          <div class="form-group">
+            <label>Phone <span class="required">*</span></label>
+            <input type="tel" name="phone" required placeholder="(555) 123-4567">
+          </div>
+          <div class="form-group">
+            <label>Email <span class="required">*</span></label>
+            <input type="email" name="email" required placeholder="you@example.com">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- PRIMARY CONTACT -->
+      <fieldset>
+        <legend>Primary Contact</legend>
+        <p class="section-note">The primary person we should contact regarding care coordination.</p>
+        <div class="form-row cols-2">
+          <div class="form-group">
+            <label>Contact Name <span class="required">*</span></label>
+            <input type="text" name="primaryContactName" required placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label>Relationship to Client</label>
+            <select name="primaryContactRelationship">
+              <option value="">Select...</option>
+              <option value="Self">Self</option>
+              <option value="Spouse">Spouse / Partner</option>
+              <option value="Adult Child">Adult Child</option>
+              <option value="Parent">Parent</option>
+              <option value="Sibling">Sibling</option>
+              <option value="Other Family">Other Family Member</option>
+              <option value="Friend">Friend</option>
+              <option value="Legal Guardian">Legal Guardian</option>
+              <option value="POA">Power of Attorney</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row cols-2">
+          <div class="form-group">
+            <label>Phone <span class="required">*</span></label>
+            <input type="tel" name="primaryContactPhone" required placeholder="(555) 123-4567">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="primaryContactEmail" placeholder="contact@example.com">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- EMERGENCY CONTACT -->
+      <fieldset>
+        <legend>Emergency Contact</legend>
+        <div class="form-row cols-2">
+          <div class="form-group">
+            <label>Emergency Contact Name <span class="required">*</span></label>
+            <input type="text" name="emergencyContactName" required placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label>Emergency Contact Phone <span class="required">*</span></label>
+            <input type="tel" name="emergencyContactPhone" required placeholder="(555) 123-4567">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- MEDICAL INFORMATION -->
+      <fieldset>
+        <legend>Medical Information</legend>
+        <p class="section-note">This helps us coordinate your care effectively. Share what you're comfortable with.</p>
+        <div class="form-row cols-2">
+          <div class="form-group">
+            <label>Primary Care Physician</label>
+            <input type="text" name="pcp" placeholder="Dr. Name / Practice">
+          </div>
+          <div class="form-group">
+            <label>Hospital Preference</label>
+            <input type="text" name="hospitalPreference" placeholder="Preferred hospital">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Specialists</label>
+          <textarea name="specialists" rows="2" placeholder="List any specialists (e.g., Cardiologist — Dr. Smith, Endocrinologist — Dr. Jones)"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Medical Conditions</label>
+          <textarea name="medicalConditions" rows="2" placeholder="List any current diagnoses or conditions"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Current Medications</label>
+          <textarea name="medications" rows="2" placeholder="List medications and dosages"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Allergies</label>
+          <input type="text" name="allergies" placeholder="Medication or food allergies">
+        </div>
+      </fieldset>
+
+      <!-- INSURANCE -->
+      <fieldset>
+        <legend>Insurance Information</legend>
+        <div class="form-row cols-2">
+          <div class="form-group">
+            <label>Medicare / Medicaid</label>
+            <input type="text" name="medicareMedicaid" placeholder="Plan name and ID number">
+          </div>
+          <div class="form-group">
+            <label>Supplemental Insurance</label>
+            <input type="text" name="supplementalInsurance" placeholder="Plan name and ID number">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Preferred Pharmacy</label>
+          <input type="text" name="pharmacy" placeholder="Pharmacy name and location">
+        </div>
+      </fieldset>
+
+      <!-- CARE NEEDS -->
+      <fieldset>
+        <legend>Care Needs</legend>
+        <div class="form-group">
+          <label>What services are you interested in? (select all that apply)</label>
+          <div class="checkbox-grid">
+            <label class="checkbox-label"><input type="checkbox" name="need_medication" value="1"><span>Medication Management</span></label>
+            <label class="checkbox-label"><input type="checkbox" name="need_appointments" value="1"><span>Appointment Coordination</span></label>
+            <label class="checkbox-label"><input type="checkbox" name="need_insurance" value="1"><span>Insurance Navigation</span></label>
+            <label class="checkbox-label"><input type="checkbox" name="need_homeVisits" value="1"><span>Home Health Visits</span></label>
+            <label class="checkbox-label"><input type="checkbox" name="need_postHospital" value="1"><span>Post-Hospital Transition</span></label>
+            <label class="checkbox-label"><input type="checkbox" name="need_wellness" value="1"><span>Wellness Check-ins</span></label>
+            <label class="checkbox-label"><input type="checkbox" name="need_endOfLife" value="1"><span>End-of-Life Planning</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- CARE GOALS -->
+      <fieldset>
+        <legend>Care Goals</legend>
+        <p class="section-note">Help us understand what matters most to you. These are optional but help us personalize your care plan.</p>
+        <div class="form-group">
+          <label>What is your primary health goal right now?</label>
+          <textarea name="careGoal1" rows="2" placeholder="e.g., Better manage my diabetes and reduce A1C levels"></textarea>
+        </div>
+        <div class="form-group">
+          <label>What daily activities would you like help with?</label>
+          <textarea name="careGoal2" rows="2" placeholder="e.g., Keeping track of appointments and medication schedules"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Is there anything else you'd like us to know?</label>
+          <textarea name="careGoal3" rows="2" placeholder="Any concerns, preferences, or additional information"></textarea>
+        </div>
+      </fieldset>
+
+      <!-- SUBMIT -->
+      <div class="form-submit">
+        <button type="submit" class="btn-primary" id="btnSubmit">
+          Submit Onboarding Form &rarr;
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Success Message -->
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h2>Welcome Aboard!</h2>
+      <p>Your onboarding form has been submitted successfully.</p>
+      <p style="margin-top:12px"><strong>Check your email</strong> — we've sent you a Client Agreement Packet to review and sign. Open the attached PDF, complete all signature fields, and reply with the signed document.</p>
+      <p style="margin-top:8px; font-size:0.9rem; color:var(--text-lt)">If you don't see the email within a few minutes, please check your spam folder.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <a href="index.html"><img src="images/nhc-logo.svg" alt="Nurse Health Concierge" class="footer-logo-img"></a>
+  <ul class="footer-links">
+    <li><a href="index.html#advocacy">Advocacy</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#founder">Our Founder</a></li>
+    <li><a href="advocate-apply.html">Join Our Team</a></li>
+    <li><a href="client-inquiry.html">Consultation</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <span class="footer-text">&copy; 2025 Nurse Health Concierge. All rights reserved.</span>
+</footer>
+
+<script>
+(function(){
+  // ── Nav scroll effect ──
+  const nav = document.querySelector('nav');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // ── Scroll reveal ──
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // ── Form submission ──
+  const form = document.getElementById('onboardingForm');
+  const btnSubmit = document.getElementById('btnSubmit');
+  const errorEl = document.getElementById('formError');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.classList.remove('visible');
+
+    // Collect form data
+    const formData = {};
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      if (el.type === 'checkbox') {
+        if (el.checked) formData[el.name] = el.value;
+      } else if (el.name) {
+        formData[el.name] = el.value.trim();
+      }
+    });
+
+    // Client-side validation
+    const required = ['clientName', 'dob', 'phone', 'email', 'primaryContactName', 'primaryContactPhone', 'emergencyContactName', 'emergencyContactPhone'];
+    const missingLabels = {
+      clientName: 'Full Name',
+      dob: 'Date of Birth',
+      phone: 'Phone',
+      email: 'Email',
+      primaryContactName: 'Primary Contact Name',
+      primaryContactPhone: 'Primary Contact Phone',
+      emergencyContactName: 'Emergency Contact Name',
+      emergencyContactPhone: 'Emergency Contact Phone',
+    };
+    const missing = required.filter(f => !formData[f]);
+
+    if (missing.length) {
+      errorEl.textContent = 'Please fill in all required fields: ' + missing.map(f => missingLabels[f]).join(', ') + '.';
+      errorEl.classList.add('visible');
+      errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Submit
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = '<span class="spinner"></span> Submitting...';
+
+    try {
+      const res = await fetch('/.netlify/functions/submit-onboarding', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.error || 'Submission failed');
+      }
+
+      // Show success
+      form.style.display = 'none';
+      document.getElementById('formSuccess').classList.add('visible');
+
+    } catch (err) {
+      errorEl.textContent = err.message || 'Something went wrong. Please try again or email us at nursehealthconcierge@gmail.com.';
+      errorEl.classList.add('visible');
+      errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btnSubmit.disabled = false;
+      btnSubmit.innerHTML = 'Submit Onboarding Form &rarr;';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
