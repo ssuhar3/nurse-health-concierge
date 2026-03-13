@@ -41,7 +41,7 @@ exports.handler = async (event) => {
     // ── Send email ────────────────────────────────
     if (action === 'send' && event.httpMethod === 'POST') {
       const body = JSON.parse(event.body || '{}');
-      const { to, template, subject, html, recordId, tab, name } = body;
+      const { to, template, subject, html, recordId, tab, name, siteUrl } = body;
 
       if (!to) return authResponse(event, 400, { error: 'Recipient email is required' });
 
@@ -51,7 +51,7 @@ exports.handler = async (event) => {
         // Use pre-built template
         const tmpl = getTemplate(template);
         if (!tmpl) return authResponse(event, 400, { error: 'Unknown template' });
-        const data = { name: name || '' };
+        const data = { name: name || '', siteUrl: siteUrl || '' };
         finalSubject = tmpl.subject(data);
         finalHtml = tmpl.html(data);
         templateName = tmpl.name;

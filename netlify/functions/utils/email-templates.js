@@ -110,6 +110,38 @@ const TEMPLATES = {
     `),
   },
 
+  onboarding_invite: {
+    name: 'Onboarding Invite',
+    subject: (d) => `Begin Your Care Journey — Nurse Health Concierge`,
+    html: (d) => wrap('Welcome to Nurse Health Concierge', `
+      <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
+      <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
+        We're excited to begin your care journey with Nurse Health Concierge!
+        To get started, we need a few details about your loved one's health and care needs.
+      </p>
+      <div style="text-align:center;margin:28px 0">
+        <a href="${d.siteUrl || ''}/client-onboarding"
+           style="display:inline-block;background:#1a365d;color:#ffffff;font-size:16px;font-weight:600;
+                  padding:14px 36px;border-radius:8px;text-decoration:none">
+          Complete Onboarding Form
+        </a>
+      </div>
+      <div style="background:#fff;border:1px solid #c9a54e;border-radius:8px;padding:20px;margin:20px 0">
+        <h3 style="color:#1a365d;margin:0 0 12px">What to Expect:</h3>
+        <ol style="color:#4a4e5c;font-size:14px;line-height:1.8;padding-left:20px;margin:0">
+          <li>Complete the online intake form (about 10 minutes)</li>
+          <li>Receive your personalized agreement packet by email</li>
+          <li>Review, sign, and return the agreements</li>
+          <li>Your dedicated Health Advocate will reach out to schedule an introduction</li>
+        </ol>
+      </div>
+      <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
+        If you have any questions, simply reply to this email or call us directly.
+        We look forward to supporting your family.
+      </p>
+    `),
+  },
+
   inquiry_response: {
     name: 'Inquiry Response',
     subject: (d) => `Re: Your Consultation Request — NHC`,

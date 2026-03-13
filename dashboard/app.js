@@ -517,8 +517,22 @@ async function openDetailModal(tab, record, statuses) {
     `<option value="${esc(s)}" ${s === currentStatus ? 'selected' : ''}>${esc(s)}</option>`
   ).join('');
 
+  // Onboarding invite button (inquiries only)
+  const inviteBtn = tab === 'inquiries' ? `
+    <div class="detail-section" style="border:2px solid var(--gold);border-radius:8px;padding:16px;background:rgba(201,165,78,0.06)">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div>
+          <h3 style="margin:0 0 4px">Convert to Client</h3>
+          <p style="margin:0;font-size:13px;color:var(--text-light)">Send onboarding intake form to ${esc(email || 'client')}</p>
+        </div>
+        <button class="btn btn-sm btn-gold" id="sendInviteBtn" ${!email ? 'disabled title="No email on record"' : ''}>Send Onboarding Invite</button>
+      </div>
+    </div>
+  ` : '';
+
   const html = `
     <div class="detail-grid">${fields}</div>
+    ${inviteBtn}
 
     <div class="detail-section">
       <h3>Status</h3>
@@ -563,6 +577,24 @@ async function openDetailModal(tab, record, statuses) {
   emailTemplates.forEach(t => {
     tmplSelect.innerHTML += `<option value="${esc(t.key)}">${esc(t.name)}</option>`;
   });
+
+  // Send onboarding invite (inquiries only)
+  const inviteEl = document.getElementById('sendInviteBtn');
+  if (inviteEl) {
+    inviteEl.addEventListener('click', async () => {
+      if (!confirm(`Send onboarding invite to ${email}?`)) return;
+      inviteEl.disabled = true; inviteEl.textContent = 'Sending...';
+      const siteUrl = window.location.origin;
+      const res = await API.sendEmail({ to: email, template: 'onboarding_invite', recordId: id, tab, name, siteUrl });
+      if (res?.success) {
+        inviteEl.textContent = 'Invite Sent!';
+        inviteEl.style.background = '#2f855a'; inviteEl.style.color = '#fff';
+      } else {
+        inviteEl.textContent = 'Error — Try Again';
+        setTimeout(() => { inviteEl.textContent = 'Send Onboarding Invite'; inviteEl.disabled = false; }, 2000);
+      }
+    });
+  }
 
   // Status save
   document.getElementById('saveStatusBtn').addEventListener('click', async () => {
