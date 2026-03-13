@@ -214,7 +214,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error('submit-onboarding error:', err);
     return respond(500, {
-      error: 'Something went wrong. Please try again or contact us directly.',
+      error: `Debug: ${err.message || 'Unknown error'}`,
     });
   }
 };
