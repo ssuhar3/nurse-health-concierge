@@ -7,6 +7,8 @@
     "serve": "npx serve . -l 8889"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1009.0",
+    "@aws-sdk/s3-request-presigner": "^3.1009.0",
     "@netlify/blobs": "^10.7.2",
     "bcryptjs": "^3.0.3",
     "googleapis": "^144.0.0",

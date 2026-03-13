@@ -4,9 +4,7 @@ const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
 const { generateOnboardingSummaryPdf } = require('./utils/client-summary-pdf');
 const { generateClientPacket } = require('./utils/client-packet-pdf');
-// PDF storage: Netlify Blobs requires NETLIFY_SITE_ID + NETLIFY_TOKEN env vars
-// For now PDFs are delivered as email attachments
-// TODO: Add Netlify Blobs once token is configured
+const { uploadPdf: uploadToS3 } = require('./utils/s3');
 
 const REQUIRED_FIELDS = [
   'clientName', 'dob', 'phone', 'email',
@@ -60,9 +58,14 @@ exports.handler = async (event) => {
       generateClientPacket(data),
     ]);
 
-    // ── Step 2: File names for email attachments ──────
-    const summaryFileName = `Onboarding_Summary_${safeName}_${Date.now()}.pdf`;
-    const packetFileName = `NHC_Client_Packet_${safeName}.pdf`;
+    // ── Step 2: Upload PDFs to S3 (encrypted) ─────────
+    const summaryFileName = `onboarding/${safeName}/Onboarding_Summary_${Date.now()}.pdf`;
+    const packetFileName = `onboarding/${safeName}/NHC_Client_Packet_${Date.now()}.pdf`;
+
+    const [summaryS3, packetS3] = await Promise.all([
+      uploadToS3(summaryFileName, summaryPdf, { clientName: data.clientName, type: 'summary' }),
+      uploadToS3(packetFileName, packetPdf, { clientName: data.clientName, type: 'packet' }),
+    ]);
 
     // ── Step 3: Sheet + emails in parallel ────────────
     const address = [data.address, data.city, data.state, data.zip].filter(Boolean).join(', ');
@@ -95,8 +98,8 @@ exports.handler = async (event) => {
       data.pharmacy || '',                    // X: Pharmacy
       careNeeds.join(', '),                   // Y: Care Needs
       careGoals,                              // Z: Care Goals
-      'Emailed to admin',                       // AA: Summary PDF Link
-      'Emailed to client',                      // AB: Agreement Packet Link
+      summaryS3.url,                            // AA: Summary PDF Link
+      packetS3.url,                             // AB: Agreement Packet Link
       'New',                                  // AC: Status
       '',                                     // AD: Internal Notes
       crypto.randomUUID(),                    // AE: Record ID
@@ -135,10 +138,15 @@ exports.handler = async (event) => {
             'Goals': careGoals,
           }) : ''}
           <p style="margin-top:20px;font-size:14px">
-            <strong>Summary PDF:</strong> Attached to this email
+            <strong>Summary PDF:</strong>
+            <a href="${summaryS3.url}" style="color:#1a365d">Download from S3</a> (also attached)
           </p>
           <p style="font-size:14px">
-            <strong>Agreement Packet:</strong> Emailed to client at ${data.email}
+            <strong>Agreement Packet:</strong>
+            <a href="${packetS3.url}" style="color:#1a365d">Download from S3</a> (emailed to client)
+          </p>
+          <p style="font-size:12px;color:#888;margin-top:8px">
+            S3 links expire in 7 days. PDFs are stored permanently in encrypted S3 storage.
           </p>
         </div>
       </div>
