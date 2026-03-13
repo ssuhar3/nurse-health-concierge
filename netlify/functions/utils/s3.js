@@ -10,7 +10,7 @@ function getClient() {
   if (s3Client) return s3Client;
 
   s3Client = new S3Client({
-    region: process.env.AWS_S3_REGION || process.env.S3_REGION || 'us-east-2',
+    region: process.env.S3_REGION || process.env.AWS_S3_REGION || 'us-east-2',
     credentials: {
       accessKeyId: process.env.S3_ACCESS_KEY_ID,
       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
@@ -29,7 +29,7 @@ function getClient() {
  */
 async function uploadPdf(fileName, pdfBuffer, metadata = {}) {
   const client = getClient();
-  const bucket = process.env.AWS_S3_BUCKET || process.env.S3_BUCKET;
+  const bucket = process.env.S3_BUCKET || process.env.AWS_S3_BUCKET;
 
   // Upload with AES-256 encryption
   await client.send(new PutObjectCommand({
@@ -59,7 +59,7 @@ async function uploadPdf(fileName, pdfBuffer, metadata = {}) {
  */
 async function getPresignedUrl(key, expiresIn = 7 * 24 * 60 * 60) {
   const client = getClient();
-  const bucket = process.env.AWS_S3_BUCKET || process.env.S3_BUCKET;
+  const bucket = process.env.S3_BUCKET || process.env.AWS_S3_BUCKET;
 
   return getSignedUrl(
     client,
