@@ -134,18 +134,30 @@ async function loadOverview() {
   const stats = await API.getStats();
   if (!stats) return;
 
+  // Handle API error response
+  if (stats.error) {
+    document.getElementById('metricsGrid').innerHTML = `
+      <div class="metric-card" style="grid-column:1/-1;border-left:4px solid #C62828">
+        <div class="label" style="color:#C62828">Connection Error</div>
+        <div class="val" style="font-size:14px;color:var(--text-mid);margin-top:8px">${esc(stats.error)}</div>
+        <div class="sub" style="margin-top:8px"><button class="btn btn-sm btn-outline" onclick="loadOverview()">Retry</button></div>
+      </div>
+    `;
+    return;
+  }
+
   // Metrics
   document.getElementById('metricsGrid').innerHTML = `
-    <div class="metric-card"><div class="label">Total Applications</div><div class="value">${stats.totalApplications}</div><div class="sub">${stats.appsThisMonth} this month</div></div>
-    <div class="metric-card"><div class="label">Total Inquiries</div><div class="value">${stats.totalInquiries}</div><div class="sub">${stats.inqsThisMonth} this month</div></div>
-    <div class="metric-card"><div class="label">Total Clients</div><div class="value">${stats.totalClients || 0}</div><div class="sub">${stats.clientsThisMonth || 0} this month</div></div>
-    <div class="metric-card"><div class="label">Pending Review</div><div class="value">${stats.pendingReview}</div><div class="sub">Needs attention</div></div>
+    <div class="metric-card"><div class="label">Total Applications</div><div class="value">${stats.totalApplications ?? 0}</div><div class="sub">${stats.appsThisMonth ?? 0} this month</div></div>
+    <div class="metric-card"><div class="label">Total Inquiries</div><div class="value">${stats.totalInquiries ?? 0}</div><div class="sub">${stats.inqsThisMonth ?? 0} this month</div></div>
+    <div class="metric-card"><div class="label">Total Clients</div><div class="value">${stats.totalClients ?? 0}</div><div class="sub">${stats.clientsThisMonth ?? 0} this month</div></div>
+    <div class="metric-card"><div class="label">Pending Review</div><div class="value">${stats.pendingReview ?? 0}</div><div class="sub">Needs attention</div></div>
   `;
 
-  // Charts
-  renderStatusChart(stats);
-  renderClientStatusChart(stats);
-  renderMonthlyChart(stats);
+  // Charts (skip if no data)
+  if (stats.appStatusCounts) renderStatusChart(stats);
+  if (stats.clientStatusCounts) renderClientStatusChart(stats);
+  if (stats.monthly) renderMonthlyChart(stats);
 
   // Recent activity
   const items = (stats.recent || []).map(r => `
