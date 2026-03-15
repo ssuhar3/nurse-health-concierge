@@ -982,6 +982,31 @@ nav.scrolled {
   font-weight: 400;
 }
 .contact-val:hover { color: var(--blue); }
+.contact-card-icon {
+  width: 56px; height: 56px;
+  background: var(--blue-bg);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.contact-cta-btn {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--blue);
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  transition: all 0.3s;
+  text-align: center;
+}
+.contact-cta-btn:hover { background: var(--blue-lt); transform: translateY(-2px); }
+.contact-cta-gold { background: var(--gold); }
+.contact-cta-gold:hover { background: #b8922e; }
 
 /* ─── FOOTER ─────────────────────────────────────────────── */
 footer {
@@ -1308,26 +1333,57 @@ footer {
     <h2 class="section-h">Let's Start the <em>Conversation</em></h2>
     <div class="section-rule"></div>
   </div>
-  <p class="contact-intro reveal">We'd love to learn about your family's situation and explain how a dedicated Health Advocate can make a meaningful difference.</p>
+  <p class="contact-intro reveal">Whether you need an advocate for a loved one, want to join our team, or simply have a question — we're here to help.</p>
 
-  <div class="contact-grid" style="justify-content:center">
+  <div class="contact-grid" style="grid-template-columns: repeat(3, 1fr); justify-content: center;">
+    <!-- Path 1: Client Inquiries -->
     <div class="contact-card reveal reveal-d1">
-      <div class="contact-name">Pat Dobbins</div>
-      <div class="contact-org">Founder &middot; Nurse Health Concierge</div>
-      <div class="contact-row">
-        <div class="contact-ico">
-          <svg viewBox="0 0 24 24" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <a href="mailto:nursehealthconcierge@gmail.com" class="contact-val">nursehealthconcierge@gmail.com</a>
+      <div class="contact-card-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </div>
+      <div class="contact-name" style="font-size:24px">Request a Consultation</div>
+      <div class="contact-org">For Families &amp; Caregivers</div>
+      <p style="font-size:14px; color:var(--text-mid); line-height:1.7; margin-bottom:24px;">Tell us about your loved one's situation and we'll reach out to discuss how a dedicated Health Advocate can help.</p>
+      <a href="client-inquiry.html" class="contact-cta-btn">Get Started &rarr;</a>
+    </div>
+
+    <!-- Path 2: Join the Team -->
+    <div class="contact-card reveal reveal-d2">
+      <div class="contact-card-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="contact-name" style="font-size:24px">Join Our Team</div>
+      <div class="contact-org">For Health Professionals</div>
+      <p style="font-size:14px; color:var(--text-mid); line-height:1.7; margin-bottom:24px;">Passionate about senior health advocacy? We're looking for experienced healthcare professionals to join our team.</p>
+      <a href="advocate-apply.html" class="contact-cta-btn contact-cta-gold">Apply Now &rarr;</a>
+    </div>
+
+    <!-- Path 3: General Contact -->
+    <div class="contact-card reveal reveal-d3">
+      <div class="contact-card-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="contact-name" style="font-size:24px">General Inquiry</div>
+      <div class="contact-org">Questions &amp; Other Requests</div>
+      <form id="generalContactForm" style="margin-top:8px">
+        <input type="text" name="gcName" placeholder="Your Name" required style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; margin-bottom:10px; font-size:14px; font-family:inherit; background:var(--cream)">
+        <input type="email" name="gcEmail" placeholder="Email Address" required style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; margin-bottom:10px; font-size:14px; font-family:inherit; background:var(--cream)">
+        <textarea name="gcMessage" placeholder="How can we help?" rows="3" required style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; margin-bottom:14px; font-size:14px; font-family:inherit; resize:vertical; background:var(--cream)"></textarea>
+        <button type="submit" class="contact-cta-btn" style="width:100%; border:none; cursor:pointer; font-family:inherit">Send Message &rarr;</button>
+      </form>
+      <p id="gcSuccess" style="display:none; color:var(--blue); font-weight:600; text-align:center; margin-top:16px;">Message sent! We'll be in touch soon.</p>
+      <p id="gcError" style="display:none; color:#e53e3e; font-size:13px; text-align:center; margin-top:8px;"></p>
     </div>
   </div>
 
-  <p class="reveal" style="text-align:center; margin-top:2.5rem;">
-    <a href="client-inquiry.html" style="color:var(--blue); font-weight:600; font-size:1.05rem; text-decoration:none; border-bottom:2px solid var(--gold); padding-bottom:2px; transition:color .3s, border-color .3s;">
-      Request a Consultation &rarr;
-    </a>
-  </p>
+  <div class="reveal" style="text-align:center; margin-top:48px;">
+    <div class="contact-row" style="justify-content:center">
+      <div class="contact-ico">
+        <svg viewBox="0 0 24 24" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <a href="mailto:nursehealthconcierge@gmail.com" class="contact-val">nursehealthconcierge@gmail.com</a>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -1373,6 +1429,40 @@ footer {
       ticking = true;
     }
   }, { passive: true });
+
+  // General contact form
+  const gcForm = document.getElementById('generalContactForm');
+  if (gcForm) {
+    gcForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = gcForm.querySelector('button[type="submit"]');
+      const successEl = document.getElementById('gcSuccess');
+      const errorEl = document.getElementById('gcError');
+      errorEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      try {
+        const formData = {};
+        gcForm.querySelectorAll('input, textarea').forEach(el => {
+          if (el.name) formData[el.name] = el.value.trim();
+        });
+        const res = await fetch('/.netlify/functions/submit-contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.error || 'Submission failed');
+        gcForm.style.display = 'none';
+        successEl.style.display = 'block';
+      } catch (err) {
+        errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
+      }
+    });
+  }
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(a => {
