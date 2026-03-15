@@ -42,22 +42,23 @@ img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 
 /* ─── LOGO ────────────────────────────────────────────── */
-.nav-logo-img { height: 40px; width: auto; }
+.nav-logo-img { height: 60px; width: auto; }
 .footer-logo-img { height: 48px; width: auto; }
 
 /* ─── NAV ─────────────────────────────────────────────── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 72px; display: flex; align-items: center; justify-content: space-between;
+  height: 80px; display: flex; align-items: center; justify-content: space-between;
   padding: 0 60px;
   background: rgba(11,29,58,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
   transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
-nav.scrolled { background: rgba(11,29,58,0.97); box-shadow: 0 4px 20px rgba(0,0,0,0.15); height: 64px; }
+nav.scrolled { background: rgba(11,29,58,0.97); box-shadow: 0 4px 20px rgba(0,0,0,0.15); height: 72px; }
 .nav-brand { display: flex; align-items: center; gap: 12px; }
-.nav-brand .nav-logo-img { height: 48px; }
+.nav-brand .nav-logo-img { height: 72px; }
 .nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a[href="advocate-apply.html"] { color: var(--gold) !important; }
 .nav-links a {
   font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
   color: rgba(255,255,255,0.55); transition: color 0.3s; position: relative;
@@ -429,7 +430,15 @@ legend::before { content: ''; display: block; width: 20px; height: 2px; backgrou
             <div class="radio-group">
               <label class="radio-label"><input type="radio" name="contactMethod" value="Phone" checked><span>Phone</span></label>
               <label class="radio-label"><input type="radio" name="contactMethod" value="Email"><span>Email</span></label>
-              <label class="radio-label"><input type="radio" name="contactMethod" value="Either"><span>Either</span></label>
+              <label class="radio-label"><input type="radio" name="contactMethod" value="Text"><span>Text</span></label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Preferred Contact Time</label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="contactTime" value="Morning"><span>Morning</span></label>
+              <label class="radio-label"><input type="radio" name="contactTime" value="Afternoon"><span>Afternoon</span></label>
+              <label class="radio-label"><input type="radio" name="contactTime" value="Evening"><span>Evening</span></label>
             </div>
           </div>
         </fieldset>
@@ -482,6 +491,16 @@ legend::before { content: ''; display: block; width: 20px; height: 2px; backgrou
               <label class="checkbox-label"><input type="checkbox" name="need_safety" value="1"><span>Concerned about home safety</span></label>
               <label class="checkbox-label"><input type="checkbox" name="need_endOfLife" value="1"><span>End-of-life or hospice planning</span></label>
               <label class="checkbox-label"><input type="checkbox" name="need_wellness" value="1"><span>General wellness check-ins</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_counseling" value="1"><span>Counseling Services - Grief, Depression, Addiction, Alcohol, Family Conflict, Mental Illness, Memory Loss</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_fiduciary" value="1"><span>Fiduciary Services - Bill Pay, Banking, Tax Prep, Accountant/Attorney Coordination, Will and Trusts</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_transport" value="1"><span>Transportation Services - Appointment Transportation, Running Errands</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_medDevice" value="1"><span>Medical Device Management</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_mobility" value="1"><span>Mobility or Balance Concerns</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_physTherapy" value="1"><span>Physical Therapy Needs</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_crisis" value="1"><span>Acute Episode / Crises Intervention and Planning</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_tech" value="1"><span>Technology Services - Mobile Device, Computer, Software, Hardware</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_handyman" value="1"><span>Handyman Services</span></label>
+              <label class="checkbox-label"><input type="checkbox" name="need_cleaning" value="1"><span>Cleaning Services</span></label>
             </div>
           </div>
         </fieldset>
@@ -548,7 +567,7 @@ legend::before { content: ''; display: block; width: 20px; height: 2px; backgrou
     <div class="sidebar-card reveal reveal-d1">
       <h3 class="sidebar-card-title">What to Expect</h3>
       <ul class="sidebar-list">
-        <li>We'll contact you within 1 business day</li>
+        <li>We'll contact you within 3 business days</li>
         <li>A brief phone conversation to understand your needs</li>
         <li>A personalized overview of how we can help</li>
         <li>No obligation &mdash; just a caring conversation</li>

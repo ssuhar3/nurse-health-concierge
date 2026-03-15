@@ -42,22 +42,23 @@ img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 
 /* ─── LOGO ────────────────────────────────────────────── */
-.nav-logo-img { height: 40px; width: auto; }
+.nav-logo-img { height: 60px; width: auto; }
 .footer-logo-img { height: 48px; width: auto; }
 
 /* ─── NAV ─────────────────────────────────────────────── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 72px; display: flex; align-items: center; justify-content: space-between;
+  height: 80px; display: flex; align-items: center; justify-content: space-between;
   padding: 0 60px;
   background: rgba(11,29,58,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
   transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
-nav.scrolled { background: rgba(11,29,58,0.97); box-shadow: 0 4px 20px rgba(0,0,0,0.15); height: 64px; }
+nav.scrolled { background: rgba(11,29,58,0.97); box-shadow: 0 4px 20px rgba(0,0,0,0.15); height: 72px; }
 .nav-brand { display: flex; align-items: center; gap: 12px; }
-.nav-brand .nav-logo-img { height: 48px; }
+.nav-brand .nav-logo-img { height: 72px; }
 .nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a[href="advocate-apply.html"] { color: var(--gold) !important; }
 .nav-links a {
   font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
   color: rgba(255,255,255,0.55); transition: color 0.3s; position: relative;
@@ -421,6 +422,8 @@ footer {
             <option value="APRN">Advanced Practice Registered Nurse (APRN)</option>
             <option value="SW">Social Worker (SW)</option>
             <option value="PA">Physician Assistant (PA)</option>
+            <option value="Retired">Retired</option>
+            <option value="HCA">Health Care Administrator</option>
             <option value="Other">Other</option>
           </select>
         </div>
@@ -438,19 +441,112 @@ footer {
             <label class="radio-label">
               <input type="radio" name="empType" value="Part Time"> <span>Part Time</span>
             </label>
-            <label class="radio-label">
-              <input type="radio" name="empType" value="Contract"> <span>Contract</span>
-            </label>
           </div>
         </div>
         <div class="form-row cols-2">
           <div class="form-group">
             <label for="geoAreas">Geographic Areas Served</label>
-            <input type="text" id="geoAreas" name="geoAreas" placeholder="e.g., Central Florida, Orlando metro">
+            <select id="geoAreas" name="geoAreas">
+              <option value="">— Select area —</option>
+              <option value="Southwest Florida (Fort Myers/Naples Metro)">Southwest Florida (Fort Myers/Naples Metro)</option>
+              <option value="West Central Florida (Tampa/St. Pete/Clearwater Metro)">West Central Florida (Tampa/St. Pete/Clearwater Metro)</option>
+              <option value="Central Florida (Orlando Metro)">Central Florida (Orlando Metro)</option>
+              <option value="South Florida (Miami/Fort Lauderdale Metro)">South Florida (Miami/Fort Lauderdale Metro)</option>
+              <option value="North Florida (Jacksonville Metro)">North Florida (Jacksonville Metro)</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="startDate">Earliest Start Date</label>
             <input type="date" id="startDate" name="startDate">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Resume & Experience -->
+      <fieldset>
+        <legend>Experience</legend>
+        <div class="form-group">
+          <label for="resume">Upload Resume</label>
+          <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" style="padding:10px;background:var(--cream);border:1px solid var(--border);border-radius:8px;width:100%">
+        </div>
+        <div class="form-group">
+          <label for="experience">Tell us about your experience with senior health advocacy (60 words or less)</label>
+          <textarea id="experience" name="experience" rows="4" maxlength="500" style="width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--cream);font-family:inherit;font-size:0.95rem;resize:vertical"></textarea>
+          <div id="wordCount" style="text-align:right;font-size:0.8rem;color:var(--text-lt);margin-top:4px">0 / 60 words</div>
+        </div>
+      </fieldset>
+
+      <!-- Professional References -->
+      <fieldset>
+        <legend>Professional References (3 Required)</legend>
+        <div class="reference-block" style="margin-bottom:20px">
+          <h4 style="color:var(--navy);margin:0 0 12px">Reference 1</h4>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label>Name <span class="required">*</span></label>
+              <input type="text" name="ref1Name" required>
+            </div>
+            <div class="form-group">
+              <label>Phone Number <span class="required">*</span></label>
+              <input type="tel" name="ref1Phone" required>
+            </div>
+          </div>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label>Email <span class="required">*</span></label>
+              <input type="email" name="ref1Email" required>
+            </div>
+            <div class="form-group">
+              <label>Relationship to Applicant <span class="required">*</span></label>
+              <input type="text" name="ref1Relationship" required>
+            </div>
+          </div>
+        </div>
+        <div class="reference-block" style="margin-bottom:20px">
+          <h4 style="color:var(--navy);margin:0 0 12px">Reference 2</h4>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label>Name <span class="required">*</span></label>
+              <input type="text" name="ref2Name" required>
+            </div>
+            <div class="form-group">
+              <label>Phone Number <span class="required">*</span></label>
+              <input type="tel" name="ref2Phone" required>
+            </div>
+          </div>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label>Email <span class="required">*</span></label>
+              <input type="email" name="ref2Email" required>
+            </div>
+            <div class="form-group">
+              <label>Relationship to Applicant <span class="required">*</span></label>
+              <input type="text" name="ref2Relationship" required>
+            </div>
+          </div>
+        </div>
+        <div class="reference-block">
+          <h4 style="color:var(--navy);margin:0 0 12px">Reference 3</h4>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label>Name <span class="required">*</span></label>
+              <input type="text" name="ref3Name" required>
+            </div>
+            <div class="form-group">
+              <label>Phone Number <span class="required">*</span></label>
+              <input type="tel" name="ref3Phone" required>
+            </div>
+          </div>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label>Email <span class="required">*</span></label>
+              <input type="email" name="ref3Email" required>
+            </div>
+            <div class="form-group">
+              <label>Relationship to Applicant <span class="required">*</span></label>
+              <input type="text" name="ref3Relationship" required>
+            </div>
           </div>
         </div>
       </fieldset>
@@ -512,6 +608,18 @@ footer {
   }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
+  // ── Word counter for experience ──
+  const expField = document.getElementById('experience');
+  const wordCountEl = document.getElementById('wordCount');
+  if (expField && wordCountEl) {
+    expField.addEventListener('input', () => {
+      const words = expField.value.trim().split(/\s+/).filter(Boolean);
+      const count = words.length;
+      wordCountEl.textContent = count + ' / 60 words';
+      wordCountEl.style.color = count > 60 ? '#e53e3e' : 'var(--text-lt)';
+    });
+  }
+
   // ── Form submission ──
   const form = document.getElementById('advocateForm');
   const btnSubmit = document.getElementById('btnSubmit');
@@ -523,17 +631,48 @@ footer {
 
     // Collect form data
     const formData = {};
-    form.querySelectorAll('input, select').forEach(el => {
+    form.querySelectorAll('input, select, textarea').forEach(el => {
       if (el.type === 'radio') {
         if (el.checked) formData[el.name] = el.value;
+      } else if (el.type === 'file') {
+        // handled separately below
       } else if (el.name) {
         formData[el.name] = el.value.trim();
       }
     });
 
+    // Handle resume file upload (base64 encode)
+    const resumeInput = document.getElementById('resume');
+    if (resumeInput.files.length > 0) {
+      const file = resumeInput.files[0];
+      if (file.size > 5 * 1024 * 1024) {
+        errorEl.textContent = 'Resume file must be under 5MB.';
+        errorEl.classList.add('visible');
+        errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      formData.resumeFile = base64;
+      formData.resumeFileName = file.name;
+      formData.resumeContentType = file.type;
+    }
+
     // Client-side validation
     if (!formData.fullName || !formData.email || !formData.phone || !formData.profTitle) {
       errorEl.textContent = 'Please fill in all required fields (Full Name, Email, Phone, Professional Title).';
+      errorEl.classList.add('visible');
+      errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    if (!formData.ref1Name || !formData.ref1Phone || !formData.ref1Email || !formData.ref1Relationship ||
+        !formData.ref2Name || !formData.ref2Phone || !formData.ref2Email || !formData.ref2Relationship ||
+        !formData.ref3Name || !formData.ref3Phone || !formData.ref3Email || !formData.ref3Relationship) {
+      errorEl.textContent = 'Please provide all 3 professional references with complete information.';
       errorEl.classList.add('visible');
       errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;

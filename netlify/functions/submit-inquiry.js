@@ -38,6 +38,16 @@ exports.handler = async (event) => {
     if (data.need_safety) healthNeeds.push('Home Safety Concerns');
     if (data.need_endOfLife) healthNeeds.push('End-of-Life Planning');
     if (data.need_wellness) healthNeeds.push('General Wellness Check');
+    if (data.need_counseling) healthNeeds.push('Counseling Services');
+    if (data.need_fiduciary) healthNeeds.push('Fiduciary Services');
+    if (data.need_transport) healthNeeds.push('Transportation Services');
+    if (data.need_medDevice) healthNeeds.push('Medical Device Management');
+    if (data.need_mobility) healthNeeds.push('Mobility or Balance Concerns');
+    if (data.need_physTherapy) healthNeeds.push('Physical Therapy Needs');
+    if (data.need_crisis) healthNeeds.push('Acute Episode / Crises Intervention');
+    if (data.need_tech) healthNeeds.push('Technology Services');
+    if (data.need_handyman) healthNeeds.push('Handyman Services');
+    if (data.need_cleaning) healthNeeds.push('Cleaning Services');
 
     const timestamp = new Date().toISOString();
 
@@ -49,6 +59,7 @@ exports.handler = async (event) => {
       data.phone,
       data.email,
       data.contactMethod || '',
+      data.contactTime || '',
       data.seniorName || '',
       data.ageRange || '',
       data.seniorLocation || '',
@@ -78,6 +89,7 @@ exports.handler = async (event) => {
             'Phone': data.phone,
             'Email': data.email,
             'Preferred Contact': data.contactMethod || 'Not specified',
+            'Preferred Time': data.contactTime || 'Not specified',
           })}
           ${formatSection('About the Senior', {
             'Senior Name': data.seniorName,

@@ -4,7 +4,7 @@ const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
 const { generateApplicationPdf } = require('./utils/pdf');
 const { generateFillablePacket } = require('./utils/fillable-pdf');
-const { uploadPdf } = require('./utils/drive');
+const { uploadPdf: uploadToS3 } = require('./utils/s3');
 
 const REQUIRED_FIELDS = ['fullName', 'email', 'phone', 'profTitle'];
 
@@ -42,19 +42,33 @@ exports.handler = async (event) => {
       generateFillablePacket(data),
     ]);
 
-    // ── Step 2: Upload both to Drive in parallel ──────
-    const summaryFileName = `Summary_${safeName}_${Date.now()}.pdf`;
-    const packetFileName = `NHC_Application_Packet_${safeName}.pdf`;
+    // ── Step 2: Upload PDFs to S3 (encrypted) ──────
+    const summaryFileName = `applications/${safeName}/Summary_${Date.now()}.pdf`;
+    const packetFileName = `applications/${safeName}/Application_Packet_${Date.now()}.pdf`;
 
-    const [summaryUpload, packetUpload] = await Promise.all([
-      uploadPdf(summaryFileName, summaryPdf),
-      uploadPdf(packetFileName, fillablePdf),
-    ]);
+    const uploads = [
+      uploadToS3(summaryFileName, summaryPdf, { applicantName: data.fullName, type: 'summary' }),
+      uploadToS3(packetFileName, fillablePdf, { applicantName: data.fullName, type: 'packet' }),
+    ];
+
+    // Upload resume to S3 if provided
+    let resumeS3 = null;
+    if (data.resumeFile) {
+      const resumeBuffer = Buffer.from(data.resumeFile, 'base64');
+      const ext = (data.resumeFileName || 'resume.pdf').split('.').pop();
+      const resumeKey = `applications/${safeName}/Resume_${Date.now()}.${ext}`;
+      uploads.push(
+        uploadToS3(resumeKey, resumeBuffer, { applicantName: data.fullName, type: 'resume' })
+          .then(result => { resumeS3 = result; return result; })
+      );
+    }
+
+    const [summaryS3, packetS3] = await Promise.all(uploads);
 
     // ── Step 3: Sheet + emails in parallel ────────────
     const address = [data.address, data.city, data.state, data.zip].filter(Boolean).join(', ');
 
-    // Sheet row — 17 columns (15 original + Notes + Record ID)
+    // Sheet row — 29 columns
     const sheetRow = [
       timestamp,
       data.fullName,
@@ -68,8 +82,13 @@ exports.handler = async (event) => {
       data.empType || '',
       data.geoAreas || '',
       data.startDate || '',
-      summaryUpload.webViewLink,
-      packetUpload.webViewLink,
+      data.experience || '',
+      summaryS3.url,
+      packetS3.url,
+      resumeS3 ? resumeS3.url : '',
+      data.ref1Name || '', data.ref1Phone || '', data.ref1Email || '', data.ref1Relationship || '',
+      data.ref2Name || '', data.ref2Phone || '', data.ref2Email || '', data.ref2Relationship || '',
+      data.ref3Name || '', data.ref3Phone || '', data.ref3Email || '', data.ref3Relationship || '',
       'Packet Sent',
       '', // Internal Notes
       crypto.randomUUID(), // Record ID
@@ -98,14 +117,25 @@ exports.handler = async (event) => {
             'Geographic Areas': data.geoAreas,
             'Earliest Start Date': data.startDate,
           })}
+          ${data.experience ? formatSection('Experience', { 'Senior Health Advocacy': data.experience }) : ''}
+          ${formatSection('Reference 1', {
+            'Name': data.ref1Name, 'Phone': data.ref1Phone, 'Email': data.ref1Email, 'Relationship': data.ref1Relationship,
+          })}
+          ${formatSection('Reference 2', {
+            'Name': data.ref2Name, 'Phone': data.ref2Phone, 'Email': data.ref2Email, 'Relationship': data.ref2Relationship,
+          })}
+          ${formatSection('Reference 3', {
+            'Name': data.ref3Name, 'Phone': data.ref3Phone, 'Email': data.ref3Email, 'Relationship': data.ref3Relationship,
+          })}
           <p style="margin-top:20px;font-size:14px">
             <strong>Summary PDF:</strong>
-            <a href="${summaryUpload.webViewLink}" style="color:#1a365d">View in Drive</a>
+            <a href="${summaryS3.url}" style="color:#1a365d">View / Download</a>
           </p>
           <p style="font-size:14px">
             <strong>Application Packet:</strong>
-            <a href="${packetUpload.webViewLink}" style="color:#1a365d">View in Drive</a>
+            <a href="${packetS3.url}" style="color:#1a365d">View / Download</a>
           </p>
+          ${resumeS3 ? `<p style="font-size:14px"><strong>Resume:</strong> <a href="${resumeS3.url}" style="color:#1a365d">View / Download</a></p>` : ''}
           <p style="font-size:13px;color:#666;margin-top:16px">
             A fillable application packet has been emailed to the applicant at ${data.email}.
           </p>
