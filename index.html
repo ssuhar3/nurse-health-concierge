@@ -896,6 +896,120 @@ nav.scrolled {
   border-radius: 1px;
 }
 
+/* ─── FAQ ────────────────────────────────────────────────── */
+.faq { background: var(--warm-white); }
+.faq-intro {
+  font-size: 16px;
+  line-height: 1.78;
+  color: var(--text-mid);
+  font-weight: 300;
+  max-width: 700px;
+  margin-bottom: 56px;
+}
+.faq-list {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-item:first-child {
+  border-top: 1px solid var(--border);
+}
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 24px 48px 24px 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--navy);
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  line-height: 1.4;
+  transition: color 0.3s;
+}
+.faq-question:hover { color: var(--blue); }
+.faq-question::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--blue);
+  transition: transform 0.3s;
+  font-family: 'Inter', sans-serif;
+}
+.faq-item.open .faq-question::after {
+  content: '−';
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), padding 0.3s;
+  padding: 0 0 0 0;
+}
+.faq-item.open .faq-answer {
+  max-height: 600px;
+  padding: 0 0 28px 0;
+}
+.faq-answer p {
+  font-size: 15px;
+  line-height: 1.78;
+  color: var(--text-mid);
+  font-weight: 300;
+  margin-bottom: 12px;
+}
+.faq-answer p:last-child { margin-bottom: 0; }
+.faq-answer ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 12px;
+}
+.faq-answer ul li {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-mid);
+  font-weight: 300;
+  padding: 4px 0 4px 20px;
+  position: relative;
+}
+.faq-answer ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+.faq-cta {
+  text-align: center;
+  margin-top: 56px;
+  padding: 48px;
+  background: var(--navy);
+  border-radius: var(--radius-lg);
+}
+.faq-cta-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.faq-cta-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
 /* ─── CONTACT ────────────────────────────────────────────── */
 .contact { background: var(--cream); }
 .contact-intro {
@@ -1107,6 +1221,7 @@ footer {
     <li><a href="#services">Services</a></li>
     <li><a href="#founder">Our Founder</a></li>
     <li><a href="#mission">Mission</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="advocate-apply.html">Join Our Team</a></li>
     <li><a href="client-inquiry.html" class="nav-cta">Request a Consultation</a></li>
   </ul>
@@ -1326,6 +1441,230 @@ footer {
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq section-pad" id="faq">
+  <div class="reveal">
+    <p class="eyebrow">About Healthcare Advocacy</p>
+    <h2 class="section-h">Frequently Asked <em>Questions</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="faq-intro reveal">Navigating the healthcare system can be complicated and overwhelming — especially when dealing with serious illness, complex diagnoses, insurance issues, or coordinating care between multiple providers. A Healthcare Advocate helps patients and families understand their options, communicate with medical providers, and make informed healthcare decisions.</p>
+
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <button class="faq-question">What is a Healthcare Advocate?</button>
+      <div class="faq-answer">
+        <p>A Healthcare Advocate is a professional who helps patients and families navigate the healthcare system. Advocates assist with things like:</p>
+        <ul>
+          <li>Understanding medical diagnoses and treatment options</li>
+          <li>Preparing for doctor appointments</li>
+          <li>Communicating with healthcare providers</li>
+          <li>Coordinating care among specialists</li>
+          <li>Reviewing medical bills and insurance issues</li>
+          <li>Organizing medical records</li>
+          <li>Supporting families during complex medical situations</li>
+        </ul>
+        <p>The goal is to help patients make informed decisions and receive the best possible care.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">When should someone hire a Healthcare Advocate?</button>
+      <div class="faq-answer">
+        <p>People often seek the help of a healthcare advocate when they are facing situations such as:</p>
+        <ul>
+          <li>A serious or complex medical diagnosis</li>
+          <li>Multiple doctors and treatment plans to coordinate</li>
+          <li>Confusing medical information</li>
+          <li>Difficulty communicating with providers</li>
+          <li>Hospitalizations or major procedures</li>
+          <li>Insurance claim denials or billing issues</li>
+          <li>Caring for an aging parent or family member</li>
+        </ul>
+        <p>An advocate can provide clarity and guidance during stressful medical situations.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">Do Healthcare Advocates replace Doctors or Nurses?</button>
+      <div class="faq-answer">
+        <p>No. Healthcare advocates do not provide medical treatments or replace physicians. Instead, they help patients:</p>
+        <ul>
+          <li>Understand what doctors are recommending</li>
+          <li>Ask the right questions</li>
+          <li>Evaluate options</li>
+          <li>Coordinate care</li>
+        </ul>
+        <p>Think of an advocate as a guide and partner in the healthcare process.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">Can a Healthcare Advocate attend medical appointments?</button>
+      <div class="faq-answer">
+        <p>Yes. Advocates can:</p>
+        <ul>
+          <li>Attend appointments in person or virtually</li>
+          <li>Help prepare questions beforehand</li>
+          <li>Take notes during visits</li>
+          <li>Help interpret what the physician explained</li>
+          <li>Ensure patient concerns are addressed</li>
+        </ul>
+        <p>Many patients find that having an advocate present helps them feel more confident and informed.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">Can you help coordinate care between multiple doctors?</button>
+      <div class="faq-answer">
+        <p>Yes. Many patients see several specialists, and communication between providers can sometimes be fragmented. Healthcare advocates help by:</p>
+        <ul>
+          <li>Organizing medical records</li>
+          <li>Ensuring providers have the necessary information</li>
+          <li>Helping coordinate referrals and tests</li>
+          <li>Monitoring follow-up care and treatment plans</li>
+        </ul>
+        <p>This can significantly reduce confusion and improve continuity of care.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">Can you help with insurance and medical billing issues?</button>
+      <div class="faq-answer">
+        <p>Yes. Healthcare advocates often assist with:</p>
+        <ul>
+          <li>Reviewing medical bills for errors</li>
+          <li>Understanding insurance coverage</li>
+          <li>Navigating claim denials</li>
+          <li>Helping file appeals</li>
+          <li>Communicating with insurance companies</li>
+        </ul>
+        <p>Medical billing and insurance processes can be complex, and advocates help patients navigate them more effectively.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">Can a Healthcare Advocate help after a hospital discharge?</button>
+      <div class="faq-answer">
+        <p>Yes. Transitions from hospital to home can be one of the most vulnerable times for patients. Advocates can help with:</p>
+        <ul>
+          <li>Understanding discharge instructions</li>
+          <li>Coordinating follow-up appointments</li>
+          <li>Managing medications</li>
+          <li>Arranging home health services if needed</li>
+          <li>Monitoring recovery and care plans</li>
+        </ul>
+        <p>This support helps reduce complications, error, and stress.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">Do you work with families as well as patients?</button>
+      <div class="faq-answer">
+        <p>Absolutely. Family members are often deeply involved in supporting loved ones through medical challenges. Healthcare advocates can:</p>
+        <ul>
+          <li>Help families understand the medical situation</li>
+          <li>Facilitate communication with providers</li>
+          <li>Provide guidance during difficult decisions</li>
+          <li>Support caregivers who may feel overwhelmed</li>
+        </ul>
+        <p>Our role is to support both patients and the people caring for them.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">Is healthcare advocacy only for older adults?</button>
+      <div class="faq-answer">
+        <p>No. People of all ages can benefit from healthcare advocacy, including:</p>
+        <ul>
+          <li>Adults managing chronic illness</li>
+          <li>Patients facing new diagnoses</li>
+          <li>Individuals undergoing major surgery</li>
+          <li>Families caring for children with complex medical needs</li>
+        </ul>
+        <p>Anyone navigating the healthcare system can benefit from expert guidance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">Are healthcare advocates bound by confidentiality?</button>
+      <div class="faq-answer">
+        <p>Yes. Healthcare advocates maintain strict confidentiality and respect patient privacy. With the patient's permission, advocates can communicate with providers, family members, and insurance companies to coordinate care.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">How do healthcare advocates help during a medical crisis?</button>
+      <div class="faq-answer">
+        <p>During urgent or high-stress medical situations, advocates can help by:</p>
+        <ul>
+          <li>Gathering accurate medical information</li>
+          <li>Communicating with doctors and hospital staff</li>
+          <li>Helping families understand treatment options</li>
+          <li>Supporting decision-making during critical moments</li>
+        </ul>
+        <p>Having an experienced advocate can provide clarity and reassurance during difficult situations.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">How do healthcare advocates work with existing care teams?</button>
+      <div class="faq-answer">
+        <p>Healthcare advocates collaborate with the patient's healthcare team. Our goal is to support the patient by:</p>
+        <ul>
+          <li>Facilitating communication</li>
+          <li>Ensuring questions are answered</li>
+          <li>Helping patients stay organized and informed</li>
+        </ul>
+        <p>We aim to complement — not replace — the work of healthcare providers.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">What types of services do you offer?</button>
+      <div class="faq-answer">
+        <p>Healthcare advocacy services may include:</p>
+        <ul>
+          <li>Medical appointment preparation and attendance</li>
+          <li>Care coordination and navigation</li>
+          <li>Medical record organization</li>
+          <li>Insurance and billing advocacy</li>
+          <li>Hospital support and discharge planning</li>
+          <li>Care planning for complex conditions</li>
+          <li>Family consultation and caregiver support</li>
+        </ul>
+        <p>Services can be tailored to meet each patient's specific needs.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">How much does a Healthcare Advocate cost?</button>
+      <div class="faq-answer">
+        <p>Fees vary depending on the level of service required. We discuss service options and fees during an initial consultation so families can choose the level of support that works best for them.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question">How do we get started?</button>
+      <div class="faq-answer">
+        <p>The first step is an initial consultation where we discuss:</p>
+        <ul>
+          <li>Your current medical situation</li>
+          <li>Challenges you're facing in the healthcare system</li>
+          <li>How advocacy services may help</li>
+        </ul>
+        <p>From there we create a personalized support plan based on your needs.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-cta reveal">
+    <p class="faq-cta-text">Navigating healthcare decisions can be overwhelming — but you don't have to do it alone.</p>
+    <p class="faq-cta-sub">A Healthcare Advocate can help you gain clarity, communicate effectively with providers, and make confident medical decisions.</p>
+    <a href="client-inquiry.html" class="contact-cta-btn">Schedule a Consultation &rarr;</a>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact section-pad" id="contact">
   <div class="reveal">
@@ -1396,6 +1735,7 @@ footer {
     <li><a href="#services">Services</a></li>
     <li><a href="#founder">Our Founder</a></li>
     <li><a href="advocate-apply.html">Join Our Team</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="client-inquiry.html">Consultation</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -1465,6 +1805,18 @@ footer {
       }
     });
   }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      // Toggle clicked
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(a => {
