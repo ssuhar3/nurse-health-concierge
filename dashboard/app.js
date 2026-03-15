@@ -52,6 +52,13 @@ let inqSortCol = 0, inqSortDir = -1;
 let clientSortCol = 0, clientSortDir = -1;
 let chartInstances = {};
 
+// Client-side cache: auto-refresh data older than 60s
+const CACHE_TTL = 60_000;
+let appDataTs = 0, inqDataTs = 0, clientDataTs = 0, statsTs = 0;
+let cachedStats = null;
+
+function isFresh(ts) { return Date.now() - ts < CACHE_TTL; }
+
 // ─── Init ───────────────────────────────────────────────
 (async function init() {
   // Verify session
@@ -131,8 +138,19 @@ function closeModal() {
 
 // ─── Overview ───────────────────────────────────────────
 async function loadOverview() {
+  if (cachedStats && isFresh(statsTs)) {
+    renderOverview(cachedStats);
+    return;
+  }
+  document.getElementById('metricsGrid').innerHTML = '<div class="loading">Loading...</div>';
   const stats = await API.getStats();
   if (!stats) return;
+  cachedStats = stats;
+  statsTs = Date.now();
+  renderOverview(stats);
+}
+
+function renderOverview(stats) {
 
   // Handle API error response
   if (stats.error) {
@@ -235,9 +253,10 @@ function renderMonthlyChart(stats) {
 
 // ─── Applicants Table ───────────────────────────────────
 async function loadApplicants() {
-  if (!appData) {
+  if (!appData || !isFresh(appDataTs)) {
     document.getElementById('appTableBody').innerHTML = '<tr><td colspan="6" class="loading">Loading...</td></tr>';
     appData = await API.listApplications();
+    appDataTs = Date.now();
     if (!appData) return;
 
     // Populate status filter
@@ -331,9 +350,10 @@ function renderAppTable() {
 
 // ─── Inquiries Table ────────────────────────────────────
 async function loadInquiries() {
-  if (!inqData) {
+  if (!inqData || !isFresh(inqDataTs)) {
     document.getElementById('inqTableBody').innerHTML = '<tr><td colspan="6" class="loading">Loading...</td></tr>';
     inqData = await API.listInquiries();
+    inqDataTs = Date.now();
     if (!inqData) return;
 
     const filter = document.getElementById('inqFilter');
@@ -419,9 +439,10 @@ function renderInqTable() {
 
 // ─── Clients Table ─────────────────────────────────────
 async function loadClients() {
-  if (!clientData) {
+  if (!clientData || !isFresh(clientDataTs)) {
     document.getElementById('clientTableBody').innerHTML = '<tr><td colspan="6" class="loading">Loading...</td></tr>';
     clientData = await API.listClients();
+    clientDataTs = Date.now();
     if (!clientData) return;
 
     const filter = document.getElementById('clientFilter');
@@ -616,6 +637,7 @@ async function openDetailModal(tab, record, statuses) {
     const res = await API.updateStatus(tab, id, newStatus);
     if (res?.success) {
       record['Status'] = newStatus;
+      statsTs = 0; // invalidate overview cache
       // Refresh table
       if (tab === 'applications') renderAppTable();
       else if (tab === 'inquiries') renderInqTable();

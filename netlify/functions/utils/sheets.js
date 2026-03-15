@@ -14,6 +14,44 @@ async function getClient() {
   return sheetsClient;
 }
 
+/* ─── In-Memory Cache ──────────────────────────────────── */
+const cache = new Map();
+const CACHE_TTL = 60_000; // 60 seconds
+
+/**
+ * Get cached data or fetch fresh
+ * @param {string} key - Cache key
+ * @param {Function} fetcher - Async function that returns fresh data
+ * @returns {*} Cached or fresh data
+ */
+async function withCache(key, fetcher) {
+  const entry = cache.get(key);
+  if (entry && Date.now() - entry.ts < CACHE_TTL) {
+    return entry.data;
+  }
+  const data = await fetcher();
+  cache.set(key, { data, ts: Date.now() });
+  return data;
+}
+
+/**
+ * Invalidate cache for a specific tab (call after writes)
+ * @param {string} tabName - Sheet tab name to invalidate
+ */
+function invalidateCache(tabName) {
+  cache.delete(`rows:${tabName}`);
+  cache.delete('stats'); // stats depend on all tabs
+}
+
+/**
+ * Clear entire cache
+ */
+function clearCache() {
+  cache.clear();
+}
+
+/* ─── Sheet Operations ─────────────────────────────────── */
+
 /**
  * Append a row to a specific sheet tab
  * @param {string} tabName - Sheet tab name (e.g., "Client Inquiries")
@@ -34,28 +72,33 @@ async function appendRow(tabName, rowValues) {
     },
   });
 
+  // Invalidate cache since data changed
+  invalidateCache(tabName);
+
   return response.data;
 }
 
 /**
- * Get all rows from a sheet tab
+ * Get all rows from a sheet tab (with caching)
  * @param {string} tabName - Sheet tab name
  * @returns {{ headers: string[], rows: string[][] }}
  */
 async function getRows(tabName) {
-  const sheets = await getClient();
-  const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+  return withCache(`rows:${tabName}`, async () => {
+    const sheets = await getClient();
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
-  const response = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range: `${tabName}!A:AZ`,
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: `${tabName}!A:AZ`,
+    });
+
+    const allRows = response.data.values || [];
+    const headers = allRows[0] || [];
+    const rows = allRows.slice(1);
+
+    return { headers, rows };
   });
-
-  const allRows = response.data.values || [];
-  const headers = allRows[0] || [];
-  const rows = allRows.slice(1);
-
-  return { headers, rows };
 }
 
 /**
@@ -76,6 +119,9 @@ async function updateCell(tabName, rowIndex, colIndex, value) {
     valueInputOption: 'USER_ENTERED',
     requestBody: { values: [[value]] },
   });
+
+  // Invalidate cache since data changed
+  invalidateCache(tabName);
 }
 
 /**
@@ -100,10 +146,13 @@ async function updateCells(tabName, rowIndex, updates) {
       data,
     },
   });
+
+  // Invalidate cache since data changed
+  invalidateCache(tabName);
 }
 
 /**
- * Convert 0-based column index to letter (0→A, 25→Z, 26→AA)
+ * Convert 0-based column index to letter (0->A, 25->Z, 26->AA)
  */
 function colIndexToLetter(index) {
   let letter = '';
@@ -115,4 +164,4 @@ function colIndexToLetter(index) {
   return letter;
 }
 
-module.exports = { appendRow, getRows, updateCell, updateCells };
+module.exports = { appendRow, getRows, updateCell, updateCells, invalidateCache, clearCache };
