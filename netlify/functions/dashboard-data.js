@@ -1,4 +1,4 @@
-const { getRows, updateCell, updateCells } = require('./utils/sheets');
+const { getRows, updateCell, updateCells, deleteRow } = require('./utils/sheets');
 const { verifySession } = require('./utils/dashboard-auth');
 const { sanitize, respond } = require('./utils/validate');
 
@@ -35,7 +35,7 @@ function authResponse(event, statusCode, body) {
       'Access-Control-Allow-Origin': event.headers.origin || '*',
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'GET, PATCH, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, PATCH, DELETE, OPTIONS',
     },
     body: JSON.stringify(body),
   };
@@ -218,6 +218,20 @@ exports.handler = async (event) => {
 
       await updateCell(tabConfig.sheetName, rowIndex, tabConfig.notesCol, newNotes);
       return authResponse(event, 200, { success: true, notes: newNotes });
+    }
+
+    // ── Delete record ──────────────────────────────
+    if (action === 'delete' && event.httpMethod === 'DELETE') {
+      const { tab, id } = JSON.parse(event.body || '{}');
+      const tabConfig = TABS[tab];
+      if (!tabConfig) return authResponse(event, 400, { error: 'Invalid tab' });
+      if (!id) return authResponse(event, 400, { error: 'Record ID is required' });
+
+      const rowIndex = await findRowById(tabConfig, id);
+      if (!rowIndex) return authResponse(event, 404, { error: 'Record not found' });
+
+      await deleteRow(tabConfig.sheetName, rowIndex);
+      return authResponse(event, 200, { success: true });
     }
 
     return authResponse(event, 400, { error: 'Invalid action' });

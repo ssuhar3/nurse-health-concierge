@@ -35,6 +35,13 @@ const API = {
       body: JSON.stringify(data),
     });
   },
+  deleteRecord(tab, id) {
+    return this.request('/.netlify/functions/dashboard-data?action=delete', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tab, id }),
+    });
+  },
   logout() {
     return this.request('/.netlify/functions/dashboard-auth?action=logout', { method: 'POST' });
   },
@@ -597,6 +604,16 @@ async function openDetailModal(tab, record, statuses) {
         </div>
       </div>
     </div>
+
+    <div class="detail-section" style="border-top:2px solid #C62828;margin-top:24px;padding-top:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div>
+          <h3 style="margin:0 0 4px;color:#C62828">Danger Zone</h3>
+          <p style="margin:0;font-size:13px;color:var(--text-light)">Permanently delete this record from the system</p>
+        </div>
+        <button class="btn btn-sm" id="deleteRecordBtn" style="background:#C62828;color:#fff;border:none">Delete Record</button>
+      </div>
+    </div>
   `;
 
   openModal(name, html);
@@ -696,6 +713,28 @@ async function openDetailModal(tab, record, statuses) {
     } else {
       btn.textContent = 'Error';
       setTimeout(() => { btn.textContent = 'Send Email'; btn.disabled = false; }, 2000);
+    }
+  });
+
+  // Delete record
+  document.getElementById('deleteRecordBtn').addEventListener('click', async () => {
+    if (!confirm(`Are you sure you want to permanently delete ${name}'s record? This cannot be undone.`)) return;
+    const btn = document.getElementById('deleteRecordBtn');
+    btn.disabled = true; btn.textContent = 'Deleting...';
+    const res = await API.deleteRecord(tab, id);
+    if (res?.success) {
+      closeModal();
+      // Invalidate cached data and stats
+      if (tab === 'applications') { appData = null; appDataTs = 0; }
+      else if (tab === 'inquiries') { inqData = null; inqDataTs = 0; }
+      else if (tab === 'clients') { clientData = null; clientDataTs = 0; }
+      statsTs = 0; cachedStats = null;
+      // Re-render current view
+      const activeView = document.querySelector('.sidebar-nav a.active')?.dataset.view;
+      if (activeView) showView(activeView);
+    } else {
+      btn.textContent = 'Error — Try Again';
+      setTimeout(() => { btn.textContent = 'Delete Record'; btn.disabled = false; }, 2000);
     }
   });
 }

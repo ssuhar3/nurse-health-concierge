@@ -164,4 +164,37 @@ function colIndexToLetter(index) {
   return letter;
 }
 
-module.exports = { appendRow, getRows, updateCell, updateCells, invalidateCache, clearCache };
+/**
+ * Delete a row from a sheet tab
+ * @param {string} tabName - Sheet tab name
+ * @param {number} rowIndex - 1-based sheet row number
+ */
+async function deleteRow(tabName, rowIndex) {
+  const sheets = await getClient();
+  const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+
+  // Get the sheetId (numeric) for the tab
+  const meta = await sheets.spreadsheets.get({ spreadsheetId, fields: 'sheets.properties' });
+  const sheet = meta.data.sheets.find(s => s.properties.title === tabName);
+  if (!sheet) throw new Error(`Sheet tab "${tabName}" not found`);
+
+  await sheets.spreadsheets.batchUpdate({
+    spreadsheetId,
+    requestBody: {
+      requests: [{
+        deleteDimension: {
+          range: {
+            sheetId: sheet.properties.sheetId,
+            dimension: 'ROWS',
+            startIndex: rowIndex - 1,
+            endIndex: rowIndex,
+          },
+        },
+      }],
+    },
+  });
+
+  invalidateCache(tabName);
+}
+
+module.exports = { appendRow, getRows, updateCell, updateCells, deleteRow, invalidateCache, clearCache };
