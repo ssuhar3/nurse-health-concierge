@@ -1,28 +1,30 @@
-const { createClient } = require('@supabase/supabase-js');
+// Supabase REST API insert — uses anon key + RLS (anon can insert)
+// No SDK needed, no extra env vars needed — keeps Netlify under 4KB limit
 
-let _client = null;
-
-function getClient() {
-  if (!_client) {
-    const url = process.env.SUPABASE_URL;
-    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!url || !key) {
-      throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env vars');
-    }
-    _client = createClient(url, key, {
-      auth: { persistSession: false },
-    });
-  }
-  return _client;
-}
+const SUPABASE_URL = 'https://rtulqglpbfeocbfskczu.supabase.co';
+// Publishable anon key — safe to include in server code
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0dWxxZ2xwYmZlb2NiZnNrY3p1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTc5NTMsImV4cCI6MjA4OTMzMzk1M30.hxsRpMc0pblgO2V_0KmXAOlj82ofY02l7qcDGASQRLI';
 
 async function insertRecord(table, data) {
-  const supabase = getClient();
-  const { error } = await supabase.from(table).insert(data);
-  if (error) {
-    console.error(`Supabase insert error (${table}):`, error.message);
-    // Don't throw — we don't want Supabase failures to break the form submission
-    // Google Sheets is still the primary store during migration
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.error(`Supabase insert error (${table}):`, res.status, text);
+    }
+  } catch (err) {
+    console.error(`Supabase insert error (${table}):`, err.message);
+    // Don't throw — Google Sheets is still the primary store during migration
   }
 }
 
