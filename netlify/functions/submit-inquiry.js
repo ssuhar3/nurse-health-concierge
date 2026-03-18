@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { appendRow } = require('./utils/sheets');
+const { insertRecord } = require('./utils/supabase');
 const { sendNotification, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
 
@@ -74,6 +75,25 @@ exports.handler = async (event) => {
     ];
 
     await appendRow('Client Inquiries', sheetRow);
+
+    // --- Supabase (dual-write for new portal) ---
+    await insertRecord('client_inquiries', {
+      contact_name: data.contactName,
+      relationship: data.relationship,
+      phone: data.phone,
+      email: data.email,
+      contact_method: data.contactMethod || '',
+      contact_time: data.contactTime || '',
+      senior_name: data.seniorName || '',
+      age_range: data.ageRange || '',
+      senior_location: data.seniorLocation || '',
+      living_situation: data.livingSituation || '',
+      health_needs: healthNeeds.join(', '),
+      story: data.story || '',
+      referral_source: data.referralSource || '',
+      timeframe: data.timeframe || '',
+      status: 'New',
+    });
 
     // --- Email Notification ---
     const html = `

@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { appendRow } = require('./utils/sheets');
+const { insertRecord } = require('./utils/supabase');
 const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
 const { generateApplicationPdf } = require('./utils/pdf');
@@ -181,6 +182,29 @@ exports.handler = async (event) => {
         </div>
       </div>
     `;
+
+    // --- Supabase (dual-write for new portal) ---
+    await insertRecord('advocate_applications', {
+      full_name: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      address: data.address || '',
+      city: data.city || '',
+      state: data.state || '',
+      zip: data.zip || '',
+      professional_title: data.profTitle,
+      employment_type: data.empType || '',
+      geographic_areas: data.geoAreas || '',
+      start_date: data.startDate || '',
+      experience: data.experience || '',
+      summary_pdf_url: summaryS3.url,
+      packet_pdf_url: packetS3.url,
+      resume_pdf_url: resumeS3 ? resumeS3.url : '',
+      ref1_name: data.ref1Name || '', ref1_phone: data.ref1Phone || '', ref1_email: data.ref1Email || '', ref1_relationship: data.ref1Relationship || '',
+      ref2_name: data.ref2Name || '', ref2_phone: data.ref2Phone || '', ref2_email: data.ref2Email || '', ref2_relationship: data.ref2Relationship || '',
+      ref3_name: data.ref3Name || '', ref3_phone: data.ref3Phone || '', ref3_email: data.ref3Email || '', ref3_relationship: data.ref3Relationship || '',
+      status: 'Packet Sent',
+    });
 
     // Fire all three in parallel
     await Promise.all([

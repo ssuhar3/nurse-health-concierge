@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { appendRow } = require('./utils/sheets');
+const { insertRecord } = require('./utils/supabase');
 const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
 const { generateOnboardingSummaryPdf } = require('./utils/client-summary-pdf');
@@ -191,6 +192,38 @@ exports.handler = async (event) => {
         </div>
       </div>
     `;
+
+    // --- Supabase (dual-write for new portal) ---
+    await insertRecord('client_onboarding', {
+      client_name: data.clientName,
+      dob: data.dob,
+      address: data.address || '',
+      city: data.city || '',
+      state: data.state || '',
+      zip: data.zip || '',
+      phone: data.phone,
+      email: data.email,
+      primary_contact_name: data.primaryContactName,
+      primary_contact_relationship: data.primaryContactRelationship || '',
+      primary_contact_phone: data.primaryContactPhone,
+      primary_contact_email: data.primaryContactEmail || '',
+      emergency_contact_name: data.emergencyContactName,
+      emergency_contact_phone: data.emergencyContactPhone,
+      pcp: data.pcp || '',
+      specialists: data.specialists || '',
+      medical_conditions: data.medicalConditions || '',
+      medications: data.medications || '',
+      allergies: data.allergies || '',
+      hospital_preference: data.hospitalPreference || '',
+      medicare_medicaid: data.medicareMedicaid || '',
+      supplemental_insurance: data.supplementalInsurance || '',
+      pharmacy: data.pharmacy || '',
+      care_needs: careNeeds.join(', '),
+      care_goals: careGoals,
+      summary_pdf_url: summaryS3.url,
+      packet_pdf_url: packetS3.url,
+      status: 'New',
+    });
 
     // Fire all three in parallel
     await Promise.all([
