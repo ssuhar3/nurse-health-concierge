@@ -1228,6 +1228,24 @@ footer {
   transition: all 0.3s;
 }
 .mobile-menu .mobile-menu-cta:hover { background: var(--blue-lt); }
+.mobile-menu-close {
+  position: absolute;
+  top: 20px; right: 24px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 36px;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+  z-index: 601;
+  transition: color 0.3s;
+}
+.mobile-menu-close:hover { color: #fff; }
+.mobile-menu .mobile-menu-home {
+  color: var(--blue-lt) !important;
+  font-weight: 600;
+}
 
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
@@ -1280,7 +1298,13 @@ footer {
   .section-pad { padding: 64px 24px; }
   .section-pad-sm { padding: 48px 24px; }
   .family-banner-overlay { padding: 32px 24px; }
-  footer { padding: 24px; flex-direction: column; text-align: center; }
+  footer { padding: 32px 24px; flex-direction: column; text-align: center; gap: 24px; }
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 24px;
+  }
+  .footer-logo-img { height: 40px; }
 }
 </style>
 </head>
@@ -1306,7 +1330,9 @@ footer {
 </nav>
 <!-- Mobile menu overlay (outside nav to avoid stacking context issues) -->
 <div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
   <ul>
+    <li><a href="#" class="mobile-menu-home">Home</a></li>
     <li><a href="#advocacy">Advocacy</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#founder">Our Founder</a></li>
@@ -1908,10 +1934,16 @@ footer {
   // Mobile menu toggle
   const hamburger = document.getElementById('navHamburger');
   const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
   if (hamburger && mobileMenu) {
     hamburger.addEventListener('click', () => {
       mobileMenu.classList.toggle('open');
     });
+    if (mobileMenuClose) {
+      mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    }
     // Close menu when a link is tapped
     mobileMenu.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
