@@ -113,7 +113,8 @@ nav.scrolled {
   gap: 5px;
   cursor: pointer;
   padding: 8px;
-  z-index: 200;
+  z-index: 600;
+  position: relative;
 }
 .nav-hamburger span {
   width: 22px; height: 2px;
@@ -1179,47 +1180,56 @@ footer {
   to   { opacity: 1; }
 }
 
-/* ─── MOBILE NAV ────────────────────────────────────────── */
-.nav-links.mobile-open {
-  display: flex !important;
-  flex-direction: column;
+/* ─── MOBILE MENU OVERLAY ───────────────────────────────── */
+.mobile-menu {
+  display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: var(--navy);
-  z-index: 199;
+  z-index: 500;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  padding: 70px 40px 40px;
 }
-.nav-links.mobile-open li { list-style: none; text-align: center; }
-.nav-links.mobile-open a {
-  font-size: 17px;
+.mobile-menu.open { display: flex; }
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.mobile-menu a {
+  font-size: 18px;
+  font-weight: 500;
   letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: rgba(255,255,255,0.75);
+  transition: color 0.3s;
 }
-.nav-links.mobile-open a:hover { color: #fff; }
-/* Divider before Join Our Team */
-.nav-links.mobile-open li:nth-last-child(2) {
-  margin-top: 12px;
-  padding-top: 20px;
+.mobile-menu a:hover { color: #fff; }
+.mobile-menu .mobile-menu-divider {
+  margin-top: 8px;
+  padding-top: 24px;
   border-top: 1px solid rgba(255,255,255,0.12);
-  width: 200px;
 }
-.nav-links.mobile-open a[href="advocate-apply.html"] {
+.mobile-menu .mobile-menu-gold {
   color: var(--gold) !important;
   font-weight: 600;
 }
-.nav-links.mobile-open .nav-cta {
+.mobile-menu .mobile-menu-cta {
+  display: inline-block;
   font-size: 13px;
   font-weight: 600;
-  padding: 14px 32px;
-  display: inline-block;
+  letter-spacing: 0.18em;
+  padding: 16px 36px;
   background: var(--blue);
   color: #fff !important;
   border-radius: var(--radius);
-  letter-spacing: 0.18em;
+  transition: all 0.3s;
 }
+.mobile-menu .mobile-menu-cta:hover { background: var(--blue-lt); }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
@@ -1260,9 +1270,14 @@ footer {
   .hero-eyebrow { justify-content: center; }
   .hero-rule { margin-left: auto; margin-right: auto; }
   .hero-body { font-size: 15px; margin-bottom: 36px; max-width: 100%; }
-  .hero-actions { flex-direction: column; align-items: center; width: 100%; }
-  .hero-actions .btn-primary { width: 100%; max-width: 320px; text-align: center; justify-content: center; }
-  .hero-actions .btn-ghost { width: 100%; max-width: 320px; text-align: center; justify-content: center; }
+  .hero-eyebrow, .hero-headline, .hero-rule, .hero-body, .hero-actions {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  .hero-actions { flex-direction: column; align-items: center; width: 100%; gap: 12px; }
+  .hero-actions .btn-primary { width: 100%; max-width: 300px; text-align: center; justify-content: center; }
+  .hero-actions .btn-ghost { width: 100%; max-width: 300px; text-align: center; justify-content: center; }
   .section-pad { padding: 64px 24px; }
   .section-pad-sm { padding: 48px 24px; }
   .family-banner-overlay { padding: 32px 24px; }
@@ -1286,10 +1301,22 @@ footer {
     <li><a href="advocate-apply.html">Join Our Team</a></li>
     <li><a href="client-inquiry.html" class="nav-cta">Request a Consultation</a></li>
   </ul>
-  <div class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')">
+  <div class="nav-hamburger" id="navHamburger">
     <span></span><span></span><span></span>
   </div>
 </nav>
+<!-- Mobile menu overlay (outside nav to avoid stacking context issues) -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#advocacy">Advocacy</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#founder">Our Founder</a></li>
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li class="mobile-menu-divider"><a href="advocate-apply.html" class="mobile-menu-gold">Join Our Team</a></li>
+    <li><a href="client-inquiry.html" class="mobile-menu-cta">Request a Consultation</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1878,6 +1905,21 @@ footer {
       if (!wasOpen) item.classList.add('open');
     });
   });
+
+  // Mobile menu toggle
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    // Close menu when a link is tapped
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    });
+  }
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(a => {
