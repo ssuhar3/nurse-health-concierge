@@ -1244,12 +1244,14 @@ footer {
   nav { height: 64px; padding: 0 20px; }
   nav.scrolled { height: 56px; }
   .hero { min-height: auto; padding-top: 64px; }
-  .hero-left { padding: 48px 24px 56px; }
+  .hero-left { padding: 48px 24px 56px; align-items: center; text-align: center; }
   .hero-headline { font-size: clamp(32px, 8vw, 42px); margin-bottom: 24px; }
-  .hero-body { font-size: 15px; margin-bottom: 36px; }
-  .hero-actions { flex-direction: column; align-items: stretch; }
-  .hero-actions .btn-primary,
-  .hero-actions .btn-ghost { text-align: center; justify-content: center; }
+  .hero-eyebrow { justify-content: center; }
+  .hero-rule { margin-left: auto; margin-right: auto; }
+  .hero-body { font-size: 15px; margin-bottom: 36px; max-width: 100%; }
+  .hero-actions { flex-direction: column; align-items: center; width: 100%; }
+  .hero-actions .btn-primary { width: 100%; max-width: 320px; text-align: center; justify-content: center; }
+  .hero-actions .btn-ghost { width: 100%; max-width: 320px; text-align: center; justify-content: center; }
   .section-pad { padding: 64px 24px; }
   .section-pad-sm { padding: 48px 24px; }
   .family-banner-overlay { padding: 32px 24px; }
