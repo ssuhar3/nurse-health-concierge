@@ -1189,25 +1189,36 @@ footer {
   z-index: 199;
   align-items: center;
   justify-content: center;
-  gap: 32px;
-  padding: 80px 40px;
-  overflow-y: auto;
+  gap: 24px;
+  padding: 70px 40px 40px;
 }
 .nav-links.mobile-open li { list-style: none; text-align: center; }
 .nav-links.mobile-open a {
-  font-size: 18px;
-  letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.85);
+  font-size: 17px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.75);
 }
 .nav-links.mobile-open a:hover { color: #fff; }
+/* Divider before Join Our Team */
+.nav-links.mobile-open li:nth-last-child(2) {
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  width: 200px;
+}
 .nav-links.mobile-open a[href="advocate-apply.html"] {
   color: var(--gold) !important;
+  font-weight: 600;
 }
 .nav-links.mobile-open .nav-cta {
-  font-size: 14px;
-  padding: 16px 36px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 14px 32px;
   display: inline-block;
-  margin-top: 8px;
+  background: var(--blue);
+  color: #fff !important;
+  border-radius: var(--radius);
+  letter-spacing: 0.18em;
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
@@ -1243,8 +1254,8 @@ footer {
   .nav-logo-img { height: 44px; }
   nav { height: 64px; padding: 0 20px; }
   nav.scrolled { height: 56px; }
-  .hero { min-height: auto; padding-top: 64px; }
-  .hero-left { padding: 48px 24px 56px; align-items: center; text-align: center; }
+  .hero { min-height: auto; padding-top: 64px; overflow: visible; }
+  .hero-left { padding: 48px 24px 48px; align-items: center; text-align: center; }
   .hero-headline { font-size: clamp(32px, 8vw, 42px); margin-bottom: 24px; }
   .hero-eyebrow { justify-content: center; }
   .hero-rule { margin-left: auto; margin-right: auto; }
