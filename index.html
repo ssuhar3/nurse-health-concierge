@@ -1022,8 +1022,11 @@ nav.scrolled {
 }
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 28px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .contact-card {
   background: #fff;
@@ -1176,6 +1179,28 @@ footer {
   to   { opacity: 1; }
 }
 
+/* ─── MOBILE NAV ────────────────────────────────────────── */
+.nav-links.mobile-open {
+  display: flex !important;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(11,29,58,0.97);
+  z-index: 150;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 80px 40px;
+}
+.nav-links.mobile-open a {
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+}
+.nav-links.mobile-open .nav-cta {
+  font-size: 14px;
+  padding: 14px 32px;
+}
+
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero { grid-template-columns: 1fr; }
@@ -1187,23 +1212,28 @@ footer {
   .founder-grid { grid-template-columns: 1fr; gap: 48px; }
   .photo-stack { padding-bottom: 80px; max-width: 420px; }
   .team-strip { grid-template-columns: 300px 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-card { padding: 36px; }
   nav { padding: 0 32px; }
-  .nav-links { gap: 24px; }
+  .nav-links { gap: 18px; }
   footer { padding: 28px 40px; }
   .family-banner-overlay { padding: 48px; }
 }
 @media (max-width: 720px) {
   .contact-grid, .creds-grid { grid-template-columns: 1fr; }
+  .contact-card { padding: 28px; }
   .hero-stats { grid-template-columns: 1fr 1fr; }
   .retainer-banner { display: block; }
   .team-strip { grid-template-columns: 1fr; }
   .formula-row { flex-direction: column; border-radius: var(--radius); }
   .formula-terms { flex-direction: column; }
   .pillars-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .hero-left { padding: 64px 28px 120px; }
   .section-pad { padding: 64px 24px; }
+  .section-pad-sm { padding: 48px 24px; }
   .family-banner-overlay { padding: 32px 24px; }
   footer { padding: 24px; flex-direction: column; text-align: center; }
 }
@@ -1450,7 +1480,7 @@ footer {
   </div>
   <p class="contact-intro reveal">Whether you need an advocate for a loved one, want to join our team, or simply have a question — we're here to help.</p>
 
-  <div class="contact-grid" style="grid-template-columns: repeat(3, 1fr); justify-content: center;">
+  <div class="contact-grid">
     <!-- Path 1: Client Inquiries -->
     <div class="contact-card reveal reveal-d1">
       <div class="contact-card-icon">
