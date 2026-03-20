@@ -1185,20 +1185,29 @@ footer {
   flex-direction: column;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(11,29,58,0.97);
-  z-index: 150;
+  background: var(--navy);
+  z-index: 199;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 32px;
   padding: 80px 40px;
+  overflow-y: auto;
 }
+.nav-links.mobile-open li { list-style: none; text-align: center; }
 .nav-links.mobile-open a {
-  font-size: 16px;
+  font-size: 18px;
+  letter-spacing: 0.15em;
   color: rgba(255,255,255,0.85);
+}
+.nav-links.mobile-open a:hover { color: #fff; }
+.nav-links.mobile-open a[href="advocate-apply.html"] {
+  color: var(--gold) !important;
 }
 .nav-links.mobile-open .nav-cta {
   font-size: 14px;
-  padding: 14px 32px;
+  padding: 16px 36px;
+  display: inline-block;
+  margin-top: 8px;
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
@@ -1231,7 +1240,16 @@ footer {
   .services-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
-  .hero-left { padding: 64px 28px 120px; }
+  .nav-logo-img { height: 44px; }
+  nav { height: 64px; padding: 0 20px; }
+  nav.scrolled { height: 56px; }
+  .hero { min-height: auto; padding-top: 64px; }
+  .hero-left { padding: 48px 24px 56px; }
+  .hero-headline { font-size: clamp(32px, 8vw, 42px); margin-bottom: 24px; }
+  .hero-body { font-size: 15px; margin-bottom: 36px; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn-primary,
+  .hero-actions .btn-ghost { text-align: center; justify-content: center; }
   .section-pad { padding: 64px 24px; }
   .section-pad-sm { padding: 48px 24px; }
   .family-banner-overlay { padding: 32px 24px; }
