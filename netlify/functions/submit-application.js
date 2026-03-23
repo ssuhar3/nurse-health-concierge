@@ -87,9 +87,6 @@ exports.handler = async (event) => {
       summaryS3.url,
       packetS3.url,
       resumeS3 ? resumeS3.url : '',
-      data.ref1Name || '', data.ref1Phone || '', data.ref1Email || '', data.ref1Relationship || '',
-      data.ref2Name || '', data.ref2Phone || '', data.ref2Email || '', data.ref2Relationship || '',
-      data.ref3Name || '', data.ref3Phone || '', data.ref3Email || '', data.ref3Relationship || '',
       'Packet Sent',
       '', // Internal Notes
       crypto.randomUUID(), // Record ID
@@ -119,15 +116,6 @@ exports.handler = async (event) => {
             'Earliest Start Date': data.startDate,
           })}
           ${data.experience ? formatSection('Experience', { 'Senior Health Advocacy': data.experience }) : ''}
-          ${formatSection('Reference 1', {
-            'Name': data.ref1Name, 'Phone': data.ref1Phone, 'Email': data.ref1Email, 'Relationship': data.ref1Relationship,
-          })}
-          ${formatSection('Reference 2', {
-            'Name': data.ref2Name, 'Phone': data.ref2Phone, 'Email': data.ref2Email, 'Relationship': data.ref2Relationship,
-          })}
-          ${formatSection('Reference 3', {
-            'Name': data.ref3Name, 'Phone': data.ref3Phone, 'Email': data.ref3Email, 'Relationship': data.ref3Relationship,
-          })}
           <p style="margin-top:20px;font-size:14px">
             <strong>Summary PDF:</strong>
             <a href="${summaryS3.url}" style="color:#1a365d">View / Download</a>
@@ -200,9 +188,6 @@ exports.handler = async (event) => {
       summary_pdf_url: summaryS3.url,
       packet_pdf_url: packetS3.url,
       resume_pdf_url: resumeS3 ? resumeS3.url : '',
-      ref1_name: data.ref1Name || '', ref1_phone: data.ref1Phone || '', ref1_email: data.ref1Email || '', ref1_relationship: data.ref1Relationship || '',
-      ref2_name: data.ref2Name || '', ref2_phone: data.ref2Phone || '', ref2_email: data.ref2Email || '', ref2_relationship: data.ref2Relationship || '',
-      ref3_name: data.ref3Name || '', ref3_phone: data.ref3Phone || '', ref3_email: data.ref3Email || '', ref3_relationship: data.ref3Relationship || '',
       status: 'Packet Sent',
     });
 
