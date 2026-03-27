@@ -573,13 +573,13 @@ nav.scrolled {
 /* ─── FAMILY BANNER ──────────────────────────────────────── */
 .family-banner {
   position: relative;
-  height: 600px;
+  height: clamp(500px, 50vw, 720px);
   overflow: hidden;
 }
 .family-banner img {
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 30%;
 }
 .family-banner-overlay {
   position: absolute;
@@ -590,7 +590,7 @@ nav.scrolled {
     rgba(11,29,58,0.12) 100%);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 64px 80px;
 }
 .family-banner-eyebrow {
@@ -1297,7 +1297,9 @@ footer {
   .hero-actions .btn-ghost { width: 100%; max-width: 300px; text-align: center; justify-content: center; }
   .section-pad { padding: 64px 24px; }
   .section-pad-sm { padding: 48px 24px; }
-  .family-banner-overlay { padding: 32px 24px; }
+  .family-banner { height: 520px; }
+  .family-banner img { object-position: center 20%; }
+  .family-banner-overlay { padding: 32px 24px 40px; }
   footer { padding: 32px 24px; flex-direction: column; text-align: center; gap: 24px; }
   .footer-links {
     flex-wrap: wrap;
