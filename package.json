@@ -1,7 +1,7 @@
 {
-  "name": "nurse-health-concierge",
+  "name": "senior-health-concierge",
   "version": "1.0.0",
-  "description": "Nurse Health Concierge website with serverless form handling",
+  "description": "Senior Health Concierge website with serverless form handling",
   "scripts": {
     "dev": "netlify dev",
     "serve": "npx serve . -l 8889"

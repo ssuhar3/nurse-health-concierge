@@ -48,7 +48,7 @@ function addPage(ctx) {
 
 function drawHeader(page, ctx, title, subtitle) {
   page.drawRectangle({ x: 0, y: PAGE_H - 80, width: PAGE_W, height: 80, color: NAVY });
-  page.drawText('Nurse Health Concierge', {
+  page.drawText('Senior Health Concierge', {
     x: MARGIN, y: PAGE_H - 32, size: 16, font: ctx.fontBold, color: WHITE,
   });
   page.drawText(title, {
@@ -94,7 +94,7 @@ function addMultiLineField(ctx, page, name, x, y, w, h, value) {
 }
 
 function drawFooter(page, ctx, pageNum) {
-  page.drawText(`Page ${pageNum} of ${TOTAL_PAGES}  |  Nurse Health Concierge  |  Confidential`, {
+  page.drawText(`Page ${pageNum} of ${TOTAL_PAGES}  |  Senior Health Concierge  |  Confidential`, {
     x: MARGIN, y: 25, size: 7, font: ctx.fontItalic, color: GRAY,
   });
 }
@@ -166,7 +166,7 @@ function buildPage1_HIPAA(ctx) {
 
   y = drawSectionTitle(page, ctx, y, 'Authorization to Use and Disclose Health Information');
 
-  y = drawLegalText(page, ctx, y, `I hereby authorize Nurse Health Concierge and its assigned Health Advocate to access and discuss my medical information with healthcare providers for the purpose of coordinating my care. This authorization includes:
+  y = drawLegalText(page, ctx, y, `I hereby authorize Senior Health Concierge and its assigned Health Advocate to access and discuss my medical information with healthcare providers for the purpose of coordinating my care. This authorization includes:
 
   \u2022  Speaking with my physicians and healthcare providers on my behalf
   \u2022  Accessing my medical records as needed for care coordination
@@ -174,11 +174,11 @@ function buildPage1_HIPAA(ctx) {
   \u2022  Sharing relevant health information with my designated family contacts
   \u2022  Coordinating care between multiple healthcare providers
 
-This authorization is voluntary. I understand that I may revoke this authorization at any time by providing written notice to Nurse Health Concierge. Revocation will not affect actions already taken in reliance on this authorization.
+This authorization is voluntary. I understand that I may revoke this authorization at any time by providing written notice to Senior Health Concierge. Revocation will not affect actions already taken in reliance on this authorization.
 
 This authorization expires one (1) year from the date of signature and may be renewed. I understand that information disclosed under this authorization may be subject to re-disclosure and no longer protected by HIPAA.
 
-I understand that Nurse Health Concierge will not condition my treatment or services on whether I sign this authorization.`);
+I understand that Senior Health Concierge will not condition my treatment or services on whether I sign this authorization.`);
 
   y -= 20;
   drawSignatureBlock(page, ctx, y, 'f2');
@@ -197,10 +197,10 @@ function buildPage2_ServiceAgreement(ctx) {
   y = drawSectionTitle(page, ctx, y, 'Services Provided');
 
   const sections = [
-    ['Services Included', 'Nurse Health Concierge provides the following health advocacy and coordination services:\n\n  \u2022  Medical appointment accompaniment and advocacy\n  \u2022  Hospital advocacy and discharge planning support\n  \u2022  Medication coordination and oversight\n  \u2022  Care coordination between multiple providers\n  \u2022  Insurance and Medicare/Medicaid navigation\n  \u2022  Family communication and health status updates\n  \u2022  Wellness monitoring and check-ins'],
-    ['Services NOT Provided', 'Nurse Health Concierge does NOT provide:\n\n  \u2022  Medical diagnosis or treatment\n  \u2022  Prescribing or administering medication\n  \u2022  Home health aide or personal care services\n  \u2022  Transportation services\n  \u2022  Legal or financial advice'],
+    ['Services Included', 'Senior Health Concierge provides the following health advocacy and coordination services:\n\n  \u2022  Medical appointment accompaniment and advocacy\n  \u2022  Hospital advocacy and discharge planning support\n  \u2022  Medication coordination and oversight\n  \u2022  Care coordination between multiple providers\n  \u2022  Insurance and Medicare/Medicaid navigation\n  \u2022  Family communication and health status updates\n  \u2022  Wellness monitoring and check-ins'],
+    ['Services NOT Provided', 'Senior Health Concierge does NOT provide:\n\n  \u2022  Medical diagnosis or treatment\n  \u2022  Prescribing or administering medication\n  \u2022  Home health aide or personal care services\n  \u2022  Transportation services\n  \u2022  Legal or financial advice'],
     ['Fees & Payment', 'Fee schedule and payment terms will be discussed and agreed upon during your initial consultation. A separate Payment Authorization form (Form 4) is included in this packet.'],
-    ['Termination', 'Either party may terminate this agreement with fourteen (14) days written notice. In cases of emergency or safety concerns, Nurse Health Concierge reserves the right to discontinue services immediately. Upon termination, NHC will provide reasonable assistance with care transition.'],
+    ['Termination', 'Either party may terminate this agreement with fourteen (14) days written notice. In cases of emergency or safety concerns, Senior Health Concierge reserves the right to discontinue services immediately. Upon termination, SHC will provide reasonable assistance with care transition.'],
   ];
 
   for (const [title, text] of sections) {
@@ -273,7 +273,7 @@ function buildPage3_PaymentAuth(ctx) {
   // Billing authorization
   y = drawSectionTitle(page, ctx, y, 'Billing Authorization');
 
-  y = drawLegalText(page, ctx, y, `I authorize Nurse Health Concierge to charge the payment method indicated above for services rendered in accordance with the agreed-upon fee schedule. I understand that:
+  y = drawLegalText(page, ctx, y, `I authorize Senior Health Concierge to charge the payment method indicated above for services rendered in accordance with the agreed-upon fee schedule. I understand that:
 
   \u2022  Charges will be processed on a monthly basis unless otherwise agreed
   \u2022  I will receive an itemized statement prior to each charge
@@ -299,7 +299,7 @@ function buildPage4_EmergencyProtocol(ctx) {
 
   y = drawSectionTitle(page, ctx, y, 'Emergency Authorization');
 
-  y = drawLegalText(page, ctx, y, `In the event of a medical emergency or safety concern, I authorize my assigned Health Advocate from Nurse Health Concierge to take the following actions on my behalf:
+  y = drawLegalText(page, ctx, y, `In the event of a medical emergency or safety concern, I authorize my assigned Health Advocate from Senior Health Concierge to take the following actions on my behalf:
 
   \u2022  Call 911 or Emergency Medical Services (EMS) if I am in immediate danger or experiencing a medical emergency
   \u2022  Contact my designated emergency contact(s) listed below
@@ -358,7 +358,7 @@ function buildPage5_FamilyCommunication(ctx) {
 
   y = drawSectionTitle(page, ctx, y, 'Authorized Contacts for Health Updates');
 
-  y = drawLegalText(page, ctx, y, `I authorize Nurse Health Concierge and my assigned Health Advocate to share information about my health status, care plans, and medical updates with the individuals listed below. I understand that I may modify this list at any time by providing written notice.`);
+  y = drawLegalText(page, ctx, y, `I authorize Senior Health Concierge and my assigned Health Advocate to share information about my health status, care plans, and medical updates with the individuals listed below. I understand that I may modify this list at any time by providing written notice.`);
 
   y -= 10;
 

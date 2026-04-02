@@ -33,7 +33,7 @@ function generateApplicationPdf(data) {
         .fillColor('#FFFFFF')
         .fontSize(22)
         .font('Helvetica-Bold')
-        .text('Nurse Health Concierge', 60, 30, { width: pageWidth });
+        .text('Senior Health Concierge', 60, 30, { width: pageWidth });
 
       doc
         .fontSize(14)
@@ -128,7 +128,7 @@ function generateApplicationPdf(data) {
         .fillColor(GRAY)
         .fontSize(8)
         .font('Helvetica')
-        .text('Nurse Health Concierge — Confidential Application', 60, doc.y, {
+        .text('Senior Health Concierge — Confidential Application', 60, doc.y, {
           width: pageWidth,
           align: 'center',
         });

@@ -28,7 +28,7 @@ function generateOnboardingSummaryPdf(data) {
       doc.rect(0, 0, doc.page.width, 110).fill(NAVY);
 
       doc.fillColor('#FFFFFF').fontSize(22).font('Helvetica-Bold')
-        .text('Nurse Health Concierge', 60, 30, { width: pageWidth });
+        .text('Senior Health Concierge', 60, 30, { width: pageWidth });
 
       doc.fontSize(14).font('Helvetica')
         .text('Client Onboarding Intake', 60, 58, { width: pageWidth });
@@ -123,7 +123,7 @@ function generateOnboardingSummaryPdf(data) {
       doc.moveTo(60, doc.y).lineTo(60 + pageWidth, doc.y).lineWidth(0.5).strokeColor('#CCCCCC').stroke();
       doc.moveDown(0.5);
       doc.fillColor(GRAY).fontSize(8).font('Helvetica')
-        .text('Nurse Health Concierge \u2014 Confidential Client Intake', 60, doc.y, {
+        .text('Senior Health Concierge \u2014 Confidential Client Intake', 60, doc.y, {
           width: pageWidth, align: 'center',
         });
 

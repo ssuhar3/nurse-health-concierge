@@ -1,5 +1,5 @@
 /**
- * NHC — Auto-Process Returned Application Packets
+ * SHC — Auto-Process Returned Application Packets
  *
  * This Google Apps Script monitors Gmail for returned filled-out PDFs
  * from advocate applicants, saves them to Google Drive, and updates
@@ -11,7 +11,7 @@
  * 3. Set Script Properties (Project Settings > Script Properties):
  *    - DRIVE_FOLDER_ID: Your Google Drive folder ID
  *    - SHEET_ID: Your Google Sheet ID
- *    - ADMIN_EMAIL: nursehealthconcierge@gmail.com (for notifications)
+ *    - ADMIN_EMAIL: srhealthconcierge@gmail.com (for notifications)
  * 4. Authorize the script when prompted
  *
  * ON-DEMAND USAGE (no auto-trigger needed):
@@ -27,10 +27,10 @@ function getConfig() {
   return {
     driveFolderId: props.getProperty('DRIVE_FOLDER_ID'),
     sheetId: props.getProperty('SHEET_ID'),
-    adminEmail: props.getProperty('ADMIN_EMAIL') || 'nursehealthconcierge@gmail.com',
+    adminEmail: props.getProperty('ADMIN_EMAIL') || 'srhealthconcierge@gmail.com',
     sheetTabName: 'Advocate Applications',
     processedLabel: 'nhc-processed',
-    searchQuery: 'has:attachment filename:pdf subject:"NHC Application" -label:nhc-processed',
+    searchQuery: 'has:attachment filename:pdf subject:"SHC Application" -label:nhc-processed',
   };
 }
 

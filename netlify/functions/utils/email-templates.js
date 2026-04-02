@@ -9,14 +9,14 @@ function wrap(title, body) {
     <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto">
       <div style="background:#1a365d;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
         <h2 style="margin:0">${title}</h2>
-        <p style="margin:4px 0 0;opacity:0.85">Nurse Health Concierge</p>
+        <p style="margin:4px 0 0;opacity:0.85">Senior Health Concierge</p>
       </div>
       <div style="padding:24px;background:#f9f7f2;border-radius:0 0 8px 8px">
         ${body}
         <p style="font-size:14px;color:#1a365d;margin-top:24px">
           Warm regards,<br>
           <strong>Pat Dobbins</strong><br>
-          <span style="color:#4a4e5c">Founder, Nurse Health Concierge</span>
+          <span style="color:#4a4e5c">Founder, Senior Health Concierge</span>
         </p>
       </div>
     </div>`;
@@ -29,7 +29,7 @@ const TEMPLATES = {
     html: (d) => wrap('Application Received', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        Thank you for your interest in joining Nurse Health Concierge as a Health Advocate.
+        Thank you for your interest in joining Senior Health Concierge as a Health Advocate.
         We have received your completed application packet and our team is now reviewing your qualifications.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -41,7 +41,7 @@ const TEMPLATES = {
 
   schedule_interview: {
     name: 'Schedule Interview',
-    subject: (d) => `Interview Invitation — Nurse Health Concierge`,
+    subject: (d) => `Interview Invitation — Senior Health Concierge`,
     html: (d) => wrap('Interview Invitation', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -62,12 +62,12 @@ const TEMPLATES = {
 
   approved: {
     name: 'Approved',
-    subject: (d) => `Congratulations! You've Been Approved — NHC`,
+    subject: (d) => `Congratulations! You've Been Approved — SHC`,
     html: (d) => wrap('Welcome to the Team!', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
         We are pleased to inform you that your application to become a Health Advocate
-        with Nurse Health Concierge has been <strong style="color:#2f855a">approved</strong>!
+        with Senior Health Concierge has been <strong style="color:#2f855a">approved</strong>!
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
         We will be sending you onboarding materials shortly. In the meantime, please
@@ -81,11 +81,11 @@ const TEMPLATES = {
 
   denied: {
     name: 'Denied',
-    subject: (d) => `Application Update — Nurse Health Concierge`,
+    subject: (d) => `Application Update — Senior Health Concierge`,
     html: (d) => wrap('Application Update', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        Thank you for your interest in Nurse Health Concierge. After careful review of your
+        Thank you for your interest in Senior Health Concierge. After careful review of your
         application, we have decided not to move forward at this time.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -97,11 +97,11 @@ const TEMPLATES = {
 
   follow_up: {
     name: 'Follow-up',
-    subject: (d) => `Following Up — Nurse Health Concierge`,
+    subject: (d) => `Following Up — Senior Health Concierge`,
     html: (d) => wrap('Following Up', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        We wanted to follow up regarding your recent submission to Nurse Health Concierge.
+        We wanted to follow up regarding your recent submission to Senior Health Concierge.
         If you have any questions or need any assistance, please don't hesitate to reach out.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -112,11 +112,11 @@ const TEMPLATES = {
 
   onboarding_invite: {
     name: 'Onboarding Invite',
-    subject: (d) => `Begin Your Care Journey — Nurse Health Concierge`,
-    html: (d) => wrap('Welcome to Nurse Health Concierge', `
+    subject: (d) => `Begin Your Care Journey — Senior Health Concierge`,
+    html: (d) => wrap('Welcome to Senior Health Concierge', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        We're excited to begin your care journey with Nurse Health Concierge!
+        We're excited to begin your care journey with Senior Health Concierge!
         To get started, we need a few details about your loved one's health and care needs.
       </p>
       <div style="text-align:center;margin:28px 0">
@@ -144,11 +144,11 @@ const TEMPLATES = {
 
   inquiry_response: {
     name: 'Inquiry Response',
-    subject: (d) => `Re: Your Consultation Request — NHC`,
+    subject: (d) => `Re: Your Consultation Request — SHC`,
     html: (d) => wrap('Thank You for Reaching Out', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        Thank you for contacting Nurse Health Concierge about care for your loved one.
+        Thank you for contacting Senior Health Concierge about care for your loved one.
         We have reviewed your consultation request and would like to discuss how we can help.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">

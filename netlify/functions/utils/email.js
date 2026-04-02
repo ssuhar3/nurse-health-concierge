@@ -31,8 +31,8 @@ async function sendNotification(subject, html, attachments = []) {
   const mail = getTransporter();
 
   const result = await mail.sendMail({
-    from: `"Nurse Health Concierge" <${process.env.SMTP_USER}>`,
-    to: process.env.NOTIFICATION_EMAIL || 'nursehealthconcierge@gmail.com',
+    from: `"Senior Health Concierge" <${process.env.SMTP_USER}>`,
+    to: process.env.NOTIFICATION_EMAIL || 'srhealthconcierge@gmail.com',
     subject,
     html,
     attachments,
@@ -75,7 +75,7 @@ async function sendEmail({ to, subject, html, replyTo, attachments = [] }) {
   const mail = getTransporter();
 
   const mailOpts = {
-    from: `"Nurse Health Concierge" <${process.env.SMTP_USER}>`,
+    from: `"Senior Health Concierge" <${process.env.SMTP_USER}>`,
     to,
     subject,
     html,

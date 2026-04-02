@@ -140,26 +140,26 @@ exports.handler = async (event) => {
     const confirmationHtml = `
       <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 600px; margin: 0 auto; background: #f9f7f2;">
         <div style="background: #1a365d; padding: 24px; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 20px; font-weight: bold;">Nurse Health Concierge</h1>
+          <h1 style="color: white; margin: 0; font-size: 20px; font-weight: bold;">Senior Health Concierge</h1>
         </div>
         <div style="padding: 32px 24px; background: white;">
           <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">Dear ${data.contactName},</p>
-          <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">Thank you for reaching out to Nurse Health Concierge. We have received your consultation request and are grateful you chose us to help with your family's care needs.</p>
+          <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">Thank you for reaching out to Senior Health Concierge. We have received your consultation request and are grateful you chose us to help with your family's care needs.</p>
           <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">A member of our team will review your request and reach out to you within <strong>3 business days</strong> to discuss how we can best support you.</p>
-          <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">If you have any urgent questions in the meantime, please don't hesitate to contact us directly at <a href="mailto:nursehealthconcierge@gmail.com" style="color: #1a365d;">nursehealthconcierge@gmail.com</a>.</p>
-          <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">Warm regards,<br/>Pat Dobbins<br/>Founder, Nurse Health Concierge</p>
+          <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">If you have any urgent questions in the meantime, please don't hesitate to contact us directly at <a href="mailto:srhealthconcierge@gmail.com" style="color: #1a365d;">srhealthconcierge@gmail.com</a>.</p>
+          <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">Warm regards,<br/>Pat Dobbins<br/>Founder, Senior Health Concierge</p>
         </div>
         <div style="padding: 16px 24px; text-align: center; color: #999; font-size: 12px;">
-          Nurse Health Concierge &bull; Caring for those who matter most
+          Senior Health Concierge &bull; Caring for those who matter most
         </div>
       </div>
     `;
 
     await sendEmail({
       to: data.email,
-      subject: 'Thank You for Your Inquiry - Nurse Health Concierge',
+      subject: 'Thank You for Your Inquiry - Senior Health Concierge',
       html: confirmationHtml,
-      replyTo: process.env.SMTP_USER || 'nursehealthconcierge@gmail.com',
+      replyTo: process.env.SMTP_USER || 'srhealthconcierge@gmail.com',
     });
 
     return respond(200, {
@@ -170,7 +170,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error('submit-inquiry error:', err);
     return respond(500, {
-      error: 'Something went wrong. Please try again or email us directly at nursehealthconcierge@gmail.com.',
+      error: 'Something went wrong. Please try again or email us directly at srhealthconcierge@gmail.com.',
     });
   }
 };

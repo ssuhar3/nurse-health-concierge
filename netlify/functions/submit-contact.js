@@ -54,7 +54,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error('submit-contact error:', err);
     return respond(500, {
-      error: 'Something went wrong. Please try again or email us directly at nursehealthconcierge@gmail.com.',
+      error: 'Something went wrong. Please try again or email us directly at srhealthconcierge@gmail.com.',
     });
   }
 };

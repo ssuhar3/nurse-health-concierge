@@ -50,7 +50,7 @@ function addPage(ctx) {
 function drawHeader(page, ctx, title, subtitle) {
   // Navy banner
   page.drawRectangle({ x: 0, y: PAGE_H - 80, width: PAGE_W, height: 80, color: NAVY });
-  page.drawText('Nurse Health Concierge', {
+  page.drawText('Senior Health Concierge', {
     x: MARGIN, y: PAGE_H - 32, size: 16, font: ctx.fontBold, color: WHITE,
   });
   page.drawText(title, {
@@ -97,7 +97,7 @@ function addMultiLineField(ctx, page, name, x, y, w, h, value) {
 }
 
 function drawFooter(page, ctx, pageNum) {
-  page.drawText(`Page ${pageNum} of 8  |  Nurse Health Concierge  |  Confidential`, {
+  page.drawText(`Page ${pageNum} of 8  |  Senior Health Concierge  |  Confidential`, {
     x: MARGIN, y: 25, size: 7, font: ctx.fontItalic, color: GRAY,
   });
 }
@@ -288,7 +288,7 @@ function buildPage4_BackgroundCheck(ctx) {
 
   y = drawSectionTitle(page, ctx, y, 'Authorization for Background Investigation');
 
-  const legalText = `I hereby authorize Nurse Health Concierge to conduct a background investigation as part of my application for a Health Advocate position. This investigation may include, but is not limited to:
+  const legalText = `I hereby authorize Senior Health Concierge to conduct a background investigation as part of my application for a Health Advocate position. This investigation may include, but is not limited to:
 
   \u2022  Criminal background check (federal and state)
   \u2022  Verification of professional licensing and certifications
@@ -298,9 +298,9 @@ function buildPage4_BackgroundCheck(ctx) {
 
 I understand that this information will be used solely for the purpose of evaluating my suitability for the Health Advocate position and will be handled in accordance with applicable federal and state laws.
 
-I release Nurse Health Concierge and its agents from any liability arising from the collection and use of this information. I understand that any misrepresentation or omission of facts in my application or during the background check process may result in disqualification from consideration or termination of any subsequent engagement.
+I release Senior Health Concierge and its agents from any liability arising from the collection and use of this information. I understand that any misrepresentation or omission of facts in my application or during the background check process may result in disqualification from consideration or termination of any subsequent engagement.
 
-This authorization remains valid for the duration of my application process and, if engaged, for the duration of my relationship with Nurse Health Concierge.`;
+This authorization remains valid for the duration of my application process and, if engaged, for the duration of my relationship with Senior Health Concierge.`;
 
   const lines = legalText.split('\n');
   for (const line of lines) {
@@ -341,17 +341,17 @@ function buildPage5_HIPAA(ctx) {
 
   y = drawSectionTitle(page, ctx, y, 'Confidentiality & HIPAA Compliance Agreement');
 
-  const legalText = `As a Health Advocate with Nurse Health Concierge, I understand that I may have access to Protected Health Information (PHI) and other confidential information regarding clients and their families. By signing below, I agree to the following:
+  const legalText = `As a Health Advocate with Senior Health Concierge, I understand that I may have access to Protected Health Information (PHI) and other confidential information regarding clients and their families. By signing below, I agree to the following:
 
 1. HIPAA Compliance: I will comply with all applicable provisions of the Health Insurance Portability and Accountability Act (HIPAA) and its implementing regulations regarding the privacy and security of PHI.
 
-2. Confidentiality: I will maintain strict confidentiality of all client information, medical records, personal data, and any proprietary information belonging to Nurse Health Concierge.
+2. Confidentiality: I will maintain strict confidentiality of all client information, medical records, personal data, and any proprietary information belonging to Senior Health Concierge.
 
 3. No Unauthorized Disclosure: I will not access, use, or disclose any PHI or confidential information except as necessary to perform my duties as a Health Advocate and as permitted by law.
 
 4. Security Measures: I will take all reasonable steps to safeguard PHI and confidential information from unauthorized access, use, or disclosure.
 
-5. Reporting: I will immediately report any known or suspected breach of PHI or confidential information to Nurse Health Concierge management.
+5. Reporting: I will immediately report any known or suspected breach of PHI or confidential information to Senior Health Concierge management.
 
 6. Return of Information: Upon termination of my engagement, I will return all documents, files, and materials containing PHI or confidential information.
 
@@ -398,12 +398,12 @@ function buildPage6_ContractorAgreement(ctx) {
   y = drawSectionTitle(page, ctx, y, 'Independent Contractor Agreement');
 
   const sections = [
-    ['Scope of Services', 'The Contractor agrees to provide health advocacy services to clients of Nurse Health Concierge as assigned, including but not limited to care coordination, medical appointment accompaniment, insurance navigation, and family communication support.'],
+    ['Scope of Services', 'The Contractor agrees to provide health advocacy services to clients of Senior Health Concierge as assigned, including but not limited to care coordination, medical appointment accompaniment, insurance navigation, and family communication support.'],
     ['Compensation', 'The Contractor will be compensated at a rate mutually agreed upon prior to commencement of services. Payment will be made on a bi-weekly basis for services rendered during the preceding period.'],
-    ['Non-Solicitation', 'During the term of this agreement and for a period of twelve (12) months following termination, the Contractor shall not directly solicit or provide independent services to any client of Nurse Health Concierge.'],
-    ['Confidentiality', 'The Contractor acknowledges and agrees that all client information, business practices, and proprietary methodologies of Nurse Health Concierge are strictly confidential and shall not be disclosed to any third party.'],
-    ['Liability Insurance', 'The Contractor shall maintain professional liability insurance with minimum coverage as specified by Nurse Health Concierge and shall provide proof of such coverage upon request.'],
-    ['Termination', 'Either party may terminate this agreement with fourteen (14) days written notice. Nurse Health Concierge may terminate immediately in cases of misconduct, breach of confidentiality, or failure to maintain required credentials.'],
+    ['Non-Solicitation', 'During the term of this agreement and for a period of twelve (12) months following termination, the Contractor shall not directly solicit or provide independent services to any client of Senior Health Concierge.'],
+    ['Confidentiality', 'The Contractor acknowledges and agrees that all client information, business practices, and proprietary methodologies of Senior Health Concierge are strictly confidential and shall not be disclosed to any third party.'],
+    ['Liability Insurance', 'The Contractor shall maintain professional liability insurance with minimum coverage as specified by Senior Health Concierge and shall provide proof of such coverage upon request.'],
+    ['Termination', 'Either party may terminate this agreement with fourteen (14) days written notice. Senior Health Concierge may terminate immediately in cases of misconduct, breach of confidentiality, or failure to maintain required credentials.'],
   ];
 
   for (const [title, text] of sections) {
