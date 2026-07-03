@@ -61,7 +61,7 @@ exports.handler = async (event) => {
 
     // ── Step 2: Upload PDFs to S3 (encrypted) ─────────
     const summaryFileName = `onboarding/${safeName}/Onboarding_Summary_${Date.now()}.pdf`;
-    const packetFileName = `onboarding/${safeName}/SHC_Client_Packet_${Date.now()}.pdf`;
+    const packetFileName = `onboarding/${safeName}/LSA_Client_Packet_${Date.now()}.pdf`;
 
     const [summaryS3, packetS3] = await Promise.all([
       uploadToS3(summaryFileName, summaryPdf, { clientName: data.clientName, type: 'summary' }),
@@ -71,7 +71,7 @@ exports.handler = async (event) => {
     // ── Step 3: Sheet + emails in parallel ────────────
     const address = [data.address, data.city, data.state, data.zip].filter(Boolean).join(', ');
 
-    // Sheet row — 31 columns (A–AE)
+    // Sheet row - 31 columns (A–AE)
     const sheetRow = [
       timestamp,                              // A: Timestamp
       data.clientName,                        // B: Client Name
@@ -157,13 +157,13 @@ exports.handler = async (event) => {
     const clientHtml = `
       <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto">
         <div style="background:#1a365d;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
-          <h2 style="margin:0">Your SHC Client Agreement Packet</h2>
-          <p style="margin:4px 0 0;opacity:0.85">Senior Health Concierge</p>
+          <h2 style="margin:0">Your LSA Client Agreement Packet</h2>
+          <p style="margin:4px 0 0;opacity:0.85">Legacy Senior Advocate</p>
         </div>
         <div style="padding:24px;background:#f9f7f2;border-radius:0 0 8px 8px">
           <p style="font-size:15px;color:#1a1e2c">Dear ${data.clientName},</p>
           <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-            Thank you for choosing Senior Health Concierge! Attached you will find your
+            Thank you for choosing Legacy Senior Advocate! Attached you will find your
             <strong>Client Agreement Packet</strong> with your information already filled in.
           </p>
           <div style="background:#fff;border:1px solid #c9a54e;border-radius:8px;padding:20px;margin:20px 0">
@@ -187,7 +187,7 @@ exports.handler = async (event) => {
           <p style="font-size:14px;color:#1a365d;margin-top:24px">
             Warm regards,<br>
             <strong>Pat Dobbins</strong><br>
-            <span style="color:#4a4e5c">Founder, Senior Health Concierge</span>
+            <span style="color:#4a4e5c">Founder, Legacy Senior Advocate</span>
           </p>
         </div>
       </div>
@@ -229,13 +229,13 @@ exports.handler = async (event) => {
     await Promise.all([
       appendRow('Client Onboarding', sheetRow),
       sendNotification(
-        `New Client Onboarding — ${data.clientName}`,
+        `New Client Onboarding - ${data.clientName}`,
         adminHtml,
         [{ filename: summaryFileName, content: summaryPdf }]
       ),
       sendEmail({
         to: data.email,
-        subject: 'Your SHC Client Agreement Packet',
+        subject: 'Your LSA Client Agreement Packet',
         html: clientHtml,
         replyTo: process.env.SMTP_USER,
         attachments: [{ filename: packetFileName, content: packetPdf }],

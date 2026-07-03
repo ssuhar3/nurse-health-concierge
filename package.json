@@ -1,7 +1,7 @@
 {
-  "name": "senior-health-concierge",
+  "name": "legacy-senior-advocate",
   "version": "1.0.0",
-  "description": "Senior Health Concierge website with serverless form handling",
+  "description": "Legacy Senior Advocate website with serverless form handling",
   "scripts": {
     "dev": "netlify dev",
     "serve": "npx serve . -l 8889"

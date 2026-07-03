@@ -69,7 +69,7 @@ exports.handler = async (event) => {
     // ── Step 3: Sheet + emails in parallel ────────────
     const address = [data.address, data.city, data.state, data.zip].filter(Boolean).join(', ');
 
-    // Sheet row — 29 columns
+    // Sheet row - 29 columns
     const sheetRow = [
       timestamp,
       data.fullName,
@@ -115,7 +115,7 @@ exports.handler = async (event) => {
             'Geographic Areas': data.geoAreas,
             'Earliest Start Date': data.startDate,
           })}
-          ${data.experience ? formatSection('Experience', { 'Senior Health Advocacy': data.experience }) : ''}
+          ${data.experience ? formatSection('Experience', { 'Senior Advocacy': data.experience }) : ''}
           <p style="margin-top:20px;font-size:14px">
             <strong>Summary PDF:</strong>
             <a href="${summaryS3.url}" style="color:#1a365d">View / Download</a>
@@ -137,12 +137,12 @@ exports.handler = async (event) => {
       <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto">
         <div style="background:#1a365d;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
           <h2 style="margin:0">Application Received</h2>
-          <p style="margin:4px 0 0;opacity:0.85">Senior Health Concierge</p>
+          <p style="margin:4px 0 0;opacity:0.85">Legacy Senior Advocate</p>
         </div>
         <div style="padding:24px;background:#f9f7f2;border-radius:0 0 8px 8px">
           <p style="font-size:15px;color:#1a1e2c">Dear ${data.fullName},</p>
           <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-            Thank you for your interest in joining our team of Health Advocates! We have received your application
+            Thank you for your interest in joining our team of Senior Advocates! We have received your application
             and a member of our team will reach out to you <strong>within 3 business days</strong> to discuss next steps.
           </p>
           <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -151,7 +151,7 @@ exports.handler = async (event) => {
           <p style="font-size:14px;color:#1a365d;margin-top:24px">
             Warm regards,<br>
             <strong>Pat Dobbins</strong><br>
-            <span style="color:#4a4e5c">Founder, Senior Health Concierge</span>
+            <span style="color:#4a4e5c">Founder, Legacy Senior Advocate</span>
           </p>
         </div>
       </div>
@@ -181,13 +181,13 @@ exports.handler = async (event) => {
     await Promise.all([
       appendRow('Advocate Applications', sheetRow),
       sendNotification(
-        `New Advocate Application — ${data.fullName} (${data.profTitle})`,
+        `New Advocate Application - ${data.fullName} (${data.profTitle})`,
         adminHtml,
         [{ filename: summaryFileName, content: summaryPdf }]
       ),
       sendEmail({
         to: data.email,
-        subject: 'Application Received — Senior Health Concierge',
+        subject: 'Application Received - Legacy Senior Advocate',
         html: applicantHtml,
         replyTo: process.env.SMTP_USER,
       }),

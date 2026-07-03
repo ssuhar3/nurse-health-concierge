@@ -1,5 +1,5 @@
 /**
- * SHC — Auto-Process Returned Application Packets
+ * LSA — Auto-Process Returned Application Packets
  *
  * This Google Apps Script monitors Gmail for returned filled-out PDFs
  * from advocate applicants, saves them to Google Drive, and updates

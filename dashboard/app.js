@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════
-   SHC Staff Dashboard — Client-Side Application
+   LSA Staff Dashboard - Client-Side Application
    ═══════════════════════════════════════════════════════ */
 
 // ─── API Layer ──────────────────────────────────────────
@@ -549,7 +549,7 @@ async function openDetailModal(tab, record, statuses) {
       if (v && (v.startsWith('http://') || v.startsWith('https://'))) {
         return `<div class="detail-field"><label>${esc(k)}</label><div class="val"><a href="${esc(v)}" target="_blank" style="color:var(--blue);text-decoration:underline">View Link</a></div></div>`;
       }
-      return `<div class="detail-field"><label>${esc(k)}</label><div class="val">${esc(v || '—')}</div></div>`;
+      return `<div class="detail-field"><label>${esc(k)}</label><div class="val">${esc(v || '-')}</div></div>`;
     }).join('');
 
   // Status options
@@ -640,7 +640,7 @@ async function openDetailModal(tab, record, statuses) {
         inviteEl.textContent = 'Invite Sent!';
         inviteEl.style.background = '#2f855a'; inviteEl.style.color = '#fff';
       } else {
-        inviteEl.textContent = 'Error — Try Again';
+        inviteEl.textContent = 'Error - Try Again';
         setTimeout(() => { inviteEl.textContent = 'Send Onboarding Invite'; inviteEl.disabled = false; }, 2000);
       }
     });
@@ -733,7 +733,7 @@ async function openDetailModal(tab, record, statuses) {
       const activeView = document.querySelector('.sidebar-nav a.active')?.dataset.view;
       if (activeView) showView(activeView);
     } else {
-      btn.textContent = 'Error — Try Again';
+      btn.textContent = 'Error - Try Again';
       setTimeout(() => { btn.textContent = 'Delete Record'; btn.disabled = false; }, 2000);
     }
   });
@@ -747,7 +747,7 @@ function esc(str) {
 }
 
 function formatDate(iso) {
-  if (!iso) return '—';
+  if (!iso) return '-';
   try {
     return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   } catch { return iso; }

@@ -48,7 +48,7 @@ function addPage(ctx) {
 
 function drawHeader(page, ctx, title, subtitle) {
   page.drawRectangle({ x: 0, y: PAGE_H - 80, width: PAGE_W, height: 80, color: NAVY });
-  page.drawText('Senior Health Concierge', {
+  page.drawText('Legacy Senior Advocate', {
     x: MARGIN, y: PAGE_H - 32, size: 16, font: ctx.fontBold, color: WHITE,
   });
   page.drawText(title, {
@@ -94,7 +94,7 @@ function addMultiLineField(ctx, page, name, x, y, w, h, value) {
 }
 
 function drawFooter(page, ctx, pageNum) {
-  page.drawText(`Page ${pageNum} of ${TOTAL_PAGES}  |  Senior Health Concierge  |  Confidential`, {
+  page.drawText(`Page ${pageNum} of ${TOTAL_PAGES}  |  Legacy Senior Advocate  |  Confidential`, {
     x: MARGIN, y: 25, size: 7, font: ctx.fontItalic, color: GRAY,
   });
 }
@@ -158,7 +158,7 @@ function drawSignatureBlock(page, ctx, y, prefix) {
 
 function buildPage1_HIPAA(ctx) {
   const page = addPage(ctx);
-  drawHeader(page, ctx, 'HIPAA Authorization', 'Form 2 \u2014 Client Onboarding Packet');
+  drawHeader(page, ctx, 'HIPAA Authorization', 'Form 2 - Client Onboarding Packet');
 
   let y = PAGE_H - 100;
 
@@ -166,7 +166,7 @@ function buildPage1_HIPAA(ctx) {
 
   y = drawSectionTitle(page, ctx, y, 'Authorization to Use and Disclose Health Information');
 
-  y = drawLegalText(page, ctx, y, `I hereby authorize Senior Health Concierge and its assigned Health Advocate to access and discuss my medical information with healthcare providers for the purpose of coordinating my care. This authorization includes:
+  y = drawLegalText(page, ctx, y, `I hereby authorize Legacy Senior Advocate and its assigned Senior Advocate to access and discuss my medical information with healthcare providers for the purpose of coordinating my care. This authorization includes:
 
   \u2022  Speaking with my physicians and healthcare providers on my behalf
   \u2022  Accessing my medical records as needed for care coordination
@@ -174,11 +174,11 @@ function buildPage1_HIPAA(ctx) {
   \u2022  Sharing relevant health information with my designated family contacts
   \u2022  Coordinating care between multiple healthcare providers
 
-This authorization is voluntary. I understand that I may revoke this authorization at any time by providing written notice to Senior Health Concierge. Revocation will not affect actions already taken in reliance on this authorization.
+This authorization is voluntary. I understand that I may revoke this authorization at any time by providing written notice to Legacy Senior Advocate. Revocation will not affect actions already taken in reliance on this authorization.
 
 This authorization expires one (1) year from the date of signature and may be renewed. I understand that information disclosed under this authorization may be subject to re-disclosure and no longer protected by HIPAA.
 
-I understand that Senior Health Concierge will not condition my treatment or services on whether I sign this authorization.`);
+I understand that Legacy Senior Advocate will not condition my treatment or services on whether I sign this authorization.`);
 
   y -= 20;
   drawSignatureBlock(page, ctx, y, 'f2');
@@ -190,17 +190,17 @@ I understand that Senior Health Concierge will not condition my treatment or ser
 
 function buildPage2_ServiceAgreement(ctx) {
   const page = addPage(ctx);
-  drawHeader(page, ctx, 'Client Service Agreement', 'Form 3 \u2014 Client Onboarding Packet');
+  drawHeader(page, ctx, 'Client Service Agreement', 'Form 3 - Client Onboarding Packet');
 
   let y = PAGE_H - 100;
 
   y = drawSectionTitle(page, ctx, y, 'Services Provided');
 
   const sections = [
-    ['Services Included', 'Senior Health Concierge provides the following health advocacy and coordination services:\n\n  \u2022  Medical appointment accompaniment and advocacy\n  \u2022  Hospital advocacy and discharge planning support\n  \u2022  Medication coordination and oversight\n  \u2022  Care coordination between multiple providers\n  \u2022  Insurance and Medicare/Medicaid navigation\n  \u2022  Family communication and health status updates\n  \u2022  Wellness monitoring and check-ins'],
-    ['Services NOT Provided', 'Senior Health Concierge does NOT provide:\n\n  \u2022  Medical diagnosis or treatment\n  \u2022  Prescribing or administering medication\n  \u2022  Home health aide or personal care services\n  \u2022  Transportation services\n  \u2022  Legal or financial advice'],
+    ['Services Included', 'Legacy Senior Advocate provides the following advocacy and coordination services:\n\n  \u2022  Medical appointment accompaniment and advocacy\n  \u2022  Hospital advocacy and discharge planning support\n  \u2022  Medication coordination and oversight\n  \u2022  Care coordination between multiple providers\n  \u2022  Insurance and Medicare/Medicaid navigation\n  \u2022  Family communication and health status updates\n  \u2022  Wellness monitoring and check-ins'],
+    ['Services NOT Provided', 'Legacy Senior Advocate does NOT provide:\n\n  \u2022  Medical diagnosis or treatment\n  \u2022  Prescribing or administering medication\n  \u2022  Home health aide or personal care services\n  \u2022  Transportation services\n  \u2022  Legal or financial advice'],
     ['Fees & Payment', 'Fee schedule and payment terms will be discussed and agreed upon during your initial consultation. A separate Payment Authorization form (Form 4) is included in this packet.'],
-    ['Termination', 'Either party may terminate this agreement with fourteen (14) days written notice. In cases of emergency or safety concerns, Senior Health Concierge reserves the right to discontinue services immediately. Upon termination, SHC will provide reasonable assistance with care transition.'],
+    ['Termination', 'Either party may terminate this agreement with fourteen (14) days written notice. In cases of emergency or safety concerns, Legacy Senior Advocate reserves the right to discontinue services immediately. Upon termination, LSA will provide reasonable assistance with care transition.'],
   ];
 
   for (const [title, text] of sections) {
@@ -220,7 +220,7 @@ function buildPage2_ServiceAgreement(ctx) {
 
 function buildPage3_PaymentAuth(ctx) {
   const page = addPage(ctx);
-  drawHeader(page, ctx, 'Payment Authorization', 'Form 4 \u2014 Client Onboarding Packet');
+  drawHeader(page, ctx, 'Payment Authorization', 'Form 4 - Client Onboarding Packet');
 
   let y = PAGE_H - 100;
   const halfW = (CONTENT_W - 16) / 2;
@@ -273,7 +273,7 @@ function buildPage3_PaymentAuth(ctx) {
   // Billing authorization
   y = drawSectionTitle(page, ctx, y, 'Billing Authorization');
 
-  y = drawLegalText(page, ctx, y, `I authorize Senior Health Concierge to charge the payment method indicated above for services rendered in accordance with the agreed-upon fee schedule. I understand that:
+  y = drawLegalText(page, ctx, y, `I authorize Legacy Senior Advocate to charge the payment method indicated above for services rendered in accordance with the agreed-upon fee schedule. I understand that:
 
   \u2022  Charges will be processed on a monthly basis unless otherwise agreed
   \u2022  I will receive an itemized statement prior to each charge
@@ -291,7 +291,7 @@ function buildPage3_PaymentAuth(ctx) {
 function buildPage4_EmergencyProtocol(ctx) {
   const page = addPage(ctx);
   const d = ctx.data;
-  drawHeader(page, ctx, 'Emergency Protocol Authorization', 'Form 5 \u2014 Client Onboarding Packet');
+  drawHeader(page, ctx, 'Emergency Protocol Authorization', 'Form 5 - Client Onboarding Packet');
 
   let y = PAGE_H - 100;
 
@@ -299,7 +299,7 @@ function buildPage4_EmergencyProtocol(ctx) {
 
   y = drawSectionTitle(page, ctx, y, 'Emergency Authorization');
 
-  y = drawLegalText(page, ctx, y, `In the event of a medical emergency or safety concern, I authorize my assigned Health Advocate from Senior Health Concierge to take the following actions on my behalf:
+  y = drawLegalText(page, ctx, y, `In the event of a medical emergency or safety concern, I authorize my assigned Senior Advocate from Legacy Senior Advocate to take the following actions on my behalf:
 
   \u2022  Call 911 or Emergency Medical Services (EMS) if I am in immediate danger or experiencing a medical emergency
   \u2022  Contact my designated emergency contact(s) listed below
@@ -308,7 +308,7 @@ function buildPage4_EmergencyProtocol(ctx) {
   \u2022  Share relevant medical information with emergency responders and hospital staff
   \u2022  Make reasonable decisions regarding my immediate safety if I am unable to communicate
 
-I understand that my Health Advocate is not a medical provider and will defer to medical professionals for all clinical decisions. This authorization is intended to ensure my safety and well-being in urgent situations.`);
+I understand that my Senior Advocate is not a medical provider and will defer to medical professionals for all clinical decisions. This authorization is intended to ensure my safety and well-being in urgent situations.`);
 
   y -= 16;
 
@@ -352,13 +352,13 @@ I understand that my Health Advocate is not a medical provider and will defer to
 function buildPage5_FamilyCommunication(ctx) {
   const page = addPage(ctx);
   const d = ctx.data;
-  drawHeader(page, ctx, 'Family Communication Authorization', 'Form 6 \u2014 Client Onboarding Packet');
+  drawHeader(page, ctx, 'Family Communication Authorization', 'Form 6 - Client Onboarding Packet');
 
   let y = PAGE_H - 100;
 
   y = drawSectionTitle(page, ctx, y, 'Authorized Contacts for Health Updates');
 
-  y = drawLegalText(page, ctx, y, `I authorize Senior Health Concierge and my assigned Health Advocate to share information about my health status, care plans, and medical updates with the individuals listed below. I understand that I may modify this list at any time by providing written notice.`);
+  y = drawLegalText(page, ctx, y, `I authorize Legacy Senior Advocate and my assigned Senior Advocate to share information about my health status, care plans, and medical updates with the individuals listed below. I understand that I may modify this list at any time by providing written notice.`);
 
   y -= 10;
 
@@ -378,7 +378,7 @@ function buildPage5_FamilyCommunication(ctx) {
   }
   y -= 20;
 
-  // 5 rows — first pre-filled with primary contact
+  // 5 rows - first pre-filled with primary contact
   for (let row = 1; row <= 5; row++) {
     const isFirst = row === 1;
     const nameVal = isFirst ? (d.primaryContactName || '') : '';

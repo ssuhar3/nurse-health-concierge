@@ -5,7 +5,7 @@ const GOLD = '#C9A54E';
 const GRAY = '#555555';
 
 /**
- * Generate a branded PDF for a Health Advocate application
+ * Generate a branded PDF for a Senior Advocate application
  * @param {Object} data - Sanitized form data
  * @returns {Promise<Buffer>} PDF as a Buffer
  */
@@ -33,12 +33,12 @@ function generateApplicationPdf(data) {
         .fillColor('#FFFFFF')
         .fontSize(22)
         .font('Helvetica-Bold')
-        .text('Senior Health Concierge', 60, 30, { width: pageWidth });
+        .text('Legacy Senior Advocate', 60, 30, { width: pageWidth });
 
       doc
         .fontSize(14)
         .font('Helvetica')
-        .text('Health Advocate Application', 60, 58, { width: pageWidth });
+        .text('Senior Advocate Application', 60, 58, { width: pageWidth });
 
       // Gold accent line
       doc
@@ -128,7 +128,7 @@ function generateApplicationPdf(data) {
         .fillColor(GRAY)
         .fontSize(8)
         .font('Helvetica')
-        .text('Senior Health Concierge — Confidential Application', 60, doc.y, {
+        .text('Legacy Senior Advocate - Confidential Application', 60, doc.y, {
           width: pageWidth,
           align: 'center',
         });

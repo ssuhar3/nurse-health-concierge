@@ -42,7 +42,7 @@ exports.handler = async (event) => {
     `;
 
     await sendNotification(
-      `General Inquiry — ${data.gcName}`,
+      `General Inquiry - ${data.gcName}`,
       html
     );
 
