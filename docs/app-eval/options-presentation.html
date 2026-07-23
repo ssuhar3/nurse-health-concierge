@@ -1,0 +1,304 @@
+<title>LSA App Decision — Options &amp; Recommendation</title>
+<style>
+  :root {
+    --navy: #1a365d;
+    --ink: #1a1e2c;
+    --ground: #f9f7f2;
+    --card: #ffffff;
+    --gold: #b8913d;
+    --gold-soft: #f0e6d2;
+    --slate: #4a4e5c;
+    --line: #e3ddd0;
+    --good: #2f7a4d;
+    --warn: #a06a1f;
+    --bad: #a13a2f;
+    --good-bg: #e8f2ec;
+    --warn-bg: #f7edda;
+    --bad-bg: #f6e7e4;
+    --shadow: 0 1px 3px rgba(26, 30, 44, 0.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --navy: #8fb0dd;
+      --ink: #e9e6de;
+      --ground: #14171f;
+      --card: #1c202b;
+      --gold: #d4af5e;
+      --gold-soft: #2c2717;
+      --slate: #a9adb9;
+      --line: #2e3340;
+      --good: #7dc59a;
+      --warn: #d9b26a;
+      --bad: #d98a80;
+      --good-bg: #1c2b22;
+      --warn-bg: #2c2517;
+      --bad-bg: #2d1e1b;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+  }
+  :root[data-theme="light"] {
+    --navy: #1a365d;
+    --ink: #1a1e2c;
+    --ground: #f9f7f2;
+    --card: #ffffff;
+    --gold: #b8913d;
+    --gold-soft: #f0e6d2;
+    --slate: #4a4e5c;
+    --line: #e3ddd0;
+    --good: #2f7a4d;
+    --warn: #a06a1f;
+    --bad: #a13a2f;
+    --good-bg: #e8f2ec;
+    --warn-bg: #f7edda;
+    --bad-bg: #f6e7e4;
+    --shadow: 0 1px 3px rgba(26, 30, 44, 0.07);
+  }
+  :root[data-theme="dark"] {
+    --navy: #8fb0dd;
+    --ink: #e9e6de;
+    --ground: #14171f;
+    --card: #1c202b;
+    --gold: #d4af5e;
+    --gold-soft: #2c2717;
+    --slate: #a9adb9;
+    --line: #2e3340;
+    --good: #7dc59a;
+    --warn: #d9b26a;
+    --bad: #d98a80;
+    --good-bg: #1c2b22;
+    --warn-bg: #2c2517;
+    --bad-bg: #2d1e1b;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  h1, h2, .route h3 { font-family: Georgia, "Times New Roman", serif; color: var(--ink); text-wrap: balance; }
+  h1 { font-size: 2.1rem; line-height: 1.2; margin: 8px 0 4px; font-weight: 600; }
+  h2 { font-size: 1.4rem; margin: 0 0 16px; font-weight: 600; }
+  section { margin-top: 56px; }
+
+  .eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin: 0;
+  }
+  .meta { color: var(--slate); font-size: 0.9rem; margin: 6px 0 0; }
+  .lede { color: var(--slate); max-width: 62ch; }
+
+  /* Requirements strip */
+  .reqs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 20px; }
+  .req {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 12px 14px; font-size: 0.88rem; box-shadow: var(--shadow);
+  }
+  .req strong { display: block; color: var(--navy); font-size: 0.92rem; }
+  .req span { color: var(--slate); }
+
+  /* Verdict banner */
+  .verdict {
+    margin-top: 40px; border-left: 4px solid var(--gold);
+    background: var(--card); border-radius: 0 8px 8px 0;
+    padding: 22px 26px; box-shadow: var(--shadow);
+  }
+  .verdict p { margin: 8px 0 0; max-width: 68ch; }
+  .verdict .headline { font-family: Georgia, serif; font-size: 1.25rem; margin: 4px 0 0; }
+
+  /* Route cards */
+  .routes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .route {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 20px 20px 18px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .route.pick { border-color: var(--gold); border-width: 2px; }
+  .route h3 { margin: 0; font-size: 1.12rem; }
+  .route .tag {
+    align-self: flex-start; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 700; padding: 3px 9px; border-radius: 99px;
+  }
+  .tag.rec { background: var(--gold-soft); color: var(--warn); }
+  .tag.alt { background: transparent; color: var(--slate); border: 1px solid var(--line); }
+  .price { font-variant-numeric: tabular-nums; margin: 2px 0 0; }
+  .price .big { font-family: Georgia, serif; font-size: 2rem; color: var(--navy); font-weight: 600; }
+  .price .per { color: var(--slate); font-size: 0.85rem; }
+  .route ul { margin: 0; padding-left: 18px; font-size: 0.88rem; color: var(--slate); }
+  .route ul li { margin: 4px 0; }
+  .route .kv { display: flex; gap: 14px; font-size: 0.8rem; color: var(--slate); border-top: 1px solid var(--line); padding-top: 10px; margin-top: auto; }
+  .route .kv b { color: var(--ink); }
+
+  /* Chips */
+  .chip { display: inline-block; font-size: 0.74rem; font-weight: 600; padding: 1px 8px; border-radius: 99px; white-space: nowrap; }
+  .chip.ok { background: var(--good-bg); color: var(--good); }
+  .chip.mid { background: var(--warn-bg); color: var(--warn); }
+  .chip.no { background: var(--bad-bg); color: var(--bad); }
+
+  /* Table */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--card); box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); background: var(--ground); }
+  tbody tr:last-child td { border-bottom: none; }
+  td:first-child { color: var(--slate); font-weight: 600; width: 180px; }
+  td { font-variant-numeric: tabular-nums; }
+  .rec-col { background: color-mix(in srgb, var(--gold-soft) 40%, transparent); }
+
+  /* Ruled out list */
+  .ruled { display: grid; gap: 10px; }
+  .ruledrow {
+    display: grid; grid-template-columns: 190px 1fr; gap: 14px; align-items: baseline;
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 12px 16px;
+    font-size: 0.9rem; box-shadow: var(--shadow);
+  }
+  .ruledrow b { color: var(--ink); }
+  .ruledrow .why { color: var(--slate); }
+  .ruledrow .cost { color: var(--slate); font-size: 0.8rem; font-variant-numeric: tabular-nums; display: block; }
+  @media (max-width: 560px) { .ruledrow { grid-template-columns: 1fr; gap: 4px; } }
+
+  /* Levers */
+  .levers { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--card); box-shadow: var(--shadow); }
+  .lever { display: grid; grid-template-columns: 1fr 1.4fr; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
+  .lever:last-child { border-bottom: none; }
+  .lever .if { color: var(--ink); font-weight: 600; }
+  .lever .then { color: var(--slate); }
+  .lever .then b { color: var(--navy); }
+  @media (max-width: 560px) { .lever { grid-template-columns: 1fr; gap: 4px; } }
+
+  /* Shared fixes + footer */
+  .shared { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 18px 22px; box-shadow: var(--shadow); }
+  .shared ol { margin: 8px 0 0; padding-left: 20px; color: var(--slate); font-size: 0.92rem; }
+  .shared ol li { margin: 6px 0; }
+  .shared ol b { color: var(--ink); }
+  footer { margin-top: 64px; border-top: 1px solid var(--line); padding-top: 18px; color: var(--slate); font-size: 0.8rem; max-width: 70ch; }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Legacy Senior Advocate · Decision brief</p>
+    <h1>Advocate &amp; Client App: the options, the costs, and why</h1>
+    <p class="meta">Prepared 2026-07-23 · Decision due Aug 1 · All prices verified against vendor pages on 2026-07-23</p>
+    <p class="lede">Advocates need five things on their phone, with clients' health information handled safely (every tool touching health details needs a signed <strong>BAA</strong> — a contract where the vendor legally commits to protecting it). Budget matters: 1–5 advocates, no paying for unused features.</p>
+    <div class="reqs">
+      <div class="req"><strong>Visit transcription</strong><span>record a doctor visit, transcript lands in the client's file</span></div>
+      <div class="req"><strong>Time clock</strong><span>clock in/out around appointments</span></div>
+      <div class="req"><strong>Shared calendar</strong><span>client + advocate + family all see appointments</span></div>
+      <div class="req"><strong>Team chat</strong><span>ask the whole advocate team a question mid-visit</span></div>
+      <div class="req"><strong>Client portal</strong><span>one place per client for transcripts &amp; documents</span></div>
+    </div>
+  </header>
+
+  <div class="verdict">
+    <p class="eyebrow">Recommendation</p>
+    <p class="headline">Route A — Google Workspace Business Standard + Clockify Free: $28/mo for 2 advocates, one BAA, tools advocates already know.</p>
+    <p>The deciding insight: moving email off free Gmail to Google Workspace is the <strong>#1 HIPAA fix required no matter what</strong> — free Gmail and the current client spreadsheet have no BAA available at any price. Since every route includes Workspace anyway, the question is really: <em>what do we pay on top of it?</em> Route A's answer is "almost nothing," because that same subscription already includes the calendar, chat, file storage, and (via Google's Gemini AI, covered by the same BAA) transcription.</p>
+  </div>
+
+  <section>
+    <h2>The three viable routes</h2>
+    <div class="routes">
+      <div class="route pick">
+        <span class="tag rec">Recommended</span>
+        <h3>A · Workspace + Clockify</h3>
+        <p class="price"><span class="big">$28</span><span class="per">/mo · 2 advocates ($70 at 5)</span></p>
+        <ul>
+          <li>One Google subscription = email, per-client shared calendars, Drive client folders, team chat, Gemini transcription</li>
+          <li>Clockify Free = time clock (client codes only, so no BAA needed)</li>
+          <li>Advocates already know Gmail/Calendar/Drive — least new training</li>
+          <li>Honest soft spots: "portal" is a shared Drive folder, not a branded app; recordings upload in ~10-min segments — both are exactly what the 30-day pilot tests</li>
+        </ul>
+        <div class="kv"><span>BAAs <b>1</b></span><span>Logins <b>2</b></span><span>Fixes Gmail/Sheets gaps <b>Yes, directly</b></span></div>
+      </div>
+      <div class="route">
+        <span class="tag alt">Upgrade path</span>
+        <h3>B · Carepatron + Workspace</h3>
+        <p class="price"><span class="big">$90</span><span class="per">/mo · 2 advocates ($225 at 5)</span></p>
+        <ul>
+          <li>Carepatron Plus ($31/user/mo): real branded client portal, polished mobile apps, team chat, AI scribe, BAA on every tier</li>
+          <li>Still needs Workspace on top — Carepatron doesn't do email</li>
+          <li>Open questions for a trial: does the family contact see the <em>calendar</em> (not just documents)? Can the scribe handle an externally recorded visit?</li>
+          <li>Cheapest platform with full coverage; easiest all-in-one to learn (2/5)</li>
+        </ul>
+        <div class="kv"><span>BAAs <b>2</b></span><span>Logins <b>3</b></span><span>Fixes Gmail/Sheets gaps <b>Only via Workspace half</b></span></div>
+      </div>
+      <div class="route">
+        <span class="tag alt">Premium option</span>
+        <h3>C · Healthie + Workspace</h3>
+        <p class="price"><span class="big">$228</span><span class="per">/mo · 2 advocates ($420 at 5)</span></p>
+        <ul>
+          <li>Most battle-tested platform of the group; best-documented feature set (team chat confirmed in writing, not inferred)</li>
+          <li>Group plan $199.99 for 2 provider seats + Workspace + Clockify</li>
+          <li>Family portal access exists but is enable-by-support-ticket, Plus tier and up</li>
+          <li>Time clock still missing (Clockify anyway); transcription is a paid add-on with the same external-recording caveat</li>
+        </ul>
+        <div class="kv"><span>BAAs <b>2</b></span><span>Logins <b>3</b></span><span>Fixes Gmail/Sheets gaps <b>Only via Workspace half</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Side-by-side</h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th></th><th class="rec-col">A · Workspace + Clockify</th><th>B · Carepatron + Workspace</th><th>C · Healthie + Workspace</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cost · 2 advocates</td><td class="rec-col"><b>$28/mo</b></td><td>~$90/mo</td><td>~$228/mo</td></tr>
+          <tr><td>Cost · 5 advocates</td><td class="rec-col"><b>$70/mo</b></td><td>~$225/mo</td><td>~$420/mo</td></tr>
+          <tr><td>Transcription</td><td class="rec-col"><span class="chip mid">Workable</span> Gemini under the same BAA; ~10-min segments, $0 extra — pilot it</td><td><span class="chip mid">Workable</span> AI scribe included, built for its own sessions; upload workaround — trial it</td><td><span class="chip mid">Workable</span> AI add-on, extra fees; same external-recording caveat</td></tr>
+          <tr><td>Time clock</td><td class="rec-col"><span class="chip ok">Clockify Free</span> no health info stored</td><td><span class="chip mid">Clockify Free</span> platform has none</td><td><span class="chip mid">Clockify Free</span> platform has none</td></tr>
+          <tr><td>Family calendar</td><td class="rec-col"><span class="chip ok">Yes</span> share to any Gmail, or read-only with no account</td><td><span class="chip mid">Verify</span> family portal exists; calendar visibility unconfirmed</td><td><span class="chip mid">Verify</span> by support ticket, Plus+ tiers</td></tr>
+          <tr><td>Team chat</td><td class="rec-col"><span class="chip ok">Google Chat</span> same login</td><td><span class="chip ok">Team Chat</span> Plus tier</td><td><span class="chip ok">Group chat</span> documented</td></tr>
+          <tr><td>Client portal</td><td class="rec-col"><span class="chip mid">Drive folder</span> functional, not branded</td><td><span class="chip ok">Real portal</span> the main thing B buys</td><td><span class="chip ok">Real portal</span> all tiers</td></tr>
+          <tr><td>Logins per advocate</td><td class="rec-col"><b>2</b></td><td>3</td><td>3</td></tr>
+          <tr><td>BAAs to manage</td><td class="rec-col"><b>1</b></td><td>2</td><td>2</td></tr>
+          <tr><td>Training burden</td><td class="rec-col">Lowest — tools they know</td><td>Low for an all-in-one (2/5)</td><td>Moderate (3/5) — full EHR surface</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Considered and ruled out — and why</h2>
+    <div class="ruled">
+      <div class="ruledrow"><span><b>SimplePractice</b><span class="cost">$173 / $395 per mo</span></span><span class="why">Account owner is documented as a clinician role — a non-licensed advocacy business may not even be able to sign up. Highest eligibility risk of the group; don't spend more time unless a test signup succeeds.</span></div>
+      <div class="ruledrow"><span><b>IntakeQ</b><span class="cost">$114.90 / $204.90 per mo</span></span><span class="why">No transcription feature at all — the biggest single requirement gap — plus no time clock and unconfirmed family access.</span></div>
+      <div class="ruledrow"><span><b>Practice Better</b><span class="cost">$155 / $305 per mo</span></span><span class="why">Built around coaching programs; internal team-broadcast chat and family calendar both unconfirmed. More platform than the team needs at a higher price than Carepatron.</span></div>
+      <div class="ruledrow"><span><b>Spruce Health</b><span class="cost">$48 / $120 per mo</span></span><span class="why">Excellent HIPAA chat/texting and the best mobile app — but no calendar, no document portal, and its transcription only covers calls placed through Spruce. Covers 1½ of 5 needs. Kept on file as the upgrade if LSA later wants to text clients directly.</span></div>
+      <div class="ruledrow"><span><b>Home-care agency suites</b><span class="cost">AxisCare, WellSky, CareSmartz360</span></span><span class="why">Purpose-built for shift-based caregiving with real time clocks and family portals — but sales-quoted pricing with a realistic floor of $200–500/mo, and still no visit transcription. Wrong business model fit.</span></div>
+      <div class="ruledrow"><span><b>Specialist AI medical scribes</b><span class="cost">Abridge, Freed, Nabla, Heidi, Otter</span></span><span class="why">All disqualified: terms are written for treating clinicians documenting their own patients (not an accompanying advocate), and/or BAAs are gated behind enterprise-only sales contracts. This is why transcription comes from Gemini or the platform's scribe instead.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What would change the answer</h2>
+    <div class="levers">
+      <div class="lever"><span class="if">Clients/families find the Drive folder too bare during the pilot</span><span class="then">Go <b>hybrid</b>: keep Workspace as the backbone, add Carepatron for its portal only (+$62/mo at 2 advocates). This is the designed fallback, decided by pilot feedback — not a restart.</span></div>
+      <div class="lever"><span class="if">Gemini's segmented transcription proves too clumsy in practice</span><span class="then">Trial <b>Carepatron's scribe</b> via the hybrid, or price <b>Otter Enterprise</b> (custom quote, second BAA). Costs nothing to try Gemini first.</span></div>
+      <div class="lever"><span class="if">Vendor maturity matters more than price</span><span class="then">Choose <b>Healthie</b> — the most battle-tested and best-documented platform, at ~8× Route A's cost.</span></div>
+      <div class="lever"><span class="if">Nothing — this happens on every route</span><span class="then"><b>Workspace migration</b> (the #1 HIPAA fix), the free <b>AWS BAA + storage audit</b>, and <b>stopping the Supabase health-data mirror</b> (making it compliant would cost ~$600–950+/mo — not worth it at this size).</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Before anything goes live</h2>
+    <div class="shared">
+      <ol>
+        <li><b>30-day pilot (Route A):</b> Week 1 — sign up, sign the Google BAA, migrate email + client spreadsheet, set up Clockify with client codes. Week 2 — Pat + one advocate run a full mock appointment: clock in → consent line → record in segments → Gemini transcript into the client's Drive folder → shared calendar entry a test "family member" can actually see → team-chat question → clock out. Weeks 3–4 — one real consenting client, then go/no-go (or hybrid).</li>
+        <li><b>Attorney, item 1:</b> confirm LSA's status (working for families, it's most likely not HIPAA-regulated at all — we run to HIPAA standards as a business choice and for liability).</li>
+        <li><b>Attorney, item 2:</b> Florida is an all-party consent state (Fla. Stat. § 934.03 — felony exposure). The recording-consent script must be settled before any advocate records a visit, on any route.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    Sources: the four research documents in the LSA repository — <em>docs/hipaa/gap-assessment.md</em>, <em>docs/app-eval/all-in-one.md</em>, <em>docs/app-eval/best-of-breed.md</em>, <em>docs/app-eval/recommendation.md</em> — every price cited there with vendor URLs, retrieved 2026-07-23. Vendors change pricing and BAA terms; re-verify in the vendor console before signing. Workspace figures use Business Standard at $14/user/mo (annual commitment); pay-monthly is $16.80/user/mo.
+  </footer>
+</div>
