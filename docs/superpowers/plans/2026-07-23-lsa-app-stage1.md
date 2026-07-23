@@ -1,5 +1,7 @@
 # LSA App Stage 1 Implementation Plan
 
+> **SUPERSEDED (2026-07-23):** do not execute. The audit of the existing nhc-portal app (live Next.js portal sharing the same Supabase project) showed extending it is less work than this fresh build. Current plan: nhc-portal repo, docs/superpowers/plans/2026-07-23-lsa-portal-stage1.md.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build Stage 1 of the LSA App (spec: `docs/superpowers/specs/2026-07-23-lsa-app-stage1-design.md`): a new Next.js app with Supabase Auth where advocates clock in/out (GPS-captured) and see their client roster, and admins manage advocates, clients, assignments, and timesheets.
