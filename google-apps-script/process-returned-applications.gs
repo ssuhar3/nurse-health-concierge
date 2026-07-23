@@ -30,7 +30,7 @@ function getConfig() {
     adminEmail: props.getProperty('ADMIN_EMAIL') || 'srhealthconcierge@gmail.com',
     sheetTabName: 'Advocate Applications',
     processedLabel: 'nhc-processed',
-    searchQuery: 'has:attachment filename:pdf subject:"SHC Application" -label:nhc-processed',
+    searchQuery: 'has:attachment filename:pdf subject:("SHC Application" OR "LSA Application") -label:nhc-processed',
   };
 }
 
