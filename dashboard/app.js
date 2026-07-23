@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════
-   SHC Staff Dashboard — Client-Side Application
+   LSA Staff Dashboard — Client-Side Application
    ═══════════════════════════════════════════════════════ */
 
 // ─── API Layer ──────────────────────────────────────────

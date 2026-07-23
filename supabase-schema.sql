@@ -1,5 +1,5 @@
 -- ══════════════════════════════════════════════════════════
--- SHC Portal — Supabase Database Schema
+-- LSA Portal — Supabase Database Schema
 -- Run this in Supabase SQL Editor
 -- ══════════════════════════════════════════════════════════
 
