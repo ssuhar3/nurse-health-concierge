@@ -138,8 +138,14 @@ Put together, making the current LSA portal PHI-capable would mean paying for **
 
 | Capability | Pick | Notes |
 |---|---|---|
-| Email + shared client calendar + client portal/transcript storage + team chat + transcription | **Google Workspace Business Standard** ($14/user/mo, 1-yr commit; $16.80/user/mo pay-monthly) | One subscription, one BAA, one login covers 5 of the "moving parts": Gmail, Calendar, Drive, Chat, and Gemini transcription |
-| Time clock | **Clockify (Free)**, with client-code convention | $0, no BAA needed — never stores PHI |
+| Transcription (doctor-visit recording → transcript) | **Gemini, bundled in Google Workspace Business Standard** | Covered by the same Workspace BAA (Section 2); pilot the ~10-min-per-file limitation before relying on it (note: the 10-min figure comes from consumer-Gemini sources — the Workspace-specific cap isn't independently confirmed, so verify during the pilot) |
+| Shared calendar (client + advocate + family) | **Google Calendar** (Workspace Business Standard) | Per-client shared calendars; family members invited by email (Section 3) |
+| Team group chat | **Google Chat** (Workspace Business Standard) | Same account, same BAA (Section 4); Spruce Health documented as the paid upgrade path if client-facing texting is later wanted |
+| Time clock | **Clockify (Free)**, with client-code convention | $0, no BAA needed — never stores PHI (Section 5) |
+| Client portal / transcript storage | **Google Drive shared folders** (Workspace Business Standard) | One BAA-covered folder per client, shared with client + family (Section 6) |
+| (Bonus) Email | **Gmail** (Workspace Business Standard) | Replaces the consumer-Gmail HIPAA gap identified in docs/hipaa/gap-assessment.md |
+
+Four of the five capability picks are the same product — **one Google Workspace Business Standard subscription** ($14/user/mo on a 1-yr commit; $16.80/user/mo pay-monthly) covers transcription, calendar, chat, portal storage, and email under a single BAA and login.
 
 ### Total monthly cost
 
