@@ -69,7 +69,8 @@ nav.scrolled {
 .nav-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .nav-brand .nav-logo-img { height: 72px; }
 .nav-links { display: flex; gap: 40px; list-style: none; }
-.nav-links a[href="advocate-apply.html"] { color: var(--gold) !important; }
+.nav-links a, .nav-cta { white-space: nowrap; }
+.nav-links a[href="https://lsa-portal.vercel.app/apply"] { color: var(--gold) !important; }
 .nav-links a {
   font-size: 11px;
   font-weight: 500;
@@ -121,6 +122,15 @@ nav.scrolled {
   background: #fff;
   border-radius: 2px;
   transition: all 0.3s;
+}
+/* Tighten nav below 1280px so the wide logo + links fit; collapse to hamburger below 1160px */
+@media (max-width: 1280px) {
+  .nav-links { gap: 24px; }
+  .nav-brand .nav-logo-img { height: 56px; }
+}
+@media (max-width: 1160px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
 }
 
 /* ─── HERO ──────────────────────────────────────────────── */
@@ -1327,7 +1337,7 @@ footer {
     <li><a href="#founder">Our Founder</a></li>
     <li><a href="#mission">Mission</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="advocate-apply.html">Join Our Team</a></li>
+    <li><a href="https://lsa-portal.vercel.app/apply">Join Our Team</a></li>
     <li><a href="client-inquiry.html" class="nav-cta">Request a Consultation</a></li>
   </ul>
   <div class="nav-hamburger" id="navHamburger">
@@ -1344,7 +1354,7 @@ footer {
     <li><a href="#founder">Our Founder</a></li>
     <li><a href="#mission">Mission</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li class="mobile-menu-divider"><a href="advocate-apply.html" class="mobile-menu-gold">Join Our Team</a></li>
+    <li class="mobile-menu-divider"><a href="https://lsa-portal.vercel.app/apply" class="mobile-menu-gold">Join Our Team</a></li>
     <li><a href="client-inquiry.html" class="mobile-menu-cta">Request a Consultation</a></li>
   </ul>
 </div>
@@ -1589,7 +1599,7 @@ footer {
       <div class="contact-name" style="font-size:24px">Join Our Team</div>
       <div class="contact-org">For Health Professionals</div>
       <p style="font-size:14px; color:var(--text-mid); line-height:1.7; margin-bottom:24px;">Passionate about senior health advocacy? We're looking for experienced healthcare professionals to join our team.</p>
-      <a href="advocate-apply.html" class="contact-cta-btn contact-cta-gold">Apply Now &rarr;</a>
+      <a href="https://lsa-portal.vercel.app/apply" class="contact-cta-btn contact-cta-gold">Apply Now &rarr;</a>
     </div>
 
     <!-- Path 3: General Contact -->
@@ -1845,7 +1855,7 @@ footer {
     <li><a href="#advocacy">Advocacy</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#founder">Our Founder</a></li>
-    <li><a href="advocate-apply.html">Join Our Team</a></li>
+    <li><a href="https://lsa-portal.vercel.app/apply">Join Our Team</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="client-inquiry.html">Consultation</a></li>
     <li><a href="#contact">Contact</a></li>
