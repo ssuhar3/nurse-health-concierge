@@ -483,8 +483,12 @@ legend::before { content: ''; display: block; width: 20px; height: 2px; backgrou
               </select>
             </div>
             <div class="form-group">
-              <label>City / Zip Code</label>
-              <input type="text" name="seniorLocation" placeholder="e.g. Clermont, FL 34711">
+              <label>Area</label>
+              <select name="seniorLocation">
+                <option value="">Select area</option>
+                <option value="Lee County">Lee County</option>
+                <option value="Collier County">Collier County</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
