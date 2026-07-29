@@ -8,6 +8,20 @@
   publish = "."
   functions = "netlify/functions"
 
+# Old advocate application form now lives in the LSA portal.
+# force = true is required because the .html file still exists in the repo.
+[[redirects]]
+  from = "/advocate-apply.html"
+  to = "https://lsa-portal.vercel.app/apply"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/advocate-apply"
+  to = "https://lsa-portal.vercel.app/apply"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/.netlify/functions/*"
   [headers.values]
