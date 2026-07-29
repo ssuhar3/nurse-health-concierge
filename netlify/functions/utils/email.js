@@ -31,7 +31,7 @@ async function sendNotification(subject, html, attachments = []) {
   const mail = getTransporter();
 
   const result = await mail.sendMail({
-    from: `"Legacy Senior Advocate" <${process.env.SMTP_USER}>`,
+    from: `"Legacy Senior Advocates" <${process.env.SMTP_USER}>`,
     to: process.env.NOTIFICATION_EMAIL || 'srhealthconcierge@gmail.com',
     subject,
     html,
@@ -75,7 +75,7 @@ async function sendEmail({ to, subject, html, replyTo, attachments = [] }) {
   const mail = getTransporter();
 
   const mailOpts = {
-    from: `"Legacy Senior Advocate" <${process.env.SMTP_USER}>`,
+    from: `"Legacy Senior Advocates" <${process.env.SMTP_USER}>`,
     to,
     subject,
     html,

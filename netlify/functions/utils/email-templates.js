@@ -9,14 +9,14 @@ function wrap(title, body) {
     <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto">
       <div style="background:#1a365d;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
         <h2 style="margin:0">${title}</h2>
-        <p style="margin:4px 0 0;opacity:0.85">Legacy Senior Advocate</p>
+        <p style="margin:4px 0 0;opacity:0.85">Legacy Senior Advocates</p>
       </div>
       <div style="padding:24px;background:#f9f7f2;border-radius:0 0 8px 8px">
         ${body}
         <p style="font-size:14px;color:#1a365d;margin-top:24px">
           Warm regards,<br>
           <strong>Pat Dobbins</strong><br>
-          <span style="color:#4a4e5c">Founder, Legacy Senior Advocate</span>
+          <span style="color:#4a4e5c">Founder, Legacy Senior Advocates</span>
         </p>
       </div>
     </div>`;
@@ -29,7 +29,7 @@ const TEMPLATES = {
     html: (d) => wrap('Application Received', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        Thank you for your interest in joining Legacy Senior Advocate as a Health Advocate.
+        Thank you for your interest in joining Legacy Senior Advocates as a Health Advocate.
         We have received your completed application packet and our team is now reviewing your qualifications.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -41,7 +41,7 @@ const TEMPLATES = {
 
   schedule_interview: {
     name: 'Schedule Interview',
-    subject: (d) => `Interview Invitation — Legacy Senior Advocate`,
+    subject: (d) => `Interview Invitation — Legacy Senior Advocates`,
     html: (d) => wrap('Interview Invitation', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -62,12 +62,12 @@ const TEMPLATES = {
 
   approved: {
     name: 'Approved',
-    subject: (d) => `Congratulations! You've Been Approved — Legacy Senior Advocate`,
+    subject: (d) => `Congratulations! You've Been Approved — Legacy Senior Advocates`,
     html: (d) => wrap('Welcome to the Team!', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
         We are pleased to inform you that your application to become a Health Advocate
-        with Legacy Senior Advocate has been <strong style="color:#2f855a">approved</strong>!
+        with Legacy Senior Advocates has been <strong style="color:#2f855a">approved</strong>!
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
         We will be sending you onboarding materials shortly. In the meantime, please
@@ -81,11 +81,11 @@ const TEMPLATES = {
 
   denied: {
     name: 'Denied',
-    subject: (d) => `Application Update — Legacy Senior Advocate`,
+    subject: (d) => `Application Update — Legacy Senior Advocates`,
     html: (d) => wrap('Application Update', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        Thank you for your interest in Legacy Senior Advocate. After careful review of your
+        Thank you for your interest in Legacy Senior Advocates. After careful review of your
         application, we have decided not to move forward at this time.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -97,11 +97,11 @@ const TEMPLATES = {
 
   follow_up: {
     name: 'Follow-up',
-    subject: (d) => `Following Up — Legacy Senior Advocate`,
+    subject: (d) => `Following Up — Legacy Senior Advocates`,
     html: (d) => wrap('Following Up', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        We wanted to follow up regarding your recent submission to Legacy Senior Advocate.
+        We wanted to follow up regarding your recent submission to Legacy Senior Advocates.
         If you have any questions or need any assistance, please don't hesitate to reach out.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -112,11 +112,11 @@ const TEMPLATES = {
 
   onboarding_invite: {
     name: 'Onboarding Invite',
-    subject: (d) => `Begin Your Care Journey — Legacy Senior Advocate`,
-    html: (d) => wrap('Welcome to Legacy Senior Advocate', `
+    subject: (d) => `Begin Your Care Journey — Legacy Senior Advocates`,
+    html: (d) => wrap('Welcome to Legacy Senior Advocates', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        We're excited to begin your care journey with Legacy Senior Advocate!
+        We're excited to begin your care journey with Legacy Senior Advocates!
         To get started, we need a few details about your loved one's health and care needs.
       </p>
       <div style="text-align:center;margin:28px 0">
@@ -144,11 +144,11 @@ const TEMPLATES = {
 
   inquiry_response: {
     name: 'Inquiry Response',
-    subject: (d) => `Re: Your Consultation Request — Legacy Senior Advocate`,
+    subject: (d) => `Re: Your Consultation Request — Legacy Senior Advocates`,
     html: (d) => wrap('Thank You for Reaching Out', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        Thank you for contacting Legacy Senior Advocate about care for your loved one.
+        Thank you for contacting Legacy Senior Advocates about care for your loved one.
         We have reviewed your consultation request and would like to discuss how we can help.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Legacy Senior Advocate (LSA) — a static website with serverless backend for senior advocacy services. Three public-facing forms feed into a staff dashboard, with data stored in Google Sheets (primary) and Supabase (secondary, migration in progress).
+Legacy Senior Advocates (LSA) — a static website with serverless backend for senior advocacy services. Three public-facing forms feed into a staff dashboard, with data stored in Google Sheets (primary) and Supabase (secondary, migration in progress).
 
 ## Commands
 

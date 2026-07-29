@@ -137,7 +137,7 @@ exports.handler = async (event) => {
       <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto">
         <div style="background:#1a365d;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
           <h2 style="margin:0">Application Received</h2>
-          <p style="margin:4px 0 0;opacity:0.85">Legacy Senior Advocate</p>
+          <p style="margin:4px 0 0;opacity:0.85">Legacy Senior Advocates</p>
         </div>
         <div style="padding:24px;background:#f9f7f2;border-radius:0 0 8px 8px">
           <p style="font-size:15px;color:#1a1e2c">Dear ${data.fullName},</p>
@@ -151,7 +151,7 @@ exports.handler = async (event) => {
           <p style="font-size:14px;color:#1a365d;margin-top:24px">
             Warm regards,<br>
             <strong>Pat Dobbins</strong><br>
-            <span style="color:#4a4e5c">Founder, Legacy Senior Advocate</span>
+            <span style="color:#4a4e5c">Founder, Legacy Senior Advocates</span>
           </p>
         </div>
       </div>
@@ -187,7 +187,7 @@ exports.handler = async (event) => {
       ),
       sendEmail({
         to: data.email,
-        subject: 'Application Received — Legacy Senior Advocate',
+        subject: 'Application Received — Legacy Senior Advocates',
         html: applicantHtml,
         replyTo: process.env.SMTP_USER,
       }),

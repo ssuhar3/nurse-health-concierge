@@ -1,4 +1,4 @@
-# Legacy Senior Advocate — Brand & Design System
+# Legacy Senior Advocates — Brand & Design System
 
 **This file is the source of truth for LSA's brand.** Paste the block below into
 Claude Design (as the first message, or as project context) so every screen it
@@ -14,7 +14,7 @@ builds is on-brand. Also usable as reference for Claude Code sessions.
 ## Paste-ready brief for Claude Design
 
 ```
-Design everything to this brand system. Legacy Senior Advocate (LSA) helps seniors
+Design everything to this brand system. Legacy Senior Advocates (LSA) helps seniors
 and their adult children navigate care, benefits, and life decisions with a trusted
 human advocate.
 
