@@ -97,7 +97,7 @@ exports.handler = async (event) => {
       <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto">
         <div style="background:#1a365d;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
           <h2 style="margin:0">New Advocate Application</h2>
-          <p style="margin:4px 0 0;opacity:0.85">${data.fullName} &mdash; ${data.profTitle}</p>
+          <p style="margin:4px 0 0;opacity:0.85">${data.fullName}, ${data.profTitle}</p>
           <p style="margin:4px 0 0;opacity:0.7">${timestamp}</p>
         </div>
         <div style="padding:16px 24px;background:#f9f7f2;border-radius:0 0 8px 8px">
