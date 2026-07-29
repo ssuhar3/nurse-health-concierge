@@ -1863,6 +1863,103 @@ footer {
   <span class="footer-text">&copy; 2026 Legacy Senior Advocates. All rights reserved.</span>
 </footer>
 
+<!-- ─── ADVOCATE RECRUITING POPUP ─────────────────────── -->
+<style>
+.recruit-overlay {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(11,29,58,0.55);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0; transition: opacity 0.35s ease;
+}
+.recruit-overlay.visible { display: flex; }
+.recruit-overlay.in { opacity: 1; }
+.recruit-card {
+  position: relative;
+  background: var(--warm-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border-top: 4px solid var(--gold);
+  max-width: 480px; width: 100%;
+  padding: 44px 40px 40px;
+  text-align: center;
+  transform: translateY(16px); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.recruit-overlay.in .recruit-card { transform: none; }
+.recruit-close {
+  position: absolute; top: 14px; right: 14px;
+  background: none; border: none; cursor: pointer;
+  font-size: 26px; line-height: 1; color: var(--text-lt);
+  padding: 6px 10px; border-radius: var(--radius);
+  transition: color 0.2s;
+}
+.recruit-close:hover { color: var(--navy); }
+.recruit-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+}
+.recruit-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 600; color: var(--navy);
+  margin-bottom: 16px; line-height: 1.25;
+}
+.recruit-card p {
+  font-size: 15px; line-height: 1.75; color: var(--text-mid);
+  margin-bottom: 28px;
+}
+.recruit-apply {
+  display: inline-block;
+  background: var(--gold); color: #fff !important;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 15px 38px; border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(201,165,78,0.35);
+  transition: all 0.3s;
+}
+.recruit-apply:hover { background: var(--gold-lt); transform: translateY(-1px); }
+.recruit-later {
+  display: block; margin: 18px auto 0;
+  background: none; border: none; cursor: pointer;
+  font-size: 13px; color: var(--text-lt); text-decoration: underline;
+  font-family: 'Inter', sans-serif;
+}
+.recruit-later:hover { color: var(--text-mid); }
+@media (max-width: 720px) {
+  .recruit-card { padding: 36px 24px 32px; }
+  .recruit-card h2 { font-size: 24px; }
+}
+</style>
+<div class="recruit-overlay" id="recruitOverlay" role="dialog" aria-modal="true" aria-labelledby="recruitHeading">
+  <div class="recruit-card">
+    <button class="recruit-close" id="recruitClose" aria-label="Close">&times;</button>
+    <p class="recruit-eyebrow">We're Growing</p>
+    <h2 id="recruitHeading">Join Our Advocate Team</h2>
+    <p>Legacy Senior Advocates is actively welcoming compassionate healthcare professionals to serve seniors in Southwest Florida (Lee and Collier Counties). If you'd like to learn more about becoming an LSA Advocate, we'd love to meet you.</p>
+    <a href="https://lsa-portal.vercel.app/apply" class="recruit-apply">Apply Now &rarr;</a>
+    <button class="recruit-later" id="recruitLater">Maybe later</button>
+  </div>
+</div>
+<script>
+(function () {
+  var KEY = 'lsaRecruitPopupSeen';
+  try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+  var overlay = document.getElementById('recruitOverlay');
+  function close() {
+    overlay.classList.remove('in');
+    setTimeout(function () { overlay.classList.remove('visible'); }, 350);
+  }
+  setTimeout(function () {
+    overlay.classList.add('visible');
+    requestAnimationFrame(function () { overlay.classList.add('in'); });
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+  }, 1200);
+  document.getElementById('recruitClose').addEventListener('click', close);
+  document.getElementById('recruitLater').addEventListener('click', close);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
+</script>
+
 <script>
 (function(){
   // Scroll reveal
