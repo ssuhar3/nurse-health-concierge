@@ -136,7 +136,7 @@ function buildPage1_CoverAndCredentials(ctx) {
   y -= 30;
 
   // Professional Credentials section
-  y = drawSectionTitle(page, ctx, y, 'Form 1 — Professional Credentials');
+  y = drawSectionTitle(page, ctx, y, 'Form 1: Professional Credentials');
 
   const halfW = (CONTENT_W - 16) / 2;
 

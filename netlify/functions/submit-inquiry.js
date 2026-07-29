@@ -132,7 +132,7 @@ exports.handler = async (event) => {
     `;
 
     await sendNotification(
-      `New Consultation Request — ${data.contactName}`,
+      `New Consultation Request: ${data.contactName}`,
       html
     );
 

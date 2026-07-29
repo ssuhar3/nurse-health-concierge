@@ -181,13 +181,13 @@ exports.handler = async (event) => {
     await Promise.all([
       appendRow('Advocate Applications', sheetRow),
       sendNotification(
-        `New Advocate Application — ${data.fullName} (${data.profTitle})`,
+        `New Advocate Application: ${data.fullName} (${data.profTitle})`,
         adminHtml,
         [{ filename: summaryFileName, content: summaryPdf }]
       ),
       sendEmail({
         to: data.email,
-        subject: 'Application Received — Legacy Senior Advocates',
+        subject: 'Application Received - Legacy Senior Advocates',
         html: applicantHtml,
         replyTo: process.env.SMTP_USER,
       }),

@@ -25,7 +25,7 @@ function wrap(title, body) {
 const TEMPLATES = {
   application_received: {
     name: 'Application Received',
-    subject: (d) => `Application Received — ${d.name || 'Applicant'}`,
+    subject: (d) => `Application Received: ${d.name || 'Applicant'}`,
     html: (d) => wrap('Application Received', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -41,7 +41,7 @@ const TEMPLATES = {
 
   schedule_interview: {
     name: 'Schedule Interview',
-    subject: (d) => `Interview Invitation — Legacy Senior Advocates`,
+    subject: (d) => `Interview Invitation - Legacy Senior Advocates`,
     html: (d) => wrap('Interview Invitation', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -62,7 +62,7 @@ const TEMPLATES = {
 
   approved: {
     name: 'Approved',
-    subject: (d) => `Congratulations! You've Been Approved — Legacy Senior Advocates`,
+    subject: (d) => `Congratulations! You've Been Approved - Legacy Senior Advocates`,
     html: (d) => wrap('Welcome to the Team!', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -74,14 +74,14 @@ const TEMPLATES = {
         ensure all your credentials and certifications are up to date.
       </p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
-        Welcome to the team — we're excited to have you!
+        Welcome to the team. We're excited to have you!
       </p>
     `),
   },
 
   denied: {
     name: 'Denied',
-    subject: (d) => `Application Update — Legacy Senior Advocates`,
+    subject: (d) => `Application Update - Legacy Senior Advocates`,
     html: (d) => wrap('Application Update', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'Applicant'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -97,7 +97,7 @@ const TEMPLATES = {
 
   follow_up: {
     name: 'Follow-up',
-    subject: (d) => `Following Up — Legacy Senior Advocates`,
+    subject: (d) => `Following Up - Legacy Senior Advocates`,
     html: (d) => wrap('Following Up', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -112,7 +112,7 @@ const TEMPLATES = {
 
   onboarding_invite: {
     name: 'Onboarding Invite',
-    subject: (d) => `Begin Your Care Journey — Legacy Senior Advocates`,
+    subject: (d) => `Begin Your Care Journey - Legacy Senior Advocates`,
     html: (d) => wrap('Welcome to Legacy Senior Advocates', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">
@@ -144,7 +144,7 @@ const TEMPLATES = {
 
   inquiry_response: {
     name: 'Inquiry Response',
-    subject: (d) => `Re: Your Consultation Request — Legacy Senior Advocates`,
+    subject: (d) => `Re: Your Consultation Request - Legacy Senior Advocates`,
     html: (d) => wrap('Thank You for Reaching Out', `
       <p style="font-size:15px;color:#1a1e2c">Dear ${d.name || 'there'},</p>
       <p style="font-size:14px;color:#4a4e5c;line-height:1.7">

@@ -229,7 +229,7 @@ exports.handler = async (event) => {
     await Promise.all([
       appendRow('Client Onboarding', sheetRow),
       sendNotification(
-        `New Client Onboarding — ${data.clientName}`,
+        `New Client Onboarding: ${data.clientName}`,
         adminHtml,
         [{ filename: summaryFileName, content: summaryPdf }]
       ),

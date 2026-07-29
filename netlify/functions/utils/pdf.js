@@ -128,7 +128,7 @@ function generateApplicationPdf(data) {
         .fillColor(GRAY)
         .fontSize(8)
         .font('Helvetica')
-        .text('Legacy Senior Advocates — Confidential Application', 60, doc.y, {
+        .text('Legacy Senior Advocates - Confidential Application', 60, doc.y, {
           width: pageWidth,
           align: 'center',
         });
