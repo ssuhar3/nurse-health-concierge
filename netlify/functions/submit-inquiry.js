@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const { appendRow } = require('./utils/sheets');
+const { uploadPdfToDrive } = require('./utils/drive');
+const { generateInquiryPdf } = require('./utils/inquiry-pdf');
 const { insertRecord } = require('./utils/supabase');
 const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
@@ -52,31 +52,22 @@ exports.handler = async (event) => {
 
     const timestamp = new Date().toISOString();
 
-    // --- Google Sheet --- (17 columns: 14 original + Status + Notes + Record ID)
-    const sheetRow = [
-      timestamp,
-      data.contactName,
-      data.relationship,
-      data.phone,
-      data.email,
-      data.contactMethod || '',
-      data.contactTime || '',
-      data.seniorName || '',
-      data.ageRange || '',
-      data.seniorLocation || '',
-      data.livingSituation || '',
-      healthNeeds.join(', '),
-      data.story || '',
-      data.referralSource || '',
-      data.timeframe || '',
-      'New', // Status
-      '', // Internal Notes
-      crypto.randomUUID(), // Record ID
-    ];
+    // --- Google Drive PDF (Workspace storage; replaces the old Sheets row) ---
+    // Non-fatal: the Supabase record below is the primary store, so a Drive
+    // hiccup should never lose the inquiry or block the emails.
+    try {
+      const pdf = await generateInquiryPdf(data, healthNeeds, timestamp);
+      const dateStr = timestamp.split('T')[0];
+      await uploadPdfToDrive(
+        process.env.DRIVE_INQUIRIES_FOLDER_ID,
+        `Inquiry - ${data.contactName} - ${dateStr}.pdf`,
+        pdf
+      );
+    } catch (driveErr) {
+      console.error('Drive upload failed for inquiry:', driveErr.message || driveErr);
+    }
 
-    await appendRow('Client Inquiries', sheetRow);
-
-    // --- Supabase (dual-write for new portal) ---
+    // --- Supabase (primary store; feeds the portal dashboard) ---
     await insertRecord('client_inquiries', {
       contact_name: data.contactName,
       relationship: data.relationship,
@@ -146,7 +137,7 @@ exports.handler = async (event) => {
           <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">Dear ${data.contactName},</p>
           <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">Thank you for reaching out to Legacy Senior Advocates. We have received your consultation request and are grateful you chose us to help with your family's care needs.</p>
           <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">A member of our team will review your request and reach out to you within <strong>3 business days</strong> to discuss how we can best support you.</p>
-          <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">If you have any urgent questions in the meantime, please don't hesitate to contact us directly at <a href="mailto:srhealthconcierge@gmail.com" style="color: #1a365d;">srhealthconcierge@gmail.com</a>.</p>
+          <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">If you have any urgent questions in the meantime, please don't hesitate to contact us directly at <a href="mailto:info@lsadvocates.com" style="color: #1a365d;">info@lsadvocates.com</a>.</p>
           <p style="color: #333; line-height: 1.6; margin: 0 0 12px 0;">Warm regards,<br/>Pat Dobbins<br/>Founder, Legacy Senior Advocates</p>
         </div>
         <div style="padding: 16px 24px; text-align: center; color: #999; font-size: 12px;">
@@ -170,7 +161,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error('submit-inquiry error:', err);
     return respond(500, {
-      error: 'Something went wrong. Please try again or email us directly at srhealthconcierge@gmail.com.',
+      error: 'Something went wrong. Please try again or email us directly at info@lsadvocates.com.',
     });
   }
 };

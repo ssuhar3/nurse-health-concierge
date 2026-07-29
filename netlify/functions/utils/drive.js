@@ -16,16 +16,17 @@ async function getClient() {
 }
 
 /**
- * Upload a PDF buffer to a Google Drive folder
+ * Upload a PDF buffer into a Google Drive folder.
+ * The service account must have Editor access to the folder.
+ * Files stay private to the folder's members (no public link sharing).
+ * @param {string} folderId - Destination Drive folder ID
  * @param {string} fileName - Name for the file in Drive
  * @param {Buffer} pdfBuffer - PDF content as a Buffer
  * @returns {{ fileId: string, webViewLink: string }}
  */
-async function uploadPdf(fileName, pdfBuffer) {
+async function uploadPdfToDrive(folderId, fileName, pdfBuffer) {
   const drive = await getClient();
-  const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
-  // Upload the file
   const file = await drive.files.create({
     requestBody: {
       name: fileName,
@@ -37,15 +38,7 @@ async function uploadPdf(fileName, pdfBuffer) {
       body: Readable.from(pdfBuffer),
     },
     fields: 'id, webViewLink',
-  });
-
-  // Make the file viewable by anyone with the link
-  await drive.permissions.create({
-    fileId: file.data.id,
-    requestBody: {
-      type: 'anyone',
-      role: 'reader',
-    },
+    supportsAllDrives: true,
   });
 
   return {
@@ -54,4 +47,4 @@ async function uploadPdf(fileName, pdfBuffer) {
   };
 }
 
-module.exports = { uploadPdf };
+module.exports = { uploadPdfToDrive };

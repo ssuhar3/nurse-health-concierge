@@ -201,7 +201,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error('submit-application error:', err);
     return respond(500, {
-      error: 'Something went wrong. Please try again or email us directly at srhealthconcierge@gmail.com.',
+      error: 'Something went wrong. Please try again or email us directly at info@lsadvocates.com.',
     });
   }
 };

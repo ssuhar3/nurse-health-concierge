@@ -1,5 +1,3 @@
-const crypto = require('crypto');
-const { appendRow } = require('./utils/sheets');
 const { insertRecord } = require('./utils/supabase');
 const { sendNotification, sendEmail, formatSection } = require('./utils/email');
 const { validateRequired, sanitizeAll, respond } = require('./utils/validate');
@@ -68,43 +66,8 @@ exports.handler = async (event) => {
       uploadToS3(packetFileName, packetPdf, { clientName: data.clientName, type: 'packet' }),
     ]);
 
-    // ── Step 3: Sheet + emails in parallel ────────────
+    // ── Step 3: Emails in parallel ────────────────────
     const address = [data.address, data.city, data.state, data.zip].filter(Boolean).join(', ');
-
-    // Sheet row — 31 columns (A–AE)
-    const sheetRow = [
-      timestamp,                              // A: Timestamp
-      data.clientName,                        // B: Client Name
-      data.dob,                               // C: DOB
-      data.address || '',                     // D: Address
-      data.city || '',                        // E: City
-      data.state || '',                       // F: State
-      data.zip || '',                         // G: Zip
-      data.phone,                             // H: Phone
-      data.email,                             // I: Email
-      data.primaryContactName,                // J: Primary Contact Name
-      data.primaryContactRelationship || '',  // K: Primary Contact Relationship
-      data.primaryContactPhone,               // L: Primary Contact Phone
-      data.primaryContactEmail || '',         // M: Primary Contact Email
-      data.emergencyContactName,              // N: Emergency Contact Name
-      data.emergencyContactPhone,             // O: Emergency Contact Phone
-      data.pcp || '',                         // P: PCP
-      data.specialists || '',                 // Q: Specialists
-      data.medicalConditions || '',           // R: Medical Conditions
-      data.medications || '',                 // S: Medications
-      data.allergies || '',                   // T: Allergies
-      data.hospitalPreference || '',          // U: Hospital Preference
-      data.medicareMedicaid || '',            // V: Medicare/Medicaid
-      data.supplementalInsurance || '',       // W: Supplemental Insurance
-      data.pharmacy || '',                    // X: Pharmacy
-      careNeeds.join(', '),                   // Y: Care Needs
-      careGoals,                              // Z: Care Goals
-      summaryS3.url,                            // AA: Summary PDF Link
-      packetS3.url,                             // AB: Agreement Packet Link
-      'New',                                  // AC: Status
-      '',                                     // AD: Internal Notes
-      crypto.randomUUID(),                    // AE: Record ID
-    ];
 
     // Admin notification email
     const adminHtml = `
@@ -225,9 +188,8 @@ exports.handler = async (event) => {
       status: 'New',
     });
 
-    // Fire all three in parallel
+    // Fire both emails in parallel
     await Promise.all([
-      appendRow('Client Onboarding', sheetRow),
       sendNotification(
         `New Client Onboarding: ${data.clientName}`,
         adminHtml,
