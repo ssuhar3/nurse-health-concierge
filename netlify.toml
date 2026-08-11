@@ -22,14 +22,25 @@
   status = 301
   force = true
 
+# The legacy staff dashboard is retired (2026-08-11) — staff work moved to the LSA
+# portal long ago, and this dashboard's login had been silently broken (missing
+# DASHBOARD_JWT_SECRET) with no one noticing, which settled the question of whether
+# anyone still used it. Old bookmarks land on the portal login instead.
+[[redirects]]
+  from = "/dashboard/*"
+  to = "https://lsa-portal.vercel.app/login"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dashboard"
+  to = "https://lsa-portal.vercel.app/login"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/.netlify/functions/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "Content-Type"
     Access-Control-Allow-Methods = "GET, POST, PATCH, OPTIONS"
-
-[[headers]]
-  for = "/dashboard/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
