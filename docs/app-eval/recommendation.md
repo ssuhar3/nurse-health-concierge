@@ -116,6 +116,8 @@ Using a stand-in "client" (a staff member or willing volunteer), walk the full w
 
 ## What stays in the LSA website/portal vs. moves to the platform
 
+> **⚠️ PARTIALLY SUPERSEDED, 2026-08-04.** This section predates the decision to build PHI features into the LSA Portal. The **website** half below is still accurate. The **platform** half is now split: Google Workspace/Drive holds transcripts and scanned medical documents, but structured care notes, care plans, journal, goals, and client-advocate messaging were built into the LSA Portal (`nhc-portal`) on BAA-covered **Neon** Postgres instead of Drive. Sheila's decision, 2026-08-04; see `nhc-portal/docs/hipaa/service-selection.md` requirement 3. Read "the chosen platform" below as "Workspace **or** the portal's Neon database", not "Workspace only".
+
 - **Website (no change):** marketing pages, the general inquiry/contact form, and advocate applications. These stay on the current Netlify site. Advocate-application processing (the Apps Script automation, which handles low-sensitivity packets) can keep running — just don't extend it to client medical documents.
 
 - **Platform (everything involving health information):** visit transcripts, medical documents, client-to-advocate messaging, and the shared client/family calendar all move into the chosen platform — Google Workspace (Drive/Docs/Calendar/Chat/Gemini) under Option 2. Client health details should not be typed into or stored on the current website stack.

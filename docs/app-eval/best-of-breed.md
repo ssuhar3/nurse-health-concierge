@@ -132,6 +132,12 @@ The brief's premise is correct: if the time-clock app never receives a client's 
 
 Put together, making the current LSA portal PHI-capable would mean paying for **two separate enterprise-tier BAAs (Supabase + Netlify)** that, combined, would cost several times more per month than the entire rest of this recommended stack put together — for a 2-5 person business. **The existing portal should stay non-PHI** (marketing site, inquiry form, advocate applications) and all client transcripts/health-related documents should live in Google Drive under the Workspace BAA instead.
 
+> **⚠️ SUPERSEDED for the LSA Portal (nhc-portal), 2026-08-04.** The conclusion above still holds for *this* repo — the Netlify site and its Supabase mirror remain non-PHI. It no longer describes the **LSA Portal** (`nhc-portal`, `lsa-portal.vercel.app`), which now stores PHI by design.
+>
+> What changed: the blocker was never a principle, it was the ~$600-950+/mo Supabase HIPAA price. Sheila decided on **2026-08-04** to put care/visit notes on **Neon Scale** (~$15-40/mo, usage-based BAA Postgres) instead — a different vendor at roughly 1/25th the cost. The second blocker (Netlify's Enterprise-only BAA) never applied to the portal, which runs on Vercel. Supabase still holds no PHI in either codebase; the PHI-minimization rule is unchanged.
+>
+> Care notes, care plans, journal, goals, and secure messaging are all live in Neon as of 2026-08-10. See `nhc-portal/docs/hipaa/service-selection.md` requirement 3 for the decision record and `nhc-portal/docs/neon-setup.md` for the runbook. Google Drive remains the store for transcripts and scanned medical documents.
+
 ---
 
 ## Recommended stack
