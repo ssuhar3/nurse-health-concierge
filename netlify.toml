@@ -9,7 +9,12 @@
   functions = "netlify/functions"
 
 # Old advocate application form now lives in the LSA portal.
-# force = true is required because the .html file still exists in the repo.
+# The page (advocate-apply.html) and its backend (submit-application function)
+# were DELETED 2026-08-18 -- the function was still deployed and accepting POSTs
+# behind this redirect, and still wrote a duplicate row into a non-BAA Google
+# Sheet. These redirects stay so old bookmarks and printed links still land
+# somewhere useful. force = true is retained deliberately: harmless now that no
+# file exists, and it keeps the redirect authoritative if one is ever re-added.
 [[redirects]]
   from = "/advocate-apply.html"
   to = "https://lsa-portal.vercel.app/apply"
