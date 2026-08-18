@@ -38,6 +38,63 @@
   status = 301
   force = true
 
+# --- Internal files must not be served publicly (added 2026-08-18) ---
+# publish = "." means Netlify serves the ENTIRE repo, so internal docs and
+# source were reachable on the live site (verified: /docs/hipaa/gap-assessment.md,
+# /supabase-schema.sql, /CLAUDE.md and /netlify/functions/*.js all returned 200).
+# force = true is required because real files exist at these paths.
+#
+# NOTE: "/netlify/*" below is the STATIC copy of the function source.
+# It does NOT affect live function invocation, which happens at "/.netlify/*"
+# (leading dot) and is untouched by these rules.
+[[redirects]]
+  from = "/docs/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/google-apps-script/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/supabase-schema.sql"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/CLAUDE.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/BRAND.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package.json"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/index.html"
+  status = 404
+  force = true
+
 [[headers]]
   for = "/.netlify/functions/*"
   [headers.values]
