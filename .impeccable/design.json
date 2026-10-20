@@ -4,7 +4,7 @@
       {
         "section": "colors",
         "name": "The Readable Color Rule",
-        "body": "Use dark text on light surfaces and warm white on navy. BRAND.md excludes gold and light gray as body text. The existing gold-and-white logo is retained unchanged at the user's explicit request."
+        "body": "Use dark text on light surfaces and warm white on navy. BRAND.md excludes gold and light gray as body text. The existing gold-and-white logo and compact homepage navigation colors are retained at the user's explicit request."
       },
       {
         "section": "typography",
@@ -15,17 +15,17 @@
     "keyCharacteristics": [
       "Navy framing with warm light surfaces.",
       "Playfair Display headings and readable Inter body copy.",
-      "Existing homepage logo on the Press page, generous controls, and visible keyboard focus."
+      "Existing homepage header and logo on the Press page, readable article controls, and visible keyboard focus."
     ],
     "overview": "The established brand is warm, clear, reassuring, and credible. Spacious public pages support seniors and family caregivers with readable copy, human photography, and direct actions. This document records the approved press implementation; it does not introduce a new visual identity or replace BRAND.md, the canonical brand authority.",
     "dos": [
       "Do preserve BRAND.md as the brand authority.",
-      "Do use readable body copy, visible keyboard focus, and controls at least 44px tall.",
+      "Do use readable body copy, visible keyboard focus, and new content controls at least 44px tall.",
       "Do retain original photograph proportions and document asset provenance in the surface brief."
     ],
     "donts": [
-      "Don't use gold or light gray as text.",
-      "Don't inherit small-body-type drift from older pages. The homepage logo is explicitly approved for Press.",
+      "Don't use gold or light gray for new content text; preserve the explicitly approved incumbent header.",
+      "Don't inherit small-body-type drift from older pages. The homepage header is explicitly approved for Press.",
       "Don't promote the press article's composition into a mandatory site-wide layout."
     ]
   },
@@ -38,6 +38,22 @@
       {
         "value": "700px",
         "name": "mobile"
+      },
+      {
+        "value": "1280px",
+        "name": "header-compact"
+      },
+      {
+        "value": "1160px",
+        "name": "header-mobile-menu"
+      },
+      {
+        "value": "1024px",
+        "name": "header-tablet"
+      },
+      {
+        "value": "720px",
+        "name": "header-mobile"
       }
     ]
   },
@@ -52,21 +68,6 @@
       "refersTo": "button-primary",
       "html": "<a class=\"ds-primary\" href=\"#article\">Read the original article</a>",
       "kind": "button"
-    },
-    {
-      "description": "Outlined consultation link within the navy navigation band.",
-      "css": ".ds-header { background: var(--navy, #0B1D3A); padding: 20px; } .ds-consultation { display: inline-flex; align-items: center; min-height: 44px; padding: 9px 16px; border: 1px solid #91A2B8; border-radius: 6px; color: var(--white, #FDFBF8); font: 500 18px/1.65 Inter, sans-serif; text-decoration: none; } .ds-consultation:hover { text-decoration: underline; text-underline-offset: 8px; } .ds-consultation:focus-visible { outline: 3px solid var(--white, #FDFBF8); outline-offset: 5px; }",
-      "name": "Consultation outline",
-      "refersTo": "button-outline",
-      "html": "<div class=\"ds-header\"><a class=\"ds-consultation\" href=\"#consultation\">Request a Consultation</a></div>",
-      "kind": "button"
-    },
-    {
-      "description": "Navy header links with underlined current-page and hover states.",
-      "name": "Header navigation",
-      "kind": "nav",
-      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 26px 48px; background: var(--navy, #0B1D3A); } .ds-nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--white, #FDFBF8); font: 500 18px/1.65 Inter, sans-serif; text-decoration: none; } .ds-nav a:hover, .ds-nav a[aria-current] { text-decoration: underline; text-underline-offset: 8px; } .ds-nav a:focus-visible { outline: 3px solid var(--white, #FDFBF8); outline-offset: 5px; }",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Example navigation\"><a href=\"#home\">Home</a><a href=\"#press\" aria-current=\"page\">Press</a></nav>"
     }
   ]
 }
