@@ -1347,7 +1347,7 @@ footer {
     <li><a href="#mission">Mission</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="https://lsa-portal.vercel.app/apply">Join Our Team</a></li>
-    <li><a href="client-inquiry.html" class="nav-cta">Request a Consultation</a></li>
+    <li><a href="https://lsa-portal.vercel.app/intake?kind=inquiry" class="nav-cta">Request a Consultation</a></li>
   </ul>
   <div class="nav-hamburger" id="navHamburger">
     <span></span><span></span><span></span>
@@ -1364,7 +1364,7 @@ footer {
     <li><a href="#mission">Mission</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li class="mobile-menu-divider"><a href="https://lsa-portal.vercel.app/apply" class="mobile-menu-gold">Join Our Team</a></li>
-    <li><a href="client-inquiry.html" class="mobile-menu-cta">Request a Consultation</a></li>
+    <li><a href="https://lsa-portal.vercel.app/intake?kind=inquiry" class="mobile-menu-cta">Request a Consultation</a></li>
   </ul>
 </div>
 
@@ -1379,7 +1379,7 @@ footer {
     <div class="hero-rule"></div>
     <p class="hero-body">Navigating the healthcare system shouldn't be a journey you take alone. We provide a dedicated personal health advocate who coordinates, communicates, and champions your care at every step, always honoring the dignity and choices of your Senior.</p>
     <div class="hero-actions">
-      <a href="client-inquiry.html" class="btn-primary">Request a Consultation &rarr;</a>
+      <a href="https://lsa-portal.vercel.app/intake?kind=inquiry" class="btn-primary">Request a Consultation &rarr;</a>
       <a href="#services" class="btn-ghost">Our Services</a>
     </div>
   </div>
@@ -1597,7 +1597,7 @@ footer {
       <div class="contact-name" style="font-size:24px">Request a Consultation</div>
       <div class="contact-org">For Families &amp; Caregivers</div>
       <p style="font-size:14px; color:var(--text-mid); line-height:1.7; margin-bottom:24px;">Tell us about your loved one's situation and we'll reach out to discuss how a dedicated Health Advocate can help.</p>
-      <a href="client-inquiry.html" class="contact-cta-btn">Get Started &rarr;</a>
+      <a href="https://lsa-portal.vercel.app/intake?kind=inquiry" class="contact-cta-btn">Get Started &rarr;</a>
     </div>
 
     <!-- Path 2: Join the Team -->
@@ -1616,15 +1616,23 @@ footer {
       <div class="contact-card-icon">
         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
-      <div class="contact-name" style="font-size:24px">General Inquiry</div>
+      <div class="contact-name" style="font-size:24px">Request a Follow-up</div>
       <div class="contact-org">Questions &amp; Other Requests</div>
       <form id="generalContactForm" style="margin-top:8px">
         <input type="text" name="gcName" placeholder="Your Name" required style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; margin-bottom:10px; font-size:14px; font-family:inherit; background:var(--cream)">
         <input type="email" name="gcEmail" placeholder="Email Address" required style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; margin-bottom:10px; font-size:14px; font-family:inherit; background:var(--cream)">
-        <textarea name="gcMessage" placeholder="How can we help?" rows="3" required style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; margin-bottom:14px; font-size:14px; font-family:inherit; resize:vertical; background:var(--cream)"></textarea>
-        <button type="submit" class="contact-cta-btn" style="width:100%; border:none; cursor:pointer; font-family:inherit">Send Message &rarr;</button>
+        <label for="gcTopic" style="display:block;font-size:18px;line-height:1.6;margin-bottom:6px">What would you like to discuss?</label>
+        <select id="gcTopic" name="gcTopic" required style="width:100%;min-height:44px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;margin-bottom:14px;font-size:18px;font-family:inherit;background:var(--cream)">
+          <option value="">Select a topic</option>
+          <option value="Consultation">Consultation</option>
+          <option value="Joining the team">Joining the team</option>
+          <option value="Existing client support">Existing client support</option>
+          <option value="Other question">Other question</option>
+        </select>
+        <p style="font-size:18px;line-height:1.6;color:var(--text-mid);margin-bottom:14px">Please share only contact information here. Do not include medical information. Our team will arrange next steps for care details.</p>
+        <button type="submit" class="contact-cta-btn" style="width:100%; border:none; cursor:pointer; font-family:inherit">Request a Follow-up &rarr;</button>
       </form>
-      <p id="gcSuccess" style="display:none; color:var(--blue); font-weight:600; text-align:center; margin-top:16px;">Message sent! We'll be in touch soon.</p>
+      <p id="gcSuccess" style="display:none; color:var(--blue); font-weight:600; text-align:center; margin-top:16px;">Request received! We'll be in touch soon.</p>
       <p id="gcError" style="display:none; color:#e53e3e; font-size:13px; text-align:center; margin-top:8px;"></p>
       <p style="font-size:13px; color:var(--text-lt); text-align:center; margin-top:16px;">Or email us directly at <a href="mailto:info@lsadvocates.com" style="color:var(--blue); font-weight:600;">info@lsadvocates.com</a></p>
     </div>
@@ -1852,7 +1860,7 @@ footer {
   <div class="faq-cta reveal">
     <p class="faq-cta-text">Navigating healthcare decisions can be overwhelming, but you don't have to do it alone.</p>
     <p class="faq-cta-sub">A Healthcare Advocate can help you gain clarity, communicate effectively with providers, and make confident medical decisions.</p>
-    <a href="client-inquiry.html" class="contact-cta-btn">Schedule a Consultation &rarr;</a>
+    <a href="https://lsa-portal.vercel.app/intake?kind=inquiry" class="contact-cta-btn">Schedule a Consultation &rarr;</a>
   </div>
 </section>
 
@@ -1867,7 +1875,7 @@ footer {
     <li><a href="#founder">Our Founder</a></li>
     <li><a href="https://lsa-portal.vercel.app/apply">Join Our Team</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="client-inquiry.html">Consultation</a></li>
+    <li><a href="https://lsa-portal.vercel.app/intake?kind=inquiry">Consultation</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="privacy.html">Privacy Policy</a></li>
     <li><a href="terms.html">Terms &amp; Conditions</a></li>
@@ -1919,7 +1927,7 @@ footer {
       btn.textContent = 'Sending...';
       try {
         const formData = {};
-        gcForm.querySelectorAll('input, textarea').forEach(el => {
+        gcForm.querySelectorAll('input, select').forEach(el => {
           if (el.name) formData[el.name] = el.value.trim();
         });
         const res = await fetch('/.netlify/functions/submit-contact', {
@@ -1935,7 +1943,7 @@ footer {
         errorEl.textContent = err.message || 'Something went wrong. Please try again.';
         errorEl.style.display = 'block';
         btn.disabled = false;
-        btn.textContent = 'Send Message →';
+        btn.textContent = 'Request a Follow-up →';
       }
     });
   }

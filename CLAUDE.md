@@ -1,75 +1,50 @@
-# CLAUDE.md
+# Legacy Senior Advocates marketing website
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Project Overview
-
-Legacy Senior Advocates (LSA) — a static marketing website with serverless form handling. Three public-facing forms store submissions in Supabase (primary) and generate PDFs; staff review everything in the separate **LSA portal** (`lsa-portal.vercel.app`, repo `ssuhar3/nhc-portal`), which reads the same Supabase project. This repo has no staff-facing surface of its own — the old `/dashboard` was retired 2026-08-11 and now redirects to the portal login.
-
-## Commands
-
-```bash
-npm run dev          # Start Netlify Dev server on port 8889 (proxies functions + static files)
-npm run serve        # Static-only server (no functions) on port 8889
-```
-
-No build step — the site is plain HTML/CSS/JS served directly. No test framework is configured.
+Read AGENTS.md and BRAND.md before changes. This file describes the current source; it does not confirm a production deployment.
 
 ## Architecture
 
-### Frontend (static HTML, no framework)
-- `index.html` — Main marketing site. All CSS is inline (no external stylesheet). Uses CSS custom properties defined in `:root` for the design system (navy/blue/gold/teal palette, Playfair Display + Inter fonts).
-- `advocate-apply.html` — Advocate application form → `submit-application` (page 301-redirects to the portal's `/apply`; the function remains live)
-- `client-inquiry.html` — Client inquiry form → `submit-inquiry`
-- `client-onboarding.html` — Client onboarding form → `submit-onboarding`
+The public marketing website uses plain HTML, inline CSS and JavaScript, and local images. There is no build step. Mocked tests use the built-in Node.js test runner. Netlify publishes the repository root and runs CommonJS functions from netlify/functions.
 
-There is no staff UI in this repo. `/dashboard` and `/dashboard/*` 301-redirect to `https://lsa-portal.vercel.app/login` (see `netlify.toml`).
+- index.html contains the marketing content and a contact request form accepting name, email, and a fixed topic only. It does not accept an open-ended message or medical details.
+- Consultation links open https://lsa-portal.vercel.app/intake?kind=inquiry.
+- Client onboarding opens https://lsa-portal.vercel.app/intake?kind=onboarding.
+- client-inquiry.html and client-onboarding.html are static handoff pages with no form fields or analytics. Netlify forces temporary 302 redirects for both extensionless and .html paths to the corresponding portal form.
+- privacy.html and terms.html remain static policy pages.
+- The retired advocate application and dashboard paths redirect to the portal's /apply and /login pages.
 
-### Backend (Netlify Functions — `netlify/functions/`)
-All serverless functions use CommonJS (`require`/`module.exports`). Each form submission function follows the same pattern: validate → sanitize → generate PDFs → upload to S3 → append to Google Sheets → insert to Supabase → send email notification.
+## Form handling
 
-**Form handlers:**
-- `submit-application.js` — Advocate applications (generates summary PDF + fillable packet)
-- `submit-inquiry.js` — Client inquiries
-- `submit-onboarding.js` — Client onboarding (generates summary PDF + client packet)
-- `submit-contact.js` — General contact form (email only, no Sheets/Supabase)
+The portal owns secure medical intake. The new intake flow stores submitted intake in the portal's separate Neon database and provides an authenticated staff intake queue at /dashboard?tab=intake. This is separate from the older Supabase inquiry/onboarding pipeline. Do not assume a new intake submission appears in that old pipeline.
 
-**Shared utilities (`netlify/functions/utils/`):**
-- `sheets.js` — Google Sheets API wrapper with 60s in-memory cache (only `submit-application` still uses it)
-- `supabase.js` — Supabase REST insert (anon key; primary store for all three forms)
-- `email.js` — Nodemailer SMTP transport (Gmail)
-- `s3.js` — AWS S3 upload for generated PDFs
-- `validate.js` — Input sanitization and required-field validation
-- `auth.js` — Google service account auth
-- `pdf.js`, `fillable-pdf.js` — Advocate application PDF generation (pdfkit/pdf-lib)
-- `client-summary-pdf.js`, `client-packet-pdf.js` — Client PDF generation
-- `drive.js` — Google Drive upload (inquiry PDFs archive to the Workspace shared drive)
+The marketing site's submit-inquiry and submit-onboarding functions are retired. They return HTTP 410 and a fixed portal link without parsing, forwarding, storing, emailing, or logging submitted payloads. Stale browser forms must be filled out again on the portal; never forward their medical answers through a redirect or query string.
 
-### Data Storage
-- **Supabase** — Primary store for all three forms (`advocate_applications`, `client_inquiries`, `client_onboarding`). Schema in `supabase-schema.sql`. This is the same Supabase project the LSA portal reads.
-- **Google Sheets** — Legacy: only advocate applications still append a row ("Advocate Applications" tab). Inquiry/onboarding Sheets writes were retired 2026-08 (`4bdac5f`).
-- **Google Drive** — Inquiry submissions archive a PDF to the Workspace shared drive (non-fatal on failure; Supabase is authoritative).
-- **AWS S3** — PDF document storage
+submit-contact remains active and emails administrative contact requests only. utils/public-form.js checks an allowlist, scalar strings, length limits, and fixed topics before any side effects. Unknown fields, including old free-text messages and clinical fields, are rejected. Errors use fixed messages rather than logging submitted data or upstream response bodies.
 
-### Google Apps Script
-- `google-apps-script/process-returned-applications.gs` — Processes returned advocate application packets in Google Drive
+Legacy PDF, Drive, S3, and Supabase helpers remain in the repository but are not invoked by the retired intake endpoints. The Supabase insert helper now throws a generic error on unsuccessful writes rather than silently claiming success. No historical records, PDFs, emails, or archives are changed by this source update.
 
-## Key Patterns
+## Local checks
 
-- All functions return responses via the shared `respond()` helper from `validate.js` which handles CORS headers
-- Form data gets a `crypto.randomUUID()` ID assigned server-side
-- There is no auth code in this repo — staff authentication lives entirely in the LSA portal (nhc-portal)
+- npm run dev starts Netlify Dev on port 8889, including functions.
+- npm run serve starts static-only serving on port 8889.
+- npm test runs the mocked handler and persistence tests without live submissions. Test source paths are protected by a forced 404 redirect.
+- Use node --check for changed function files.
+- Static handoff links lead to the production portal; do not submit test medical information there.
 
-## Environment Variables
+## Release order
 
-See `.env.example` for the full list. Key groups: Google Sheets API (service account), SMTP (Gmail app password), Google Drive, S3 (AWS credentials), Supabase (URL + anon key). Variables are set in Netlify's environment settings for production. (Dashboard auth vars — `DASHBOARD_JWT_SECRET`, `DASHBOARD_PASSWORD_HASH` — are obsolete since the dashboard retirement; nothing reads them.)
+This source change is not a deployment. Release the coordinated changes in this order:
 
-## Deployment
+1. Apply the portal's Neon migration 0025 for secure intake.
+2. Deploy the portal implementation and verify the intake page/API and authenticated staff queue.
+3. Deploy this marketing-site handoff and verify the redirects and retired endpoints.
 
-Deployed on Netlify. Push to `main` triggers auto-deploy. The `netlify.toml` configures CORS headers for functions and 301 redirects: `/advocate-apply*` → the portal's `/apply`, `/dashboard*` → the portal's `/login`.
+Pushes to main deploy directly to production. Use feature branches and PRs. All configured data services must be treated as production. Do not deploy the website handoff before the portal destination and its migration are ready.
 
-## Working Style
-- I am non-technical and learning. Explain what you're doing before doing it.
-- Make small testable changes, not large rewrites.
-- Flag anything that could break form submissions or the data reaching Supabase.
-- Current status: Supabase is primary for all forms; only advocate applications still dual-write to Sheets.
+## Rules
+
+- PHI belongs in the BAA-covered Neon database, never Supabase, logs, email, or marketing-site archives.
+- Never send SMS to clients or families.
+- Follow BRAND.md: senior accessibility, wordmark-only logo, and no em dashes in customer-facing copy.
+- publish = "." serves the repository root. Preserve forced 404 protections for internal source and documents, including AGENTS.md. Keep test fixtures and internal artifacts outside the public root or explicitly protect them.
+- Explain changes plainly, keep changes testable, and flag anything affecting form delivery.

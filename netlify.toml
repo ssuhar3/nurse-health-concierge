@@ -106,3 +106,44 @@
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "Content-Type"
     Access-Control-Allow-Methods = "GET, POST, PATCH, OPTIONS"
+
+# Keep Codex project instructions private, matching the CLAUDE.md protection.
+[[redirects]]
+  from = "/AGENTS.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+# Intake lives in the portal. Deploy only after migration 0025 and the portal release.
+# Temporary redirects permit verification before choosing permanent redirects.
+
+[[redirects]]
+  from = "/client-inquiry"
+  to = "https://lsa-portal.vercel.app/intake?kind=inquiry"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/client-inquiry.html"
+  to = "https://lsa-portal.vercel.app/intake?kind=inquiry"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/client-onboarding"
+  to = "https://lsa-portal.vercel.app/intake?kind=onboarding"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/client-onboarding.html"
+  to = "https://lsa-portal.vercel.app/intake?kind=onboarding"
+  status = 302
+  force = true
+
+# Test sources must remain private because the repository root is published.
+[[redirects]]
+  from = "/tests/*"
+  to = "/index.html"
+  status = 404
+  force = true

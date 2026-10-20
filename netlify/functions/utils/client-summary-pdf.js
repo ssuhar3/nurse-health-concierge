@@ -31,7 +31,7 @@ function generateOnboardingSummaryPdf(data) {
         .text('Legacy Senior Advocates', 60, 30, { width: pageWidth });
 
       doc.fontSize(14).font('Helvetica')
-        .text('Client Onboarding Intake', 60, 58, { width: pageWidth });
+        .text('Client Contact Registration', 60, 58, { width: pageWidth });
 
       doc.moveTo(60, 85).lineTo(200, 85).lineWidth(3).strokeColor(GOLD).stroke();
 
@@ -87,43 +87,12 @@ function generateOnboardingSummaryPdf(data) {
       fieldRow('Name', data.emergencyContactName);
       fieldRow('Phone', data.emergencyContactPhone);
 
-      // ── Medical Information ───────────────────────
-      checkPageBreak();
-      sectionHeading('Medical Information');
-      fieldRow('Primary Care Physician', data.pcp);
-      fieldRow('Specialists', data.specialists);
-      fieldRow('Medical Conditions', data.medicalConditions);
-      fieldRow('Current Medications', data.medications);
-      fieldRow('Allergies', data.allergies);
-      fieldRow('Hospital Preference', data.hospitalPreference);
-
-      // ── Insurance ─────────────────────────────────
-      checkPageBreak();
-      sectionHeading('Insurance Information');
-      fieldRow('Medicare / Medicaid', data.medicareMedicaid);
-      fieldRow('Supplemental Insurance', data.supplementalInsurance);
-      fieldRow('Pharmacy', data.pharmacy);
-
-      // ── Care Needs ────────────────────────────────
-      checkPageBreak();
-      sectionHeading('Care Needs');
-      fieldRow('Selected Services', data.careNeeds);
-
-      // ── Care Goals ────────────────────────────────
-      if (data.goalConcerns || data.goalIndependence || data.goalChallenges) {
-        checkPageBreak();
-        sectionHeading('Care Goals');
-        fieldRow('Health Concerns', data.goalConcerns);
-        fieldRow('Independence Goals', data.goalIndependence);
-        fieldRow('Healthcare Challenges', data.goalChallenges);
-      }
-
       // ── Footer ────────────────────────────────────
       doc.moveDown(3);
       doc.moveTo(60, doc.y).lineTo(60 + pageWidth, doc.y).lineWidth(0.5).strokeColor('#CCCCCC').stroke();
       doc.moveDown(0.5);
       doc.fillColor(GRAY).fontSize(8).font('Helvetica')
-        .text('Legacy Senior Advocates \u2014 Confidential Client Intake', 60, doc.y, {
+        .text('Legacy Senior Advocates | Confidential Contact Registration', 60, doc.y, {
           width: pageWidth, align: 'center',
         });
 
