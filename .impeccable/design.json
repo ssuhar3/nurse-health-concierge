@@ -1,0 +1,73 @@
+{
+  "narrative": {
+    "rules": [
+      {
+        "section": "colors",
+        "name": "The Readable Color Rule",
+        "body": "Use dark text on light surfaces and warm white on navy. BRAND.md excludes gold and light gray as body text. The existing gold-and-white logo and compact homepage navigation colors are retained at the user's explicit request."
+      },
+      {
+        "section": "typography",
+        "name": "The Readable Body Rule",
+        "body": "Body copy stays at least 18px, with line-height at least 1.6 and weight at least 400. Lettering within the logo is identity treatment, not a body-copy size precedent."
+      }
+    ],
+    "keyCharacteristics": [
+      "Navy framing with warm light surfaces.",
+      "Playfair Display headings and readable Inter body copy.",
+      "Existing homepage header and logo on the Press page, readable article controls, and visible keyboard focus."
+    ],
+    "overview": "The established brand is warm, clear, reassuring, and credible. Spacious public pages support seniors and family caregivers with readable copy, human photography, and direct actions. This document records the approved press implementation; it does not introduce a new visual identity or replace BRAND.md, the canonical brand authority.",
+    "dos": [
+      "Do preserve BRAND.md as the brand authority.",
+      "Do use readable body copy, visible keyboard focus, and new content controls at least 44px tall.",
+      "Do retain original photograph proportions and document asset provenance in the surface brief."
+    ],
+    "donts": [
+      "Don't use gold or light gray for new content text; preserve the explicitly approved incumbent header.",
+      "Don't inherit small-body-type drift from older pages. The homepage header is explicitly approved for Press.",
+      "Don't promote the press article's composition into a mandatory site-wide layout."
+    ]
+  },
+  "extensions": {
+    "breakpoints": [
+      {
+        "value": "1000px",
+        "name": "compact"
+      },
+      {
+        "value": "700px",
+        "name": "mobile"
+      },
+      {
+        "value": "1280px",
+        "name": "header-compact"
+      },
+      {
+        "value": "1160px",
+        "name": "header-mobile-menu"
+      },
+      {
+        "value": "1024px",
+        "name": "header-tablet"
+      },
+      {
+        "value": "720px",
+        "name": "header-mobile"
+      }
+    ]
+  },
+  "title": "Design System: Legacy Senior Advocates",
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T20:09:02.9272886Z",
+  "components": [
+    {
+      "description": "Original-article link with visible hover and keyboard focus.",
+      "css": ".ds-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 20px; background: var(--navy, #0B1D3A); color: var(--white, #FDFBF8); border-radius: 6px; font: 500 18px/1.65 Inter, sans-serif; text-decoration: none; } .ds-primary:hover { background: var(--navy-light, #16304F); text-decoration: underline; } .ds-primary:focus-visible { outline: 3px solid var(--teal, #276B6B); outline-offset: 5px; }",
+      "name": "Primary action",
+      "refersTo": "button-primary",
+      "html": "<a class=\"ds-primary\" href=\"#article\">Read the original article</a>",
+      "kind": "button"
+    }
+  ]
+}

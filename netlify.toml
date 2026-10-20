@@ -100,6 +100,36 @@
   status = 404
   force = true
 
+# Press page and development-only project context.
+[[redirects]]
+  from = "/press"
+  to = "/press.html"
+  status = 200
+
+[[redirects]]
+  from = "/AGENTS.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/PRODUCT.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/DESIGN.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.impeccable/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
 [[headers]]
   for = "/.netlify/functions/*"
   [headers.values]

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Press | Legacy Senior Advocates</title>
+  <meta name="description" content="Read news coverage of Legacy Senior Advocates, including Florida Weekly's feature on the Dobbins family and a free senior health panel in Fort Myers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy: #0B1D3A; --navy-light: #16304F; --cream: #F7F5F1; --white: #FDFBF8; --ink: #1A1E2C; --muted: #4A4E5C; --teal: #276B6B; --line: #D6D8D7; --blue: #3D7AB5; --blue-lt: #6BA3D6; --gold: #C9A54E; --radius: 6px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--white); color: var(--ink); font: 400 18px/1.65 'Inter', sans-serif; }
+    ::selection { background: var(--navy); color: var(--white); }
+    a { color: var(--teal); text-underline-offset: 5px; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-offset: 5px; }
+    .skip-link { position: fixed; top: -100px; left: 20px; padding: 12px 20px; background: var(--white); z-index: 700; }
+    .skip-link:focus { top: 12px; }
+    .site-header { height: 80px; background: var(--navy); }
+    #siteNav, .mobile-menu { font: 400 16px/normal 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    :where(#siteNav, .mobile-menu) * { margin: 0; padding: 0; }
+    #siteNav a, .mobile-menu a { text-decoration: none; }
+    #siteNav img { display: block; max-width: 100%; width: auto; }
+#siteNav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  background: rgba(11,29,58,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+#siteNav.scrolled {
+  background: rgba(11,29,58,0.97);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  height: 72px;
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.nav-brand .nav-logo-img { height: 60px; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a, .nav-cta { white-space: nowrap; }
+.nav-links a[href="https://lsa-portal.vercel.app/apply"] { color: var(--gold) !important; }
+.nav-links a {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 0; right: 0;
+  height: 2px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  transform-origin: left;
+  border-radius: 1px;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff !important;
+  background: var(--blue);
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  transition: all 0.3s !important;
+}
+.nav-cta:hover { background: var(--blue-lt); transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+
+/* hamburger */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 600;
+  position: relative;
+}
+.nav-hamburger span {
+  width: 22px; height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+/* Tighten #siteNav below 1280px so the wide logo + links fit; collapse to hamburger below 1160px */
+@media (max-width: 1280px) {
+  .nav-links { gap: 24px; }
+  .nav-brand .nav-logo-img { height: 56px; }
+}
+@media (max-width: 1160px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--navy);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.mobile-menu a {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  transition: color 0.3s;
+}
+.mobile-menu a:hover { color: #fff; }
+.mobile-menu .mobile-menu-divider {
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.mobile-menu .mobile-menu-gold {
+  color: var(--gold) !important;
+  font-weight: 600;
+}
+.mobile-menu .mobile-menu-cta {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  padding: 16px 36px;
+  background: var(--blue);
+  color: #fff !important;
+  border-radius: var(--radius);
+  transition: all 0.3s;
+}
+.mobile-menu .mobile-menu-cta:hover { background: var(--blue-lt); }
+.mobile-menu-close {
+  position: absolute;
+  top: 20px; right: 24px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 36px;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+  z-index: 601;
+  transition: color 0.3s;
+}
+.mobile-menu-close:hover { color: #fff; }
+.mobile-menu .mobile-menu-home {
+  color: var(--blue-lt) !important;
+  font-weight: 600;
+}
+
+
+    #siteNav .nav-links { margin: 0; padding: 0; }
+    #siteNav .nav-links a[aria-current="page"] { color: #fff; }
+    #siteNav .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+    #siteNav .nav-hamburger { border: 0; background: none; min-height: 44px; justify-content: center; }
+    #siteNav a:focus-visible, #siteNav button:focus-visible, .mobile-menu a:focus-visible, .mobile-menu button:focus-visible { outline: 3px solid var(--white); outline-offset: 5px; }
+    .mobile-menu { overflow-y: auto; padding: 72px 24px; }
+    .mobile-menu ul { margin: auto; flex-shrink: 0; }
+    .mobile-menu a[aria-current="page"] { color: #fff; text-decoration: underline; text-underline-offset: 8px; }
+    @media (max-width: 1024px) {
+      #siteNav { padding: 0 32px; }
+      #siteNav .nav-links { gap: 18px; }
+    }
+    @media (max-width: 720px) {
+      .site-header { height: 64px; }
+      #siteNav { height: 64px; padding: 0 20px; }
+      #siteNav.scrolled { height: 56px; }
+      .nav-logo-img { height: 44px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #siteNav, #siteNav *, .mobile-menu * { transition: none; }
+    }
+    .footer-links { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 28px; list-style: none; margin: 0; padding: 0; }
+    main { max-width: 1320px; margin: auto; padding: 66px 48px 88px; }
+    h1, h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-weight: 500; text-wrap: balance; }
+    h1 { font-size: clamp(64px, 7vw, 96px); line-height: 1.05; letter-spacing: -.035em; margin: 0 0 20px; }
+    .intro { max-width: 65ch; margin: 0; color: var(--muted); font-size: 20px; }
+    .coverage { margin-top: 48px; border-top: 1px solid var(--line); }
+    .feature { padding-top: 40px; display: grid; grid-template-columns: 1fr 1.04fr; gap: 48px; align-items: start; }
+    .feature figure { margin: 0; }
+    .feature img { display: block; width: 100%; height: auto; }
+    figcaption { margin-top: 12px; color: var(--muted); font-size: 18px; }
+    .metadata { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 18px; color: var(--muted); font-size: 18px; }
+    .publication { color: var(--teal); font-weight: 600; }
+    h2 { font-size: clamp(32px, 3.1vw, 44px); line-height: 1.18; letter-spacing: -.025em; margin: 0 0 22px; }
+    .summary { margin: 0 0 26px; max-width: 65ch; }
+    .article-link { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 48px; padding: 13px 20px; background: var(--navy); color: var(--white); border-radius: 6px; font-weight: 500; text-decoration: none; }
+    .article-link:hover { background: var(--navy-light); text-decoration: underline; }
+    .article-link svg { flex: 0 0 20px; }
+    .speakers { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 36px; }
+    .speakers h3 { margin: 0 0 12px; color: var(--navy); font: 500 32px/1.2 'Playfair Display', serif; }
+    .speakers-intro { margin: 0 0 28px; max-width: 65ch; color: var(--muted); }
+    .speaker-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 40px; padding: 0; margin: 0; list-style: none; }
+    .speaker-list li { border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+    .speaker-list h4 { margin: 0 0 10px; color: var(--navy); font: 500 25px/1.25 'Playfair Display', serif; }
+    .speaker-list p { margin: 0; }
+    .speaker-list strong { font-weight: 600; color: var(--teal); }
+    .media-contact { border-top: 1px solid var(--line); margin-top: 64px; padding-top: 32px; display: flex; justify-content: space-between; gap: 24px 48px; align-items: baseline; }
+    .media-contact h2 { font-size: 30px; margin: 0; }
+    .media-contact p { margin: 0; }
+    .media-contact a { display: inline-block; min-height: 44px; padding-top: 7px; }
+    footer { background: var(--cream); border-top: 1px solid var(--line); }
+    .footer-inner { max-width: 1320px; padding: 36px 48px; margin: auto; }
+    .footer-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--navy); }
+    .copyright { margin: 20px 0 0; color: var(--muted); font-size: 18px; }
+    @media (max-width: 1000px) {
+      main { padding: 52px 28px 64px; }
+      .feature { gap: 30px; }
+      .speaker-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+      .footer-inner { padding: 28px; }
+    }
+    @media (max-width: 700px) {
+      main { padding: 42px 24px 56px; }
+      .intro { font-size: 18px; }
+      .coverage { margin-top: 32px; }
+      .feature { grid-template-columns: 1fr; gap: 28px; padding-top: 28px; }
+      .feature-copy { grid-row: 1; }
+      .speakers { padding-top: 28px; }
+      .speaker-list { grid-template-columns: 1fr; gap: 24px; }
+      h2 { font-size: 34px; }
+      .article-link { width: 100%; text-align: center; }
+      .media-contact { margin-top: 40px; padding-top: 28px; display: block; }
+      .media-contact h2 { margin-bottom: 12px; }
+      .footer-inner { padding: 28px 24px; }
+      .footer-links { gap: 8px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<nav id="siteNav" aria-label="Main navigation">
+  <a class="nav-brand" href="index.html" aria-label="Legacy Senior Advocates home">
+    <img src="images/LSA-Logo.png" alt="Legacy Senior Advocates" class="nav-logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#advocacy">Advocacy</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#founder">Our Founder</a></li>
+    <li><a href="index.html#mission">Mission</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="press.html" aria-current="page">Press</a></li>
+    <li><a href="https://lsa-portal.vercel.app/apply">Join Our Team</a></li>
+    <li><a href="client-inquiry.html" class="nav-cta">Request a Consultation</a></li>
+  </ul>
+  <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+</header>
+<!-- Mobile menu overlay (outside nav to avoid stacking context issues) -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+  <ul>
+    <li><a href="index.html" class="mobile-menu-home">Home</a></li>
+    <li><a href="index.html#advocacy">Advocacy</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#founder">Our Founder</a></li>
+    <li><a href="index.html#mission">Mission</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="press.html" aria-current="page">Press</a></li>
+    <li class="mobile-menu-divider"><a href="https://lsa-portal.vercel.app/apply" class="mobile-menu-gold">Join Our Team</a></li>
+    <li><a href="client-inquiry.html" class="mobile-menu-cta">Request a Consultation</a></li>
+  </ul>
+</div>
+
+  <main id="main">
+    <h1>Press</h1>
+    <p class="intro">Legacy Senior Advocates in the news, sharing our family's commitment to seniors and the people who care for them.</p>
+    <section class="coverage" aria-label="News coverage">
+      <article class="feature" aria-labelledby="florida-weekly-title">
+        <figure>
+          <img src="images/Pats%20Family.jpeg" width="640" height="420" alt="The Dobbins family together outdoors">
+          <figcaption>The Dobbins family</figcaption>
+        </figure>
+        <div class="feature-copy">
+          <p class="metadata"><span class="publication">Florida Weekly</span><time datetime="2026-10-19">October 19, 2026</time></p>
+          <h2 id="florida-weekly-title">Fort Myers family hosts free senior health panel at Collaboratory</h2>
+          <p class="summary">Florida Weekly spotlights a free community panel bringing medical and legal perspectives to seniors and their families. The feature introduces the Dobbins family and the experience behind Legacy Senior Advocates.</p>
+          <a class="article-link" href="https://www.floridaweekly.com/fort-myers/news/healthy-living/family-hosts-free-senior-health-panel-at-fort-myers-facility/article_b011b131-60ad-4f55-9c70-23b5b16c497e.html">Read the Florida Weekly article<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <section class="speakers" aria-labelledby="speakers-heading">
+          <h3 id="speakers-heading">Meet the speakers</h3>
+          <p class="speakers-intro">The panel featured in Florida Weekly brings together perspectives from senior care, community leadership, elder law, and medicine.</p>
+          <ul class="speaker-list">
+            <li>
+              <h4>Scott Dobbins</h4>
+              <p><strong>Moderator</strong><br>Co-founder, Legacy Senior Advocates</p>
+            </li>
+            <li>
+              <h4>Brian Sykes</h4>
+              <p>Shell Point's vice president for healthcare services</p>
+            </li>
+            <li>
+              <h4>Dr. Dawn Belamarich</h4>
+              <p>Collaboratory's president and CEO</p>
+            </li>
+            <li>
+              <h4>Carl Zacharia</h4>
+              <p>Elder law attorney and founding partner at Zacharia Frey</p>
+            </li>
+            <li>
+              <h4>Dr. Lawrence Hobbs</h4>
+              <p>Emergency medicine physician</p>
+            </li>
+            <li>
+              <h4>Pat Dobbins, RN</h4>
+              <p>Founder, Legacy Senior Advocates</p>
+            </li>
+          </ul>
+        </section>
+      </article>
+    </section>
+    <section class="media-contact" aria-labelledby="media-heading">
+      <h2 id="media-heading">Media inquiries</h2>
+      <p>For interviews or more information:<br><a href="mailto:info@lsadvocates.com">info@lsadvocates.com</a></p>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <nav aria-label="Footer navigation">
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="press.html" aria-current="page">Press</a></li>
+          <li><a href="client-inquiry.html">Consultation</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms &amp; Conditions</a></li>
+        </ul>
+      </nav>
+      <p class="copyright">&copy; 2026 Legacy Senior Advocates. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    (() => {
+      const nav = document.getElementById('siteNav');
+      const hamburger = document.getElementById('navHamburger');
+      const menu = document.getElementById('mobileMenu');
+      const close = document.getElementById('mobileMenuClose');
+      const background = [document.querySelector('.site-header'), document.querySelector('main'), document.querySelector('footer')];
+      const setOpen = (open) => {
+        menu.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', String(open));
+        background.forEach(element => { element.inert = open; });
+        document.body.style.overflow = open ? 'hidden' : '';
+        (open ? close : hamburger).focus();
+      };
+      hamburger.addEventListener('click', () => setOpen(true));
+      close.addEventListener('click', () => setOpen(false));
+      menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
+      menu.addEventListener('keydown', event => {
+        if (event.key === 'Escape') { setOpen(false); return; }
+        if (event.key !== 'Tab') return;
+        const links = [...menu.querySelectorAll('button, a')];
+        const first = links[0], last = links[links.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      });
+      window.matchMedia('(min-width: 1161px)').addEventListener('change', event => {
+        if (event.matches && menu.classList.contains('open')) setOpen(false);
+      });
+      let ticking = false;
+      const updateNav = () => { nav.classList.toggle('scrolled', window.scrollY > 60); ticking = false; };
+      window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(updateNav); ticking = true; }
+      }, { passive: true });
+      updateNav();
+    })();
+  </script>
+</body>
+</html>
