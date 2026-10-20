@@ -21,8 +21,8 @@
     .skip-link:focus { top: 12px; }
     .site-header { background: var(--navy); color: var(--white); }
     .header-inner { max-width: 1320px; margin: auto; padding: 26px 48px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
-    .wordmark { display: inline-flex; flex-direction: column; justify-content: center; min-height: 44px; color: inherit; text-decoration: none; font: 500 27px/1.2 'Playfair Display', serif; }
-    .wordmark span { font: 500 13px/1.7 'Inter', sans-serif; letter-spacing: .18em; text-transform: uppercase; }
+    .site-logo { display: inline-flex; flex-shrink: 0; align-items: center; min-height: 44px; }
+    .site-logo img { display: block; height: 60px; width: auto; }
     .desktop-nav, .footer-links { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 28px; list-style: none; margin: 0; padding: 0; }
     .site-header nav a { display: inline-flex; align-items: center; min-height: 44px; color: inherit; font-weight: 500; text-decoration: none; }
     .site-header nav a:hover, .site-header a[aria-current] { text-decoration: underline; text-underline-offset: 8px; }
@@ -44,6 +44,14 @@
     .article-link { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 48px; padding: 13px 20px; background: var(--navy); color: var(--white); border-radius: 6px; font-weight: 500; text-decoration: none; }
     .article-link:hover { background: var(--navy-light); text-decoration: underline; }
     .article-link svg { flex: 0 0 20px; }
+    .speakers { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 36px; }
+    .speakers h3 { margin: 0 0 12px; color: var(--navy); font: 500 32px/1.2 'Playfair Display', serif; }
+    .speakers-intro { margin: 0 0 28px; max-width: 65ch; color: var(--muted); }
+    .speaker-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 40px; padding: 0; margin: 0; list-style: none; }
+    .speaker-list li { border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+    .speaker-list h4 { margin: 0 0 10px; color: var(--navy); font: 500 25px/1.25 'Playfair Display', serif; }
+    .speaker-list p { margin: 0; }
+    .speaker-list strong { font-weight: 600; color: var(--teal); }
     .media-contact { border-top: 1px solid var(--line); margin-top: 64px; padding-top: 32px; display: flex; justify-content: space-between; gap: 24px 48px; align-items: baseline; }
     .media-contact h2 { font-size: 30px; margin: 0; }
     .media-contact p { margin: 0; }
@@ -58,11 +66,12 @@
       .site-header .consultation { display: none; }
       main { padding: 52px 28px 64px; }
       .feature { gap: 30px; }
+      .speaker-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
       .footer-inner { padding: 28px; }
     }
     @media (max-width: 700px) {
       .header-inner { display: block; padding: 20px 24px; }
-      .wordmark { font-size: 25px; }
+      .site-logo img { height: 48px; }
       .desktop-nav { display: none; }
       .mobile-nav { display: block; margin-top: 18px; }
       .mobile-nav summary { min-height: 44px; cursor: pointer; width: fit-content; padding: 6px 0; font-weight: 500; }
@@ -73,6 +82,8 @@
       .coverage { margin-top: 32px; }
       .feature { grid-template-columns: 1fr; gap: 28px; padding-top: 28px; }
       .feature-copy { grid-row: 1; }
+      .speakers { padding-top: 28px; }
+      .speaker-list { grid-template-columns: 1fr; gap: 24px; }
       h2 { font-size: 34px; }
       .article-link { width: 100%; text-align: center; }
       .media-contact { margin-top: 40px; padding-top: 28px; display: block; }
@@ -86,7 +97,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="header-inner">
-      <a class="wordmark" href="index.html" aria-label="Legacy Senior Advocates home">Legacy<span>Senior Advocates</span></a>
+      <a class="site-logo" href="index.html" aria-label="Legacy Senior Advocates home"><img src="images/LSA-Logo.png" width="1400" height="396" alt="Legacy Senior Advocates"></a>
       <nav aria-label="Main navigation">
         <ul class="desktop-nav">
           <li><a href="index.html">Home</a></li>
@@ -123,6 +134,36 @@
           <p class="summary">Florida Weekly spotlights a free community panel bringing medical and legal perspectives to seniors and their families. The feature introduces the Dobbins family and the experience behind Legacy Senior Advocates.</p>
           <a class="article-link" href="https://www.floridaweekly.com/fort-myers/news/healthy-living/family-hosts-free-senior-health-panel-at-fort-myers-facility/article_b011b131-60ad-4f55-9c70-23b5b16c497e.html">Read the Florida Weekly article<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
+        <section class="speakers" aria-labelledby="speakers-heading">
+          <h3 id="speakers-heading">Meet the speakers</h3>
+          <p class="speakers-intro">The panel featured in Florida Weekly brings together perspectives from senior care, community leadership, elder law, and medicine.</p>
+          <ul class="speaker-list">
+            <li>
+              <h4>Scott Dobbins</h4>
+              <p><strong>Moderator</strong><br>Co-founder, Legacy Senior Advocates</p>
+            </li>
+            <li>
+              <h4>Brian Sykes</h4>
+              <p>Shell Point's vice president for healthcare services</p>
+            </li>
+            <li>
+              <h4>Dr. Dawn Belamarich</h4>
+              <p>Collaboratory's president and CEO</p>
+            </li>
+            <li>
+              <h4>Carl Zacharia</h4>
+              <p>Elder law attorney and founding partner at Zacharia Frey</p>
+            </li>
+            <li>
+              <h4>Dr. Lawrence Hobbs</h4>
+              <p>Emergency medicine physician</p>
+            </li>
+            <li>
+              <h4>Pat Dobbins, RN</h4>
+              <p>Founder, Legacy Senior Advocates</p>
+            </li>
+          </ul>
+        </section>
       </article>
     </section>
     <section class="media-contact" aria-labelledby="media-heading">

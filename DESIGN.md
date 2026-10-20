@@ -57,9 +57,9 @@ The established brand is warm, clear, reassuring, and credible. Spacious public 
 **Key Characteristics:**
 - Navy framing with warm light surfaces.
 - Playfair Display headings and readable Inter body copy.
-- Text wordmark on new surfaces, generous controls, and visible keyboard focus.
+- Existing homepage logo on the Press page, generous controls, and visible keyboard focus.
 
-The extracted tokens above describe press.html. Broader brand decisions remain in BRAND.md; press composition and asset provenance remain in .impeccable/surfaces/press.md.
+The extracted tokens above describe press.html. Broader brand decisions remain in BRAND.md, with the user-requested homepage logo superseding the earlier wordmark-only direction on this page; press composition and asset provenance remain in .impeccable/surfaces/press.md.
 
 ## Colors
 
@@ -69,13 +69,13 @@ Navy frames the header and primary action; navy-light is the action's hover stat
 ### Neutral
 Warm white is the page surface, cream separates the footer, ink carries body copy, and muted ink carries secondary copy. The line color is reserved for dividers.
 
-**The Readable Color Rule.** Use dark text on light surfaces and warm white on navy. BRAND.md excludes gold and light gray as text; this page does not use gold.
+**The Readable Color Rule.** Use dark text on light surfaces and warm white on navy. BRAND.md excludes gold and light gray as body text. The existing gold-and-white logo is retained unchanged at the user's explicit request.
 
 ## Typography
 
 Playfair Display supplies display and headline roles; Inter supplies body and controls. The frontmatter records the implemented desktop type ramp. On the press page, introductory text is 20px, returning to the body size on mobile. Article headlines become 34px at the mobile breakpoint; media-contact headings are 30px. Paragraphs are limited to 65ch where implemented.
 
-**The Readable Body Rule.** Body copy stays at least 18px, with line-height at least 1.6 and weight at least 400. Compact wordmark lettering is identity treatment, not a body-copy size precedent.
+**The Readable Body Rule.** Body copy stays at least 18px, with line-height at least 1.6 and weight at least 400. Lettering within the logo is identity treatment, not a body-copy size precedent.
 
 ## Layout
 
@@ -95,7 +95,10 @@ Controls use gently rounded corners as recorded in the frontmatter. Article cont
 The original-article link uses navy with warm white text, medium-weight Inter, and a minimum height of 48px. Hover changes the background to navy-light and adds an underline. Its directional arrow is inline SVG. On mobile it fills the available width.
 
 ### Navigation
-The header uses a text wordmark and medium-weight links with minimum 44px targets. Hover and current-page states are underlined. Consultation uses a thin outlined control. At 700px, native details/summary navigation replaces the desktop list. Footer links remain underlined on cream.
+The header uses the existing images/LSA-Logo.png asset at its original aspect ratio, 60px high on desktop and 48px on mobile, plus medium-weight links with minimum 44px targets. Hover and current-page states are underlined. Consultation uses a thin outlined control. At 700px, native details/summary navigation replaces the desktop list. Footer links remain underlined on cream.
+
+### Article speakers
+The article contains a named roster, with Scott Dobbins identified as moderator and the five panelists presented by name and role. The open list uses three columns on desktop, two below 1000px, and one below 700px; thin dividers separate entries without enclosing cards. Speaker names are 25px Playfair Display; roles retain 18px body type.
 
 ### Keyboard focus
 Links and menu summaries use a 3px teal outline with 5px offset, changing to warm white in the navy header. The skip link becomes visible on focus.
@@ -109,5 +112,5 @@ Links and menu summaries use a 3px teal outline with 5px offset, changing to war
 
 ### Don't:
 - Don't use gold or light gray as text.
-- Don't inherit older homepage logo or small-body-type drift into new surfaces.
+- Don't inherit small-body-type drift from older pages. The homepage logo is explicitly approved for Press.
 - Don't promote the press article's composition into a mandatory site-wide layout.

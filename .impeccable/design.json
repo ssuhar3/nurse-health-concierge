@@ -4,18 +4,18 @@
       {
         "section": "colors",
         "name": "The Readable Color Rule",
-        "body": "Use dark text on light surfaces and warm white on navy. BRAND.md excludes gold and light gray as text; this page does not use gold."
+        "body": "Use dark text on light surfaces and warm white on navy. BRAND.md excludes gold and light gray as body text. The existing gold-and-white logo is retained unchanged at the user's explicit request."
       },
       {
         "section": "typography",
         "name": "The Readable Body Rule",
-        "body": "Body copy stays at least 18px, with line-height at least 1.6 and weight at least 400. Compact wordmark lettering is identity treatment, not a body-copy size precedent."
+        "body": "Body copy stays at least 18px, with line-height at least 1.6 and weight at least 400. Lettering within the logo is identity treatment, not a body-copy size precedent."
       }
     ],
     "keyCharacteristics": [
       "Navy framing with warm light surfaces.",
       "Playfair Display headings and readable Inter body copy.",
-      "Text wordmark on new surfaces, generous controls, and visible keyboard focus."
+      "Existing homepage logo on the Press page, generous controls, and visible keyboard focus."
     ],
     "overview": "The established brand is warm, clear, reassuring, and credible. Spacious public pages support seniors and family caregivers with readable copy, human photography, and direct actions. This document records the approved press implementation; it does not introduce a new visual identity or replace BRAND.md, the canonical brand authority.",
     "dos": [
@@ -25,7 +25,7 @@
     ],
     "donts": [
       "Don't use gold or light gray as text.",
-      "Don't inherit older homepage logo or small-body-type drift into new surfaces.",
+      "Don't inherit small-body-type drift from older pages. The homepage logo is explicitly approved for Press.",
       "Don't promote the press article's composition into a mandatory site-wide layout."
     ]
   },
