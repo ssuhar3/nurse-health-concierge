@@ -19,12 +19,11 @@ async function insertRecord(table, data) {
     });
 
     if (!res.ok) {
-      const text = await res.text();
-      console.error(`Supabase insert error (${table}):`, res.status, text);
+      throw new Error('Unable to save submission.');
     }
   } catch (err) {
-    console.error(`Supabase insert error (${table}):`, err.message);
-    // Don't throw — Google Sheets is still the primary store during migration
+    // Never expose database response bodies or network errors containing submitted data.
+    throw new Error('Unable to save submission.');
   }
 }
 

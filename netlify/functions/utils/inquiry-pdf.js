@@ -7,11 +7,11 @@ const GRAY = '#555555';
 /**
  * Generate a branded PDF summary of a client consultation request
  * @param {Object} data - Sanitized form data
- * @param {string[]} healthNeeds - Selected health challenge labels
+ * @param {string[]} _legacyNeeds - Ignored legacy argument for caller compatibility
  * @param {string} timestamp - ISO timestamp of the submission
  * @returns {Promise<Buffer>} PDF as a Buffer
  */
-function generateInquiryPdf(data, healthNeeds, timestamp) {
+function generateInquiryPdf(data, _legacyNeeds, timestamp) {
   return new Promise((resolve, reject) => {
     try {
       const doc = new PDFDocument({
@@ -94,17 +94,6 @@ function generateInquiryPdf(data, healthNeeds, timestamp) {
         doc.moveDown(0.3);
       }
 
-      // ── Helper: Paragraph block ─────────────────────
-      function paragraph(text) {
-        if (!text) return;
-        doc
-          .fillColor('#222222')
-          .fontSize(10)
-          .font('Helvetica')
-          .text(String(text), 60, doc.y, { width: pageWidth });
-        doc.moveDown(0.3);
-      }
-
       // ── Contact Information ─────────────────────────
       sectionHeading('Contact Information');
       fieldRow('Name', data.contactName);
@@ -114,24 +103,7 @@ function generateInquiryPdf(data, healthNeeds, timestamp) {
       fieldRow('Preferred Contact', data.contactMethod);
       fieldRow('Preferred Time', data.contactTime);
 
-      // ── About the Senior ────────────────────────────
-      sectionHeading('About the Senior');
-      fieldRow('Senior Name', data.seniorName);
-      fieldRow('Age Range', data.ageRange);
       fieldRow('Area', data.seniorLocation);
-      fieldRow('Living Situation', data.livingSituation);
-
-      // ── Health Situation ────────────────────────────
-      if (healthNeeds && healthNeeds.length) {
-        sectionHeading('Health Situation');
-        fieldRow('Challenges', healthNeeds.join(', '));
-      }
-
-      // ── Their Story ─────────────────────────────────
-      if (data.story) {
-        sectionHeading('Their Story');
-        paragraph(data.story);
-      }
 
       // ── Additional ──────────────────────────────────
       sectionHeading('Additional');

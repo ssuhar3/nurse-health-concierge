@@ -4,7 +4,8 @@
   "description": "Legacy Senior Advocates website with serverless form handling",
   "scripts": {
     "dev": "netlify dev",
-    "serve": "npx serve . -l 8889"
+    "serve": "npx serve . -l 8889",
+    "test": "node --test tests/*.test.cjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1009.0",
