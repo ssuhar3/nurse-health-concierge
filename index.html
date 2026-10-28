@@ -1072,6 +1072,7 @@ nav.scrolled {
 }
 .contact-card:hover::before { transform: scaleX(1); }
 .contact-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+#contact-us { scroll-margin-top: 120px; }
 .contact-name {
   font-family: 'Playfair Display', serif;
   font-size: 32px;
@@ -1228,12 +1229,15 @@ footer {
   z-index: 500;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
+  padding: 88px 24px;
 }
 .mobile-menu.open { display: flex; }
 .mobile-menu ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: auto;
+  flex-shrink: 0;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -1248,6 +1252,19 @@ footer {
   transition: color 0.3s;
 }
 .mobile-menu a:hover { color: #fff; }
+.mobile-menu .mobile-menu-contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 28px;
+  font-size: 18px;
+  font-weight: 700;
+  background: var(--blue);
+  color: #fff;
+  border-radius: var(--radius);
+}
+.mobile-menu .mobile-menu-contact:hover { background: var(--blue-lt); }
 .mobile-menu .mobile-menu-divider {
   margin-top: 8px;
   padding-top: 24px;
@@ -1379,6 +1396,7 @@ footer {
   <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
   <ul>
     <li><a href="#" class="mobile-menu-home">Home</a></li>
+    <li><a href="#contact-us" class="mobile-menu-contact">Contact Us</a></li>
     <li><a href="#advocacy">Advocacy</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#founder">Our Founder</a></li>
@@ -1634,7 +1652,7 @@ footer {
     </div>
 
     <!-- Path 3: General Contact -->
-    <div class="contact-card reveal reveal-d3">
+    <div class="contact-card reveal reveal-d3" id="contact-us">
       <div class="contact-card-icon">
         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
